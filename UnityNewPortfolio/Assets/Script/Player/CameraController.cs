@@ -1,31 +1,43 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class CameraController : MonoBehaviour
 {
-    GameObject player;
+    GameObject originCamera;
 
     public Vector3 startPosition;
     public Vector3 startRotation;
 
+    private float xRotate, xRotateMove, yRotate, yRotateMove;
+    public float minXRotate, maxXRotate;
+    public float rotateSpeed = 500.0f;
+
     private void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").gameObject;
+        originCamera = transform.parent.gameObject;
 
-        if (player != null)
+        if (originCamera != null)
         {
-            transform.position = player.transform.position + startPosition;
+            transform.position = originCamera.transform.position + startPosition;
             transform.rotation = Quaternion.Euler(startRotation);
         }
     }
 
     private void Update()
     {
-        if (player != null)
+        if (originCamera != null)
         {
-            transform.position = player.transform.position + startPosition;
-            transform.rotation = Quaternion.Euler(startRotation);
+            xRotateMove = -Input.GetAxis("Mouse Y") * Time.deltaTime * rotateSpeed;
+            yRotateMove = Input.GetAxis("Mouse X") * Time.deltaTime * rotateSpeed;
+
+            xRotate = xRotate + xRotateMove;
+            yRotate = yRotate + yRotateMove;
+
+            xRotate = Mathf.Clamp(xRotate, minXRotate, maxXRotate); // 위, 아래 고정
+
+            transform.rotation = Quaternion.Euler(new Vector3(xRotate, yRotate, 0));
         }
     }
 }
