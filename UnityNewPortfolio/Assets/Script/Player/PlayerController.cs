@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     private float vSpeed = 0.0f;
     private bool isAttack = false;
     private bool isJumping = false;
+    private bool isIdle = false;        // idle애니메이션 상태전환
 
     public GameObject cameraOrigin;
 
@@ -53,17 +54,20 @@ public class PlayerController : MonoBehaviour
         // 캐릭터가 바닥에 착지한 경우
         if (cc.collisionFlags == CollisionFlags.Below)
         {
-            isJumping = false;
             // 캐릭터 Y축 속도를 0으로 설정한다
+            isJumping = false;
             yVelocity = 0;
+
+            animator.SetTrigger("Landed");
         }
 
         // 스페이스 바를 입력했을 때 점프를 하지 않은 상태
         if (Input.GetButtonDown("Jump") && !isJumping)
         {
             // 캐릭터 Y축 속력에 점프력을 적용하고 상태 변경한다
-            yVelocity = jumpPower;
             isJumping = true;
+
+            animator.SetTrigger("JumpTrigger");
         }
 
         // 캐릭터 수직 속도에 중력을 적용한다
@@ -73,13 +77,19 @@ public class PlayerController : MonoBehaviour
         {
             if (moveAct != 0)
             {
+                Debug.Log(moveAct);
                 Vector3 lookForward = new Vector3(cameraOrigin.transform.forward.x, 0f, cameraOrigin.transform.forward.z).normalized;
                 Vector3 lookRight = new Vector3(cameraOrigin.transform.right.x, 0f, cameraOrigin.transform. right.z).normalized;
                 Vector3 moveDir = lookForward * moveY + lookRight * moveX;
 
                 transform.forward = lookForward;
+                if(!isJumping) animator.SetTrigger("WalkFoward");
 
                 velocity = moveDir * speed;
+            }
+            else
+            {
+                if (!isJumping) animator.Play("Idle");
             }
         }
 
@@ -95,5 +105,10 @@ public class PlayerController : MonoBehaviour
         animator.Play("Idle");
 
         Debug.Log("AttackEnd");
+    }
+
+    void JumpTime()
+    {
+        yVelocity = jumpPower;
     }
 }
