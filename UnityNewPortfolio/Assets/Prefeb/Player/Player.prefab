@@ -79,8 +79,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b0f03b69b819aa4d8a73b18003c3172, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
-  jumpPower: 10
+  speed: 3
+  runSpeed: 2
+  jumpPower: 5
   gravity: -10
   cameraOrigin: {fileID: 0}
 --- !u!143 &5638788334328055080

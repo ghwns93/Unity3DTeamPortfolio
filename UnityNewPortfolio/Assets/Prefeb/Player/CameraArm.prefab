@@ -148,3 +148,4 @@ MonoBehaviour:
   minXRotate: -45
   maxXRotate: 45
   rotateSpeed: 500
+  fovRate: 10
