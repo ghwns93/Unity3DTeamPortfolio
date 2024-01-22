@@ -16,10 +16,10 @@ public class UIInputController : MonoBehaviour
         // 플레이어와 창고와의 거리가 일정 거리 안일 때를 추가 해야함
         if (!OpenBox)
         {
-            if (Input.GetKeyDown(KeyCode.F))    
-            {
-                OpenStorageBox();
-            }
+            //if (Input.GetKeyDown(KeyCode.F))    
+            //{
+            //    OpenStorageBox();
+            //}
         }
     }
 
