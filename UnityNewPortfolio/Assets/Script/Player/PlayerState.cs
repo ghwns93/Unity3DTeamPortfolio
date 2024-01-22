@@ -60,8 +60,8 @@ public class PlayerState : MonoBehaviour
     {
         get
         {
-            if(null == Instance) return null;
-            return Instance;
+            if(null == playerInstance) return null;
+            return playerInstance;
         }
     }
 }

@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class ObjectState : MonoBehaviour
 {
-    public string name;
-
     private void Start()
     {
         RaycastHit hit;
