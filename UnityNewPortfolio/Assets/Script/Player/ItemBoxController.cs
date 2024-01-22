@@ -1,18 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ItemBoxController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public GameObject dropItem;
+    public Canvas canvas;
+
+    private void OnTriggerStay(Collider other)
     {
-        
+        if(other.gameObject.transform.tag == "Player")
+        {
+            canvas.enabled = true;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerExit(Collider other)
     {
-        
+        if (other.gameObject.transform.tag == "Player")
+        {
+            canvas.enabled = false;
+        }
     }
 }

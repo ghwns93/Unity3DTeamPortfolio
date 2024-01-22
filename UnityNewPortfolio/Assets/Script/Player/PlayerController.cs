@@ -13,9 +13,9 @@ public class PlayerController : MonoBehaviour
     private float nowSpeed; // 최종 속도
 
     private float vSpeed = 0.0f;
-    private bool isAttack = false;
-    private bool isJumping = false;
-    private bool isIdle = false;        // idle애니메이션 상태전환
+    internal bool isAttack = false;
+    internal bool isJumping = false;
+    internal bool isIdle = false;        // idle애니메이션 상태전환
 
     public GameObject cameraOrigin;
 
