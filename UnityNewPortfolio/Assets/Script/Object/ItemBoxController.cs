@@ -6,29 +6,36 @@ using static UnityEngine.GraphicsBuffer;
 
 public class ItemBoxController : MonoBehaviour
 {
-    public GameObject dropItem;
+    public Item dropItem;
     public Canvas canvas;
 
-    ObjectState objectState;
     GameObject target;
     Text text;
 
     private void Start()
     {
-        Instantiate(dropItem, transform);
+        Instantiate(dropItem.itemPrefab, transform);
 
-        objectState = dropItem.GetComponent<ObjectState>();
         text = canvas.transform.Find("Name").GetComponent<Text>();
 
         target = GameObject.FindGameObjectWithTag("MainCamera");
 
-        text.text = objectState.name;
+        text.text = dropItem.itemName;
         canvas.enabled = false;
     }
 
     private void Update()
     {
         canvas.transform.forward = target.transform.forward;
+
+        if(canvas.enabled)
+        {
+            if(Input.GetKeyDown(KeyCode.E))
+            {
+                Inventory.Instance.AddItem(dropItem);
+                Destroy(gameObject);
+            }
+        }
     }
 
     private void OnTriggerStay(Collider other)

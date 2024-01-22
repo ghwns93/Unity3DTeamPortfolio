@@ -7,7 +7,6 @@ public class UIInputController : MonoBehaviour
     public GameObject panel_item;
     public GameObject panel_Box;
     public GameObject panel_Equip;
-    public Camera camera_EqipChar;
 
     bool OpenBox = false;   // false = 닫힌상태  true = 열린상태
 
@@ -39,7 +38,6 @@ public class UIInputController : MonoBehaviour
 
     public void EquipchangeButtonClicked()
     {
-        camera_EqipChar.enabled = true;
         panel_Equip.SetActive(true);
         Debug.Log("장비창 열림");
         panel_Box.SetActive(false);
@@ -47,7 +45,6 @@ public class UIInputController : MonoBehaviour
 
     public void EquipcloseButtonClicked()
     {
-        camera_EqipChar.enabled = false;
         panel_Equip.SetActive(false);
         Debug.Log("장비창 닫힘");
         OpenStorageBox();
