@@ -27,11 +27,6 @@ public class Slot : MonoBehaviour
                 image.color = new Color(1, 1, 1, 1);
 				count.text = item.count.ToString();
 			}
-			else
-            {
-                image.color = new Color(1, 1, 1, 0);
-                count.text = "0";
-			}
 		}
 	}
 
