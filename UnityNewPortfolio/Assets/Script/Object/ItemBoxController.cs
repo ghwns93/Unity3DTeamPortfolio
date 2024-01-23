@@ -32,7 +32,22 @@ public class ItemBoxController : MonoBehaviour
         {
             if(Input.GetKeyDown(KeyCode.E))
             {
-                Inventory.Instance.AddItem(dropItem);
+                if (dropItem.itemType == Item.ObjectType.Material)
+                {
+                    Inventory.Instance.AddItem(dropItem);
+                }
+                else if (dropItem.itemType == Item.ObjectType.Weapon) 
+                {
+                    Transform weaponPos = GameObject.Find("WeaponPos").transform;
+
+                    if(weaponPos.childCount > 0)
+                    {
+                        Destroy(weaponPos.GetChild(0).gameObject);
+                    }
+
+                    //Quaternion rotate = Quaternion.Euler(0, 0, 90);
+                    GameObject weaponIns = Instantiate(dropItem.itemPrefab, weaponPos);
+                }
                 Destroy(gameObject);
             }
         }

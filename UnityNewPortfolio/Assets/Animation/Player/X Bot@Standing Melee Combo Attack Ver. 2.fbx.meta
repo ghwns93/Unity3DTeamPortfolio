@@ -64,21 +64,21 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.26829478
+      - time: 0.32603756
         functionName: CheckEndComboAttack
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 4b0f03b69b819aa4d8a73b18003c3172, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.4171431
+      - time: 0.36727434
         functionName: CheckStartComboAttack
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 4b0f03b69b819aa4d8a73b18003c3172, type: 3}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.48969787
+      - time: 0.47919917
         functionName: CheckEndComboAttack
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 4b0f03b69b819aa4d8a73b18003c3172, type: 3}
