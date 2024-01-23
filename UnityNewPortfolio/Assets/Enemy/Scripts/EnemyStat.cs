@@ -7,47 +7,33 @@ using UnityEngine.UI;
 
 public class EnemyStat : MonoBehaviour
 {
-    public int UnitKey;                     // 적 유닛 고유코드 및 드랍테이블 json용 코드
-    public string name;                   // 적 유닛 이름
-    public int maxHp;                      // 최대 체력
-    public int hp;                               // 현재 체력
-    public float power;                    // 적 데미지
-    public float defence;                 // 적 방어력
-    public float speed;                     // 적 속도
-    public float sight;                       // 적 시야(플레이어 발견 시야)
-    public float attackRange1;     // 적 사거리(원거리 및 근거리)
-    public float attackRange2;     // 적 사거리(특수 공격 사거리)
-    public float exp;                          // 적이 주는 경험치
-    public float morale;                   // 적 사기
+    protected int UnitKey;                     // 적 유닛 고유코드 및 드랍테이블 json용 코드
+    protected string Unitname;                   // 적 유닛 이름
+    
+    [SerializeField]
+    protected int maxHp;                      // 최대 체력
+    [SerializeField]
+    protected int hp;                               // 현재 체력
+    [SerializeField]
+    protected float power;                    // 적 데미지
+    [SerializeField]
+    protected float defence;                 // 적 방어력
+    [SerializeField]
+    protected float speed;                     // 적 속도
+    [SerializeField]
+    protected float sight;                       // 적 시야(플레이어 발견 시야)
+    [SerializeField]
+    protected float attackRange1;     // 적 사거리(원거리 및 근거리)
+    [SerializeField]
+    protected float attackRange2;     // 적 사거리(특수 공격 사거리)
+    [SerializeField]
+    protected float exp;                          // 적이 주는 경험치
+    [SerializeField]
+    protected float morale;                   // 적 사기
 
-    public bool isFinded = false;   // 플레이어 발견 상태 유무
+    protected bool isFinded = false;   // 플레이어 발견 상태 유무
 
-    // 체력 슬라이더 바
-    public Slider hpSlider;
-
-    // 플레이어 위치
-    Transform player;
-
-    // 적 캐릭터 컨트롤러
-    CharacterController cc;
-
-    // 누적 시간
-    float currentTime = 0.0f;
-
-    // 딜레이
-    float attackDelay;
-
-    // 적 초기 위치
-    Vector3 originPos;
-    Quaternion originRot;
-
-    // 애니메이터 컴포넌트
-    Animator anim;
-
-    // 내비게이션 메쉬 컴포넌트
-    NavMeshAgent agent;
-
-    enum EnemyState
+     protected enum EnemyState
     {
         Idle,                           // 기본 상태
         Patrol,                       // 순찰 상태
@@ -67,4 +53,60 @@ public class EnemyStat : MonoBehaviour
         Die                             // 사망
     }
 
+    protected int LevelingStat(int num, int level)
+    {
+        int leveling = num;
+
+        if( level  < 20)
+        {
+            leveling = (num + ((level * 10) / 5 - ((level * 10) / 5) % 5));
+
+            return leveling;
+        }
+
+        else if(level <= 50)
+        {
+            leveling = num + (((level * 10) / 5 - ((level * 10) / 5) % 5)*2);
+
+            return leveling;
+        }
+
+        else if (50 < level)
+        {
+            leveling = num + (level * 5);
+        }
+
+        return leveling;
+    }
+
+    protected float LevelingStat(float num, int level)
+    {
+        float leveling = num;
+
+        if ( level < 10)
+        {
+            return leveling;
+        }
+        else if (level < 20)
+        {
+            leveling = (level * 0.3f);
+
+            return leveling;
+        }
+
+        else if (level <= 50)
+        {
+            leveling = num + (level * 0.5f );
+
+            return leveling;
+        }
+
+        else if (50 < level)
+        {
+            leveling = num + (level * 0.7f);
+        }
+
+        return leveling;
+
+    }
 }
