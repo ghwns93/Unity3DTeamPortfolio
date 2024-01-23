@@ -47,6 +47,16 @@ public class PlayerController : MonoBehaviour
         float moveAct = moveX != 0 ? moveX : moveY;
         moveAct = Mathf.Abs(moveAct);
 
+        if (!isAttack)
+        {
+            transform.forward =
+                new Vector3(
+                    Camera.main.transform.forward.x,
+                transform.forward.y,
+                Camera.main.transform.forward.z
+                );
+        }
+
         if (Input.GetButtonDown("Fire1"))
         {
             if (!isAttack)
@@ -131,7 +141,6 @@ public class PlayerController : MonoBehaviour
         isAttack = false;
 
         animator.SetBool("AttackEnd", true);
-        transform.forward = cameraOrigin.transform.forward;
     }
 
     void JumpTime()

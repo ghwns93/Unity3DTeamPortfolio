@@ -5,9 +5,14 @@ using UnityEngine;
 [CreateAssetMenu]
 public class Item : ScriptableObject
 {
+    public enum ObjectType
+    {
+        Material,
+        Weapon
+    }
+
     public string itemName;
     public Sprite itemImage;
     public GameObject itemPrefab;
-
-    public int count = 0;
+    public ObjectType itemType;
 }

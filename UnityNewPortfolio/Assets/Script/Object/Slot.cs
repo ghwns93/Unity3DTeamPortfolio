@@ -8,7 +8,7 @@ public class Slot : MonoBehaviour
 	Image image;
 	Text count;
 
-	private Item item;
+	ItemInfo items;
 
     private void Start()
     {
@@ -16,17 +16,23 @@ public class Slot : MonoBehaviour
         count = transform.GetChild(1).GetComponent<Text>();
     }
 
-    public Item Item
+    public ItemInfo Items
 	{
-		get { return item; }
+		get { return items; }
 		set { 
-			item = value; 
-			if(item != null)
+			items = value; 
+			if(items != null)
 			{
-                image.sprite = item.itemImage;
+                image.sprite = items.item.itemImage;
                 image.color = new Color(1, 1, 1, 1);
-				count.text = item.count.ToString();
+				count.text = items.count.ToString();
 			}
+			else
+			{
+				image.sprite = null;
+                image.color = new Color(1, 1, 1, 0);
+				count.text = "0";
+            }
 		}
 	}
 

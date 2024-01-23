@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
-    public List<Item> items;
+    public List<ItemInfo> items;
 
     [SerializeField]
     private Transform slotParent;
@@ -27,20 +27,25 @@ public class Inventory : MonoBehaviour
             instance = this;
         }
 
+        items = new List<ItemInfo>();
+    }
+
+    private void Start()
+    {
         FreshSlot();
     }
 
     public void FreshSlot()
     {
         int i = 0;
+
         for(; i < items.Count && i < slots.Length; i++) 
         {
-            Debug.Log("i : " + i);
-            slots[i].Item = items[i];
+            slots[i].Items = items[i];
         }
         for(; i< slots.Length;i++)
         {
-            slots[i].Item = null;
+            slots[i].Items = null;
         }
     }
 
@@ -48,19 +53,20 @@ public class Inventory : MonoBehaviour
     {
         if(items.Count < slots.Length) 
         {
-            if (!items.Contains(item))
+            bool isDup = false;
+            foreach(var n in items)
             {
-                item.count = 0;
-                items.Add(item);
-            }
-            
-            for(int i  = 0; i < items.Count; i++)
-            {
-                if (items[i] == item)
+                if(n.item == item)
                 {
-                    items[i].count++;
-                    break;
+                    n.count++;
+                    isDup = true;
                 }
+            }
+
+            if(!isDup)
+            {
+                items.Add(new ItemInfo { item = item, count = 1 });
+                Debug.Log(items[items.Count - 1].count);
             }
 
             FreshSlot();
@@ -79,4 +85,10 @@ public class Inventory : MonoBehaviour
             return instance;
         }
     }
+}
+
+public class ItemInfo
+{
+    public Item item;
+    public int count;
 }
