@@ -7,6 +7,7 @@ public class UIInputController : MonoBehaviour
     public GameObject panel_item;
     public GameObject panel_Box;
     public GameObject panel_Equip;
+    public GameObject canvas_player;
 
     bool OpenBox = false;   // false = 닫힌상태  true = 열린상태
 
@@ -15,7 +16,7 @@ public class UIInputController : MonoBehaviour
         // 플레이어와 창고와의 거리가 일정 거리 안일 때를 추가 해야함
         if (!OpenBox)
         {
-            //if (Input.GetKeyDown(KeyCode.F))    
+            //if (Input.GetKeyDown(KeyCode.F))
             //{
             //    OpenStorageBox();
             //}
@@ -27,6 +28,7 @@ public class UIInputController : MonoBehaviour
         panel_Box.SetActive(true);
         Debug.Log("창고 열림");
         OpenBox = true;
+        canvas_player.SetActive(false);
     }
 
     public void BoxcloseButtonClicked()
@@ -34,6 +36,7 @@ public class UIInputController : MonoBehaviour
         panel_Box.SetActive(false);
         Debug.Log("창고 닫힘");
         OpenBox = false;
+        canvas_player.SetActive(false);
     }
 
     public void EquipchangeButtonClicked()
