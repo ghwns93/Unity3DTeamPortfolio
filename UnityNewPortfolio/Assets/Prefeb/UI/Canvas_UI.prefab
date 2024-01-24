@@ -136,7 +136,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1193260232028487826
 RectTransform:
   m_ObjectHideFlags: 0
@@ -558,7 +558,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1396,7 +1396,7 @@ RectTransform:
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 52.5609, y: -23.8022}
   m_SizeDelta: {x: -216.2234, y: -109.4466}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2084,7 +2084,6 @@ GameObject:
   - component: {fileID: 8058347713369229903}
   - component: {fileID: 8058347713369229936}
   - component: {fileID: 8058347713369229937}
-  - component: {fileID: 8058347713369229897}
   - component: {fileID: 8058347713369229896}
   m_Layer: 5
   m_Name: Canvas_UI
@@ -2176,22 +2175,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &8058347713369229897
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8058347713369229938}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5075373146476b741a9d8a316236c89a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  text_lv: {fileID: 0}
-  text_hp: {fileID: 0}
-  text_sp: {fileID: 0}
-  text_gold: {fileID: 0}
 --- !u!114 &8058347713369229896
 MonoBehaviour:
   m_ObjectHideFlags: 0

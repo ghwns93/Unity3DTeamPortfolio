@@ -17,18 +17,6 @@ public class Shop : MonoBehaviour
 
     bool shopOpened = false;    // false = ´ÝÈû true = ¿­¸²
 
-    private void Awake()
-    {
-        canvas.SetActive(true);
-        slot_weapon.SetActive(true);
-        slot_armor.SetActive(true);
-        slot_item.SetActive(true);
-
-        canvas.SetActive(false);
-        slot_armor.SetActive(false);
-        slot_item.SetActive(false);
-    }
-
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -50,8 +38,7 @@ public class Shop : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.Escape))
                 {
-                    canvas.SetActive(false);
-                    shopOpened = false;
+                    Exitbuttonclick();
                 }
             }
         }
@@ -66,16 +53,16 @@ public class Shop : MonoBehaviour
 
     public void ArmorbuttonClick()
     {
-        slot_weapon.SetActive(true);
-        slot_armor.SetActive(false);
+        slot_weapon.SetActive(false);
+        slot_armor.SetActive(true);
         slot_item.SetActive(false);
     }
 
     public void ItembuttonClick()
     {
-        slot_weapon.SetActive(true);
+        slot_weapon.SetActive(false);
         slot_armor.SetActive(false);
-        slot_item.SetActive(false);
+        slot_item.SetActive(true);
     }
 
     public void Exitbuttonclick()
