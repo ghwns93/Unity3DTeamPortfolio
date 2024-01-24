@@ -26,10 +26,14 @@ public class PlayerController : MonoBehaviour
 
     private Animator animator;
 
+    Transform weaponPos;
+
     void Start()
     {
         cc = GetComponent<CharacterController>();
         tran = GetComponent<Transform>();
+
+        weaponPos = GameObject.Find("WeaponPos").transform;
 
         //animator = transform.GetChild(0).GetComponent<Animator>();
         animator = GetComponent<Animator>();

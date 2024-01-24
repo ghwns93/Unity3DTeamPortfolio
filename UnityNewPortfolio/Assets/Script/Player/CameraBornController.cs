@@ -19,10 +19,10 @@ public class CameraBornController : MonoBehaviour
     void Update()
     {
         Vector3 refVec = Vector3.zero;
-        transform.position = Vector3.SmoothDamp(transform.position, player.transform.position, ref refVec, 0.05f);
+        transform.position = Vector3.SmoothDamp(transform.position, player.transform.position, ref refVec, 0.02f);
     }
 
-    private void FixedUpdate()
+    private void LateUpdate()
     {
         LookAround();
     }
