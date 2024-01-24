@@ -9,26 +9,16 @@ public class EnemyStat : MonoBehaviour
 {
     protected int UnitKey;                     // 적 유닛 고유코드 및 드랍테이블 json용 코드
     protected string Unitname;                   // 적 유닛 이름
-    
-    [SerializeField]
+        
     protected int maxHp;                      // 최대 체력
-    [SerializeField]
     protected int hp;                               // 현재 체력
-    [SerializeField]
     protected float power;                    // 적 데미지
-    [SerializeField]
     protected float defence;                 // 적 방어력
-    [SerializeField]
     protected float speed;                     // 적 속도
-    [SerializeField]
     protected float sight;                       // 적 시야(플레이어 발견 시야)
-    [SerializeField]
     protected float attackRange1;     // 적 사거리(원거리 및 근거리)
-    [SerializeField]
     protected float attackRange2;     // 적 사거리(특수 공격 사거리)
-    [SerializeField]
     protected float exp;                          // 적이 주는 경험치
-    [SerializeField]
     protected float morale;                   // 적 사기
 
     protected bool isFinded = false;   // 플레이어 발견 상태 유무

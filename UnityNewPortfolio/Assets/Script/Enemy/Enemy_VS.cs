@@ -8,24 +8,23 @@ using static UnityEngine.InputManagerEntry;
 
 public class Enemy_VS : EnemyStat
 {
-
+    // 플레이어 스크립트
     PlayerState pStat;
-
-    Slider hpSlider;
-
+        
+    // 적 상태 구조체
     EnemyState E_State;
     
     // 플레이어 위치
-    public Transform player;
+    Transform player;
 
     // 적 캐릭터 컨트롤러
-    public CharacterController cc;
+    CharacterController cc;
 
     // 누적 시간
     protected float currentTime = 0.0f;
 
     // 딜레이
-    protected float attackDelay;
+    protected float attackDelay = 2.0f;
 
     // 적 초기 위치
     Vector3 originPos;
@@ -38,23 +37,21 @@ public class Enemy_VS : EnemyStat
     NavMeshAgent agent;
 
     // 배회 웨이포인트
-    public Transform[] waypoints;
-   
-    
+    public Transform[] points;
+
+    // 해당 목표지점의 인덱스
     private int destPoint = 0;
-   
+
 
     // Start is called before the first frame update
     void Start()
     {
-
-
         Unitname = "바이킹 약탈자";
         UnitKey = 11111;
-        maxHp = 100;
-        hp = 100;
-        power = 10.0f;
-        defence = 5.0f;
+        maxHp = 100;//LevelingStat(100 , pStat.Level.ge);
+        hp = maxHp;//LevelingStat(100, pStat.Level);
+        power = 10.0f;//LevelingStat(10.0f, pStat.Level); ;
+        defence = 5.0f;//LevelingStat(5.0f, pStat.Level);
         speed = 10.0f;
         exp = 50.0f;
         sight = 10.0f;
@@ -77,10 +74,17 @@ public class Enemy_VS : EnemyStat
         originRot = transform.rotation;
 
         // 애니메이터 컴포넌트를 가져오기 (자식 오브젝트의 컴포넌트)
-        anim = transform.GetComponentInChildren<Animator>();
+        anim = GetComponentInChildren<Animator>();
 
         // 내비게이션 에이전트 컴포넌트 가져오기
         agent = GetComponent<NavMeshAgent>();
+
+        
+        // 자동으로 목적지 변경을 멈춤
+        agent.autoBraking = false;
+
+        GotoNextPoint();
+        
     }
 
     // Update is called once per frame
@@ -93,10 +97,10 @@ public class Enemy_VS : EnemyStat
                 Idle();
                 break;
             case EnemyState.Patrol:
-                //Patrol();
+                Patrol();
                 break;
             case EnemyState.Move0:
-                Move0();
+                //Move0();
                 break;
             case EnemyState.Move1:
                 //Move1();
@@ -138,40 +142,45 @@ public class Enemy_VS : EnemyStat
                 //Die();
                 break;
         }
-
-        if(E_State==EnemyState.Move0)
-        {
-            if (!agent.pathPending && agent.remainingDistance < 0.5f)
-                GoToNextWaypoint();
-        }
-
-
-        // 현재 HP를 슬라이더의 value에 반영한다
-        //hpSlider.value = (float)hp / (float)maxHp;
     }
 
     private void Idle()
     {
+            print("상태 : Idle");
             //enum 변수의 상태 전환
-            E_State = EnemyState.Move0;
-            print("상태 전환 : Idle -> Move");
+            E_State = EnemyState.Patrol;
+            print("상태 전환 : Idle -> Patrol");
 
             //이동 애니메이션 전환하기
-            anim.SetTrigger("IdleToMove");
+            anim.SetTrigger("IdleToPatrol");
     }
 
-    private void Move0()
+    private void Patrol()
     {
-            agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
-            agent.autoBraking = false;
-            GoToNextWaypoint();
-     }
+            print("상태 : Patrol");
 
-    void GoToNextWaypoint()
+        
+        // Agent가 현재 목적지에 거의 도달했다면, 다음 목적지로 이동
+        if (!agent.pathPending && agent.remainingDistance < 0.5f)
+            GotoNextPoint();
+        
+
+    }
+
+    
+    // 목적지 순회 메서드
+    void GotoNextPoint()
     {
-        if (waypoints.Length == 0)
+        // 포인트가 설정되지 않았다면, 반환
+        if (points.Length == 0)
             return;
-        agent.destination = waypoints[destPoint].position;
-        destPoint = (destPoint + 1) % waypoints.Length;
+
+        // Agent가 현재의 목적지를 가리키도록 설정
+        agent.destination = points[destPoint].position;
+
+        // 배열 내의 다음 위치로 목적지 인덱스를 순환
+        destPoint = (destPoint + 1) % points.Length;
     }
+    
+
 }
