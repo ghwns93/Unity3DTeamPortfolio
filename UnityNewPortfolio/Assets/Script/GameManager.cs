@@ -19,6 +19,9 @@ public class GameManager : MonoBehaviour
         {
             player = Instantiate(playerPrefeb) as GameObject;
         }
+
+        DontDestroyOnLoad(player);
+        DontDestroyOnLoad(gameObject);
     }
 
     private void Start()

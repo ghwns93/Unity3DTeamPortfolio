@@ -13,8 +13,10 @@ public class CameraController : MonoBehaviour
 
     private float xRotate, xRotateMove, yRotate, yRotateMove;
     public float minXRotate, maxXRotate;
-    public float rotateSpeed = 500.0f;
     public float fovRate = 1.0f;
+
+    CameraBornController cbc;
+    private float rotateSpeed;
 
     private void Start()
     {
@@ -25,10 +27,13 @@ public class CameraController : MonoBehaviour
         {
             transform.position = originCamera.transform.position + startPosition;
             transform.rotation = Quaternion.Euler(startRotation);
+
+            cbc = originCamera.GetComponent<CameraBornController>();
+            rotateSpeed = cbc.rotateSpeed;
         }
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (originCamera != null)
         {
