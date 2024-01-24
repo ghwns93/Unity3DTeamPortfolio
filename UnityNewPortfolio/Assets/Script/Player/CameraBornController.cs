@@ -10,7 +10,7 @@ public class CameraBornController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").gameObject;
+        player = GameObject.Find("PlayerBody");
     }
 
     // Update is called once per frame
