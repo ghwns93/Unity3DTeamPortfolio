@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
+using static UnityEngine.UI.ScrollRect;
 
 public class CameraBornController : MonoBehaviour
 {
@@ -10,13 +12,18 @@ public class CameraBornController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindGameObjectWithTag("Player").gameObject;
+        player = GameObject.Find("PlayerBody");
     }
 
     // Update is called once per frame
     void Update()
     {
-        transform.position = player.transform.position;
+        Vector3 refVec = Vector3.zero;
+        transform.position = Vector3.SmoothDamp(transform.position, player.transform.position, ref refVec, 0.05f);
+    }
+
+    private void FixedUpdate()
+    {
         LookAround();
     }
 
@@ -25,6 +32,6 @@ public class CameraBornController : MonoBehaviour
         float x = (Input.GetAxis("Mouse X") * rotateSpeed * Time.deltaTime);
         Vector3 camAngle = transform.rotation.eulerAngles;
 
-        transform.rotation = Quaternion.Euler(camAngle.x, camAngle.y + x, camAngle.z);
+        transform.rotation = Quaternion.Euler(new Vector3(camAngle.x, camAngle.y + x, camAngle.z));
     }
 }

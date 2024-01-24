@@ -66,7 +66,6 @@ public class Inventory : MonoBehaviour
             if(!isDup)
             {
                 items.Add(new ItemInfo { item = item, count = 1 });
-                Debug.Log(items[items.Count - 1].count);
             }
 
             FreshSlot();

@@ -10,7 +10,7 @@ public class Slot : MonoBehaviour
 
 	ItemInfo items;
 
-    private void Start()
+    private void Awake()
     {
         image = transform.GetChild(0).GetComponent<Image>();
         count = transform.GetChild(1).GetComponent<Text>();

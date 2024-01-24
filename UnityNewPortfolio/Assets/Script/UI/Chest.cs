@@ -17,6 +17,21 @@ public class Chest : MonoBehaviour
 
     GameObject player;
 
+    private void Awake()
+    {
+        canvas.SetActive(true);
+        panel_Box.SetActive(true);
+        playerUI.SetActive(true);
+        panel_item.SetActive(true);
+        panel_Equip.SetActive(true);
+        
+        canvas.SetActive(false);
+        panel_Box.SetActive(false);
+        playerUI.SetActive(false);
+        panel_item.SetActive(false);
+        panel_Equip.SetActive(false);
+    }
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
