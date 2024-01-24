@@ -37,52 +37,24 @@ public class Enemy_VS : EnemyStat
     // 내비게이션 메쉬 컴포넌트
     NavMeshAgent agent;
 
+    // 배회 웨이포인트
+    public Transform[] waypoints;
+   
+    
+    private int destPoint = 0;
+   
 
     // Start is called before the first frame update
     void Start()
     {
 
 
-        /*
-        [[UnitKey]]
-        
-        첫째 자리 0 - 마을 NPC류
-        첫째 자리 1 - 숲 필드(현재 숲만 구현)
-
-        둘째 자리 0 - 비공격형
-        둘째 자리 1 - 선공형
-        둘째 자리 2 - 비선공형
-
-        셋째 자리 0 - 무공격형
-        셋째 자리 1 - 근거리형
-        셋째 자리 2 - 중거리형
-        셋째 자리 3 - 원거리형
-        셋째 자리 4 - 복합형(근거리, 원거리 모두 사용)
-
-        넷째 자리 0 - 순수 동물
-        넷째 자리 1 - 인간형
-        넷째 자리 2 - 몬스터형
-        넷째 자리 3 - 보스 몬스터
-        넷째 자리 4 - 단순 NPC
-
-        다섯째 자리 1 - 유닛 제작 순서
-
-        [키 코드 예시]
-        ex) 숲에서 나오는 선공형 근거리 인간(검과 방패) - 11111
-        ex) 숲에서 나오는 선공형 근거리 인간(한손 검) - 11112
-        ex) 숲에서 나오는 선공형 근거리 인간(창) - 11211
-        ex) 마을에서 나오는 비공격 동물 - 00001
-        ex) 마을에서 나오는 비공격 상인 NPC - 00041
-        ex) 숲에서 나오는 비선공 복합형 개미몬스터 - 12421
-         
-         */
-
         Unitname = "바이킹 약탈자";
-        UnitKey = 11111;  
-        maxHp = LevelingStat(100 , pStat.Level);
-        hp = LevelingStat(100 , pStat.Level);
-        power = LevelingStat(10.0f, pStat.Level);
-        defence = LevelingStat(5.0f, pStat.Level);
+        UnitKey = 11111;
+        maxHp = 100;
+        hp = 100;
+        power = 10.0f;
+        defence = 5.0f;
         speed = 10.0f;
         exp = 50.0f;
         sight = 10.0f;
@@ -121,129 +93,85 @@ public class Enemy_VS : EnemyStat
                 Idle();
                 break;
             case EnemyState.Patrol:
-                Patrol();
+                //Patrol();
                 break;
             case EnemyState.Move0:
                 Move0();
                 break;
             case EnemyState.Move1:
-                Move1();
+                //Move1();
                 break;
             case EnemyState.Find:
-                Find();
+                //Find();
                 break;
             case EnemyState.Attack0:
-                Attack0();
+                //Attack0();
                 break;
             case EnemyState.Attack1:
-                Attack1();
+                //Attack1();
                 break;
             case EnemyState.Attack2:
-                Attack2();
+                //Attack2();
                 break;
             case EnemyState.Attack3:
-                Attack3();
+                //Attack3();
                 break;
             case EnemyState.Guard:
-                Guard();
+                //Guard();
                 break;
             case EnemyState.AttackDelay:
-                AttackDelay();
+                //AttackDelay();
                 break;
             case EnemyState.Reload:
-                Reload();
+                //Reload();
                 break;
             case EnemyState.Return:
-                Return();
+                //Return();
                 break;
             case EnemyState.Damaged:
-                Damaged();
+                //Damaged();
                 break;
             case EnemyState.LowMorale:
-                LowMorale();
+                //LowMorale();
                 break;
             case EnemyState.Die:
-                Die();
+                //Die();
                 break;
         }
 
+        if(E_State==EnemyState.Move0)
+        {
+            if (!agent.pathPending && agent.remainingDistance < 0.5f)
+                GoToNextWaypoint();
+        }
+
+
         // 현재 HP를 슬라이더의 value에 반영한다
-        hpSlider.value = (float)hp / (float)maxHp;
-    }
-
-    private void Die()
-    {
-    }
-
-    private void LowMorale()
-    {
-    }
-
-    private void Damaged()
-    {
-    }
-
-    private void Return()
-    {
-    }
-
-    private void Reload()
-    {
-    }
-
-    private void AttackDelay()
-    {
-    }
-
-    private void Guard()
-    {
-    }
-
-    private void Attack3()
-    {
-    }
-
-    private void Attack2()
-    {
-    }
-
-    private void Attack1()
-    {
-    }
-
-    private void Attack0()
-    {
-    }
-
-    private void Find()
-    {
-    }
-
-    private void Move1()
-    {
-    }
-
-    private void Move0()
-    {
-    }
-
-    private void Patrol()
-    {
+        //hpSlider.value = (float)hp / (float)maxHp;
     }
 
     private void Idle()
     {
-        // 만약 플레이어와의 거리가 지정한 값보다 적을 경우 Move 상태로 전환
-        if (Vector3.Distance(transform.position, player.position) < 0)
-        {
-            /*
-            // enum 변수의 상태 전환
-            m_State = EnemyState.Move;
+            //enum 변수의 상태 전환
+            E_State = EnemyState.Move0;
             print("상태 전환 : Idle -> Move");
 
-            // 이동 애니메이션 전환하기
+            //이동 애니메이션 전환하기
             anim.SetTrigger("IdleToMove");
-             */
-        }
+    }
+
+    private void Move0()
+    {
+            agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+            agent.autoBraking = false;
+            GoToNextWaypoint();
+     }
+
+    void GoToNextWaypoint()
+    {
+        if (waypoints.Length == 0)
+            return;
+        agent.destination = waypoints[destPoint].position;
+        destPoint = (destPoint + 1) % waypoints.Length;
     }
 }
