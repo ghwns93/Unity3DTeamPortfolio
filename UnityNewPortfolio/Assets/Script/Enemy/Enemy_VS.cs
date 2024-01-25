@@ -50,12 +50,12 @@ public class Enemy_VS : EnemyStat
         UnitKey = 11111;
         maxHp = 100;//LevelingStat(100 , pStat.Level.ge);
         hp = maxHp;//LevelingStat(100, pStat.Level);
-        power = 10.0f;//LevelingStat(10.0f, pStat.Level); ;
+        power = 10;//LevelingStat(10.0f, pStat.Level); ;
         defence = 5.0f;//LevelingStat(5.0f, pStat.Level);
-        speed = 10.0f;
+        speed = 3.0f;
         exp = 50.0f;
-        sight = 10.0f;
-        lostSight = 20.0f;
+        sight = 20.0f;
+        lostSight = 30.0f;
         attackRange1 = 2.5f;
         attackRange2 = 2.5f;
         morale = 100.0f;
@@ -64,8 +64,13 @@ public class Enemy_VS : EnemyStat
         // 최초의 상태는 대기 모드
         E_State = EnemyState.Idle;
 
-        // 플레이어의 위치 좌표 가져오기
-        player = GameObject.Find("Player").transform;
+        // 플레이어 태그의 오브젝트의 위치 좌표 가져오기
+        GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
+        if (playerObject != null)
+        {
+            player = playerObject.transform;
+        }
+        
 
         // 캐릭터 컨트롤러 가져오기
         cc = GetComponent<CharacterController>();
@@ -79,6 +84,7 @@ public class Enemy_VS : EnemyStat
 
         waitTimer = waitTime;
 
+        isFinded= false;
     }
 
     // Update is called once per frame
@@ -106,7 +112,7 @@ public class Enemy_VS : EnemyStat
                 //Move1();
                 break;
             case EnemyState.Attack0:
-                //Attack0();
+                Attack0();
                 break;
             case EnemyState.Attack1:
                 //Attack1();
@@ -130,14 +136,41 @@ public class Enemy_VS : EnemyStat
                 //Return();
                 break;
             case EnemyState.Damaged:
-                //Damaged();
+                Damaged();
                 break;
             case EnemyState.LowMorale:
                 //LowMorale();
                 break;
             case EnemyState.Die:
-                //Die();
+                Die();
                 break;
+        }
+
+        if (player == null) return;
+
+        float distanceToPlayer = Vector3.Distance(transform.position, player.position);
+
+        if (isFinded)
+        {
+            if (distanceToPlayer > lostSight)
+            {
+                isFinded = false;
+            }
+            else
+            {
+                MoveTowards(player.position);
+            }
+        }
+        else
+        {
+            if (distanceToPlayer <= sight)
+            {
+                isFinded = true;
+            }
+            else
+            {
+                MoveTowards(originPos);
+            }
         }
     }
 
@@ -151,36 +184,36 @@ public class Enemy_VS : EnemyStat
             //이동 애니메이션 전환하기
             anim.SetTrigger("IdleToPatrol");
     }
-
     private void Patrol()
     {
-        //MoveToNextWaypoint();
+        MoveToNextWaypoint();
 
+        // 플레이어 발견 시 상태를 변경하고 Patrol 메소드를 빠져나온다.
         if (Vector3.Distance(transform.position, player.position) < sight)
         {
-            
             isFinded = true;
-            // enum 변수의 상태 전환
             E_State = EnemyState.Find;
             print("상태 전환 : Patrol -> Find");
-
-            // 이동 애니메이션 전환하기
             anim.SetTrigger("PlayerFind");
+            return; // 이동을 멈추고 Update 루프로 돌아간다.
         }
+
     }
 
     private void Find()
     {
-        E_State = EnemyState.Move0;
+                E_State = EnemyState.Move0;
         print("상태전환 : Find -> Move0");
 
         anim.SetTrigger("FindToMove0");
     }
 
+
+
     private void Move0()
     {
         // 만약 플레이어와의 거리가 공격 범위 밖이라면 플레이어를 향해 이동한다
-        if (Vector3.Distance(transform.position, player.position) > sight )//&& Vector3.Distance(transform.position, player.position) < lostSight)
+        if (Vector3.Distance(transform.position, player.position) > attackRange1 && Vector3.Distance(transform.position, player.position) < lostSight)
         {
             // 이동 방향
             Vector3 dir = (player.position - transform.position).normalized;
@@ -204,6 +237,18 @@ public class Enemy_VS : EnemyStat
             // 이동 애니메이션 전환하기
             anim.SetTrigger("PlayerLost");
         }
+
+        else
+        {
+            E_State = EnemyState.Attack0;
+            print("상태 전환 : Move -> Attack");
+
+            // 누적 시간을 딜레이 시간만큼 미리 진행시켜둔다 (즉시 공격)
+            currentTime = attackDelay;
+
+            // 공격 대기 애니메이션
+            anim.SetTrigger("MoveToAttackDelay");
+        }
     }
 
         private void Lost()
@@ -212,58 +257,163 @@ public class Enemy_VS : EnemyStat
             E_State = EnemyState.Patrol;
             print("상태 전환 : Lost -> Patrol");
 
-        // 이동 애니메이션 전환하기
-        anim.SetTrigger("LostToPatrol");
+            // 이동 애니메이션 전환하기
+            anim.SetTrigger("LostToPatrol");
+       }
+
+    void Attack0()
+    {
+        // 플레이어가 공격 범위 내라면 공격을 시작한다
+        if (Vector3.Distance(transform.position, player.position) < attackRange1)
+        {
+            // 일정시간마다 공격한다
+            // 누적된 시간이 딜레이를 넘어설 때마다 초기화
+            currentTime += Time.deltaTime;
+            if (currentTime > attackDelay)
+            {
+                //player.GetComponent<PlayerMove>().DamageAction(attackPower);
+                print("공격!");
+                currentTime = 0;
+
+                // 공격 애니메이션
+                anim.SetTrigger("StartAttack");
+            }
+        }
+        // 공격 범위를 벗어났다면 현재 상태를 Move로 전환한다 (재추격)
+        else
+        {
+            E_State = EnemyState.Move0;
+            print("상태 전환 : Attack -> Move");
+            currentTime = 0;
+
+            // 이동 애니메이션
+            anim.SetTrigger("AttackToMove");
+        }
     }
-
-        // 현재 상태를 공격(Attack)으로 전환한다
-        //else
-        //{
-        //E_State = EnemyState.Attack0;
-        //print("상태 전환 : Move0 -> Attack0");
-
-        // 누적 시간을 딜레이 시간만큼 미리 진행시켜둔다 (즉시 공격)
-        //currentTime = attackDelay;
-
-        // 공격 대기 애니메이션
-        //anim.SetTrigger("MoveToAttackDelay");
-        //}
-
-
-
-
 
     /////////////////////////////////
 
     void MoveToNextWaypoint()
     {
         Vector3 targetPosition = waypoints[currentWaypointIndex].position;
-        // 현재 웨이포인트로 이동
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+        Vector3 direction = (targetPosition - transform.position).normalized;
 
-        // 이동 방향으로 회전
-        Vector3 direction = targetPosition - transform.position;
-        if (direction != Vector3.zero) // 정지 상태가 아닐 때만 회전
+        // 이동할 거리를 계산합니다.
+        float moveDistance = speed * Time.deltaTime;
+
+        // 웨이포인트를 향해 캐릭터 회전
+        if (direction != Vector3.zero)
         {
-            Quaternion lookRotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, rotateSpeed * Time.deltaTime);
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotateSpeed * Time.deltaTime);
         }
 
-        // 목적지에 도착했는지 확인
-        if (transform.position == targetPosition)
+        // CharacterController를 사용하여 이동합니다.
+        cc.Move(direction * moveDistance);
+
+        // 웨이포인트에 충분히 가까워졌는지 확인합니다.
+        if (Vector3.Distance(transform.position, targetPosition) < 0.1f)
         {
-            // 대기 시간이 남아있다면 감소
             if (waitTimer > 0)
             {
                 waitTimer -= Time.deltaTime;
             }
             else
             {
-                // 다음 웨이포인트로 이동
                 currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Length;
                 waitTimer = waitTime;
             }
         }
+    }
+
+    // 플레이어의 데미지 처리 함수
+    public void AttackAction()
+    {
+        player.GetComponent<PlayerState>().DamageAction(power);
+        Debug.Log(player.GetComponent<PlayerState>().Hp);
+    }
+
+    // 사망 상태
+    void Die()
+    {
+        // 진행 중인 피격 코루틴 함수를 중지한다
+        StopAllCoroutines();
+
+        // 사망 상태를 처리하기 위한 코루틴을 실행한다
+        StartCoroutine(DieProcess());
+    }
+
+    // 사망 상태 처리용 코루틴
+    IEnumerator DieProcess()
+    {
+        // 캐릭터 컨트롤러를 비활성화한다
+        cc.enabled = false;
+
+        // 2초 동안 기다린 이후 자기자신을 제거한다
+        yield return new WaitForSeconds(2.0f);
+        print("소멸!");
+        Destroy(gameObject);
+    }
+
+    // 데미지 처리 함수
+    public void HitEnemy(int hitPower)
+    {
+        // 피격, 사망, 복귀 상태일 경우에는 함수 즉시 종료
+        if (E_State == EnemyState.Damaged ||
+            E_State == EnemyState.Die)
+        {
+            return;
+        }
+
+        // 플레이어의 공격력만큼 적 체력을 감소시켜준다
+        hp -= hitPower;
+
+
+
+        // 적 체력이 0보다 크면 피격 상태로 전환
+        if (hp > 0)
+        {
+            E_State = EnemyState.Damaged;
+            print("상태 전환 : Any State -> Damaged");
+
+            // 피격 애니메이션 재생
+            anim.SetTrigger("Damaged");
+            Damaged();
+        }
+        // 그렇지 않다면 사망 상태로 전환
+        else
+        {
+            E_State = EnemyState.Die;
+            print("상태 전환 : Any State -> Die");
+
+            // 사망 애니메이션 재생
+            anim.SetTrigger("Die");
+            Die();
+        }
+    }
+
+    // 피격 상태
+    void Damaged()
+    {
+        // 피격 상태를 처리하는 코루틴 함수를 호출한다
+        StartCoroutine(DamageProcess());
+    }
+
+    // 피격 상태 처리용 코루틴
+    IEnumerator DamageProcess()
+    {
+        // 피격 애니메이션 재생 시간만큼 기다린다
+        yield return new WaitForSeconds(1.0f);
+
+        // 현재 상태를 이동으로 전환한다
+        E_State = EnemyState.Move0;
+        print("상태 전환 : Damaged -> Move");
+    }
+
+void MoveTowards(Vector3 target)
+    {
+        Vector3 direction = (target - transform.position).normalized;
+        transform.position += direction * speed * Time.deltaTime;
     }
 
 

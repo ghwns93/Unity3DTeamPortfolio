@@ -12,7 +12,7 @@ public class EnemyStat : MonoBehaviour
         
     protected int maxHp;                      // 최대 체력
     protected int hp;                               // 현재 체력
-    protected float power;                    // 적 데미지
+    protected int power;                    // 적 데미지
     protected float defence;                 // 적 방어력
     protected float speed;                     // 적 속도
     protected float sight;                       // 적 시야(플레이어 발견 시야)
