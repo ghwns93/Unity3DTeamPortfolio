@@ -8,8 +8,12 @@ public class Chest : MonoBehaviour
 
     public GameObject panel_Box;
     public GameObject playerUI;
-    public GameObject panel_item;
-    public GameObject panel_Equip;
+    public GameObject EquipBox;         // 장비 상자
+    public GameObject ConsumablesBox;   // 소모품 상자
+    public GameObject MaterialBox;      // 재료 상자
+
+    public GameObject Stat;             // 장비 및 스탯 창
+    public GameObject PotionSlot;        // 인벤토리
 
     public GameObject canvas;
 
@@ -22,14 +26,16 @@ public class Chest : MonoBehaviour
         canvas.SetActive(true);
         panel_Box.SetActive(true);
         playerUI.SetActive(true);
-        panel_item.SetActive(true);
-        panel_Equip.SetActive(true);
+        EquipBox.SetActive(true);
+        ConsumablesBox.SetActive(true);
+        MaterialBox.SetActive(true);
         
         canvas.SetActive(false);
         panel_Box.SetActive(false);
         playerUI.SetActive(false);
-        panel_item.SetActive(false);
-        panel_Equip.SetActive(false);
+        EquipBox.SetActive(false);
+        ConsumablesBox.SetActive(false);
+        MaterialBox.SetActive(false);
     }
 
     void Start()
@@ -48,7 +54,7 @@ public class Chest : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.E))
                 {
-                    OpenStorageBox();
+                    StorageBoxOpen();
                 }
             }
         }
@@ -58,48 +64,68 @@ public class Chest : MonoBehaviour
         }
     }
 
-    public void OpenStorageBox()
+    public void StorageBoxOpen()
     {
         panel_Box.SetActive(true);
         Debug.Log("창고 열림");
         OpenBox = true;
         playerUI.SetActive(false);
+        PotionSlot.SetActive(false);
     }
 
-    public void BoxcloseButtonClicked()
+    public void StorageBoxselectCloseButtonClicked()
     {
         panel_Box.SetActive(false);
         Debug.Log("창고 닫힘");
         OpenBox = false;
         playerUI.SetActive(true);
+        PotionSlot.SetActive(true);
     }
 
-    public void EquipchangeButtonClicked()
-    {
-        panel_Equip.SetActive(true);
-        Debug.Log("장비창 열림");
-        panel_Box.SetActive(false);
-    }
-
-    public void EquipcloseButtonClicked()
-    {
-        panel_Equip.SetActive(false);
-        Debug.Log("장비창 닫힘");
-        OpenStorageBox();
-    }
-
-    public void ItemchangeButtonClicked()
+    public void EquipBoxOpenButtonClicked()
     {
         panel_Box.SetActive(false);
-        panel_item.SetActive(true);
-        Debug.Log("아이템창 열림");
+        EquipBox.SetActive(true);
+        Stat.SetActive(true);
+        Debug.Log("장비 상자 열림");
     }
 
-    public void ItemcloseButtonClicked()
+    public void EquipBoxCloseButtonClicked()
     {
-        panel_item.SetActive(false);
-        Debug.Log("아이템창 닫힘");
-        OpenStorageBox();
+        EquipBox.SetActive(false);
+        Stat.SetActive(false);
+        Debug.Log("장비 상자 닫힘");
+        StorageBoxOpen();
+    }
+
+    public void ConsumablesBoxOpenButtonClicked()
+    {
+        panel_Box.SetActive(false);
+        ConsumablesBox.SetActive(true);
+        PotionSlot.SetActive(true);
+        Debug.Log("소모품 상자 열림");
+    }
+
+    public void ConsumablesBoxCloseButtonClicked()
+    {
+        ConsumablesBox.SetActive(false);
+        PotionSlot.SetActive(false);
+        Debug.Log("소모품 상자 닫힘");
+        StorageBoxOpen();
+    }
+
+    public void MaterialBoxOpenButtonClicked()
+    {
+        panel_Box.SetActive(false);
+        MaterialBox.SetActive(true);
+        Debug.Log("소모품 상자 열림");
+    }
+
+    public void MaterialBoxCloseButtonClicked()
+    {
+        MaterialBox.SetActive(false);
+        Debug.Log("소모품 상자 닫힘");
+        StorageBoxOpen();
     }
 
     // 거리 확인
