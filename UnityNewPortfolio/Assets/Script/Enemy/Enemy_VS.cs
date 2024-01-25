@@ -55,6 +55,7 @@ public class Enemy_VS : EnemyStat
         speed = 10.0f;
         exp = 50.0f;
         sight = 10.0f;
+        lostSight = 20.0f;
         attackRange1 = 2.5f;
         attackRange2 = 2.5f;
         morale = 100.0f;
@@ -99,14 +100,14 @@ public class Enemy_VS : EnemyStat
             case EnemyState.Patrol:
                 Patrol();
                 break;
+            case EnemyState.Find:
+                Find();
+                break;
             case EnemyState.Move0:
                 //Move0();
                 break;
             case EnemyState.Move1:
                 //Move1();
-                break;
-            case EnemyState.Find:
-                //Find();
                 break;
             case EnemyState.Attack0:
                 //Attack0();
@@ -157,16 +158,25 @@ public class Enemy_VS : EnemyStat
 
     private void Patrol()
     {
-            print("상태 : Patrol");
-
-        
         // Agent가 현재 목적지에 거의 도달했다면, 다음 목적지로 이동
         if (!agent.pathPending && agent.remainingDistance < 0.5f)
             GotoNextPoint();
-        
 
+        if (Vector3.Distance(transform.position, player.position) < sight)
+        {
+            // enum 변수의 상태 전환
+            E_State = EnemyState.Find;
+            print("상태 전환 : Patrol -> Find");
+
+            // 이동 애니메이션 전환하기
+            anim.SetTrigger("");
+        }
     }
 
+    private void Find()
+    {
+
+    }
     
     // 목적지 순회 메서드
     void GotoNextPoint()
