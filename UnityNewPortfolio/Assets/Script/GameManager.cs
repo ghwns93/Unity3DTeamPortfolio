@@ -12,24 +12,24 @@ public class GameManager : MonoBehaviour
     public GameObject map;
     public GameObject playerPrefeb;
 
+    bool onceTime = true;
+
     // Start is called before the first frame update
     void Awake()
     {
-        startPos = GameObject.Find("UserStartPos");
-        player = GameObject.FindGameObjectWithTag("Player");
-
-        if(player == null )
-        {
-            player = Instantiate(playerPrefeb);
-            playerBody = player.transform.Find("PlayerBody").gameObject;
-        }
-
-        DontDestroyOnLoad(player);
-        DontDestroyOnLoad(gameObject);
+        
     }
 
     private void Start()
     {
+        startPos = GameObject.Find("UserStartPos");
+        Debug.Log(startPos.transform.position); 
+        player = GameObject.Find("Player");
+
+        playerBody = player.transform.Find("PlayerBody").gameObject;
+        DontDestroyOnLoad(player);
+        //DontDestroyOnLoad(gameObject);
+
         player.transform.position = startPos.transform.position;
 
         if (map != null)
@@ -41,16 +41,16 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if(map != null)
+        if (map != null)
         {
-            if(Input.GetKeyDown(KeyCode.M))
+            if (Input.GetKeyDown(KeyCode.M))
             {
                 map.SetActive(!map.activeSelf);
             }
 
             playerBody.SetActive(!map.activeSelf);
 
-            playerPos.transform.position = playerBody.transform.position;
+            playerPos.transform.position = player.transform.position;
             playerPos.transform.position += new Vector3(0, 100, 0);
 
         }

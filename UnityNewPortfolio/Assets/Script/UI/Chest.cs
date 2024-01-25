@@ -12,8 +12,8 @@ public class Chest : MonoBehaviour
     public GameObject ConsumablesBox;   // 소모품 상자
     public GameObject MaterialBox;      // 재료 상자
 
-    public GameObject Stat;             // 장비 및 스탯 창
-    public GameObject PotionSlot;        // 인벤토리
+    public GameObject stat;             // 장비 및 스탯 창
+    public GameObject PotionSlot;       // 인벤토리
 
     public GameObject canvas;
 
@@ -25,14 +25,12 @@ public class Chest : MonoBehaviour
     {
         canvas.SetActive(true);
         panel_Box.SetActive(true);
-        playerUI.SetActive(true);
         EquipBox.SetActive(true);
         ConsumablesBox.SetActive(true);
         MaterialBox.SetActive(true);
         
         canvas.SetActive(false);
         panel_Box.SetActive(false);
-        playerUI.SetActive(false);
         EquipBox.SetActive(false);
         ConsumablesBox.SetActive(false);
         MaterialBox.SetActive(false);
@@ -50,13 +48,13 @@ public class Chest : MonoBehaviour
         {
             canvas.SetActive(true);
 
-            if (!OpenBox)
+            if (Input.GetKeyDown(KeyCode.E))
             {
-                if (Input.GetKeyDown(KeyCode.E))
+                if (!OpenBox)
                 {
                     StorageBoxOpen();
                 }
-            }
+            }            
         }
         else
         {
@@ -86,14 +84,16 @@ public class Chest : MonoBehaviour
     {
         panel_Box.SetActive(false);
         EquipBox.SetActive(true);
-        Stat.SetActive(true);
+        stat.SetActive(true);
+        stat.GetComponent<RectTransform>().position = new Vector3(1376.5f, 540f);        
         Debug.Log("장비 상자 열림");
     }
 
     public void EquipBoxCloseButtonClicked()
     {
         EquipBox.SetActive(false);
-        Stat.SetActive(false);
+        stat.GetComponent<RectTransform>().position = new Vector3(566f, 540f);
+        stat.SetActive(false);
         Debug.Log("장비 상자 닫힘");
         StorageBoxOpen();
     }
