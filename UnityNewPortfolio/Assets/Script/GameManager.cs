@@ -17,17 +17,19 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        startPos = GameObject.Find("UserStartPos");
+        
+    }
 
+    private void Start()
+    {
+        startPos = GameObject.Find("UserStartPos");
+        Debug.Log(startPos.transform.position); 
         player = GameObject.Find("Player");
 
         playerBody = player.transform.Find("PlayerBody").gameObject;
         DontDestroyOnLoad(player);
         //DontDestroyOnLoad(gameObject);
-    }
 
-    private void Start()
-    {
         player.transform.position = startPos.transform.position;
 
         if (map != null)
