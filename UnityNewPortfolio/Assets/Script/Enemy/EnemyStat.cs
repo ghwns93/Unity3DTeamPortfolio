@@ -16,6 +16,7 @@ public class EnemyStat : MonoBehaviour
     protected float defence;                 // 적 방어력
     protected float speed;                     // 적 속도
     protected float sight;                       // 적 시야(플레이어 발견 시야)
+    protected float lostSight;                       // 적 소실 시야(플레이어 발견 시야)
     protected float attackRange1;     // 적 사거리(원거리 및 근거리)
     protected float attackRange2;     // 적 사거리(특수 공격 사거리)
     protected float exp;                          // 적이 주는 경험치
