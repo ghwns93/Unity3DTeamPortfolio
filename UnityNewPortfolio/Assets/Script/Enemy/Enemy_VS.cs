@@ -33,15 +33,15 @@ public class Enemy_VS : EnemyStat
     // 애니메이터 컴포넌트
     Animator anim;
 
-    // 내비게이션 메쉬 컴포넌트
-    NavMeshAgent agent;
+    public Transform[] waypoints; // 웨이포인트 배열
+    
+    public float waitTime = 0.5f; // 각 웨이포인트에서 대기하는 시간
 
-    // 배회 웨이포인트
-    public Transform[] points;
+    private int currentWaypointIndex = 0; // 현재 웨이포인트 인덱스
+    
+    private float waitTimer;               // 대기 타이머
 
-    // 해당 목표지점의 인덱스
-    private int destPoint = 0;
-
+    public float rotateSpeed = 2.0f; // 회전 속도
 
     // Start is called before the first frame update
     void Start()
@@ -77,15 +77,8 @@ public class Enemy_VS : EnemyStat
         // 애니메이터 컴포넌트를 가져오기 (자식 오브젝트의 컴포넌트)
         anim = GetComponentInChildren<Animator>();
 
-        // 내비게이션 에이전트 컴포넌트 가져오기
-        agent = GetComponent<NavMeshAgent>();
+        waitTimer = waitTime;
 
-        
-        // 자동으로 목적지 변경을 멈춤
-        agent.autoBraking = false;
-
-        GotoNextPoint();
-        
     }
 
     // Update is called once per frame
@@ -103,8 +96,11 @@ public class Enemy_VS : EnemyStat
             case EnemyState.Find:
                 Find();
                 break;
+            case EnemyState.Lost:
+                Lost();
+                break;
             case EnemyState.Move0:
-                //Move0();
+                Move0();
                 break;
             case EnemyState.Move1:
                 //Move1();
@@ -158,39 +154,117 @@ public class Enemy_VS : EnemyStat
 
     private void Patrol()
     {
-        // Agent가 현재 목적지에 거의 도달했다면, 다음 목적지로 이동
-        if (!agent.pathPending && agent.remainingDistance < 0.5f)
-            GotoNextPoint();
+        //MoveToNextWaypoint();
 
         if (Vector3.Distance(transform.position, player.position) < sight)
         {
+            
+            isFinded = true;
             // enum 변수의 상태 전환
             E_State = EnemyState.Find;
             print("상태 전환 : Patrol -> Find");
 
             // 이동 애니메이션 전환하기
-            anim.SetTrigger("");
+            anim.SetTrigger("PlayerFind");
         }
     }
 
     private void Find()
     {
+        E_State = EnemyState.Move0;
+        print("상태전환 : Find -> Move0");
 
+        anim.SetTrigger("FindToMove0");
     }
-    
-    // 목적지 순회 메서드
-    void GotoNextPoint()
+
+    private void Move0()
     {
-        // 포인트가 설정되지 않았다면, 반환
-        if (points.Length == 0)
-            return;
+        // 만약 플레이어와의 거리가 공격 범위 밖이라면 플레이어를 향해 이동한다
+        if (Vector3.Distance(transform.position, player.position) > sight )//&& Vector3.Distance(transform.position, player.position) < lostSight)
+        {
+            // 이동 방향
+            Vector3 dir = (player.position - transform.position).normalized;
 
-        // Agent가 현재의 목적지를 가리키도록 설정
-        agent.destination = points[destPoint].position;
+            // 캐릭터 컨트롤러를 사용하여 이동
+            cc.Move(dir * speed * Time.deltaTime);
 
-        // 배열 내의 다음 위치로 목적지 인덱스를 순환
-        destPoint = (destPoint + 1) % points.Length;
+            // 플레이어를 향해 방향 전환
+            transform.forward = dir;
+
+        }
+
+        // 플레이어와의 거리가 소실 거리 밖이면 원래대로 patrol 한다.
+        else if (Vector3.Distance(transform.position, player.position) > lostSight)
+        {
+            isFinded = false;
+
+            // enum 변수의 상태 전환
+            E_State = EnemyState.Lost;
+            print("상태 전환 : Find -> Lost");
+            // 이동 애니메이션 전환하기
+            anim.SetTrigger("PlayerLost");
+        }
     }
-    
+
+        private void Lost()
+        {
+            // enum 변수의 상태 전환
+            E_State = EnemyState.Patrol;
+            print("상태 전환 : Lost -> Patrol");
+
+        // 이동 애니메이션 전환하기
+        anim.SetTrigger("LostToPatrol");
+    }
+
+        // 현재 상태를 공격(Attack)으로 전환한다
+        //else
+        //{
+        //E_State = EnemyState.Attack0;
+        //print("상태 전환 : Move0 -> Attack0");
+
+        // 누적 시간을 딜레이 시간만큼 미리 진행시켜둔다 (즉시 공격)
+        //currentTime = attackDelay;
+
+        // 공격 대기 애니메이션
+        //anim.SetTrigger("MoveToAttackDelay");
+        //}
+
+
+
+
+
+    /////////////////////////////////
+
+    void MoveToNextWaypoint()
+    {
+        Vector3 targetPosition = waypoints[currentWaypointIndex].position;
+        // 현재 웨이포인트로 이동
+        transform.position = Vector3.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+
+        // 이동 방향으로 회전
+        Vector3 direction = targetPosition - transform.position;
+        if (direction != Vector3.zero) // 정지 상태가 아닐 때만 회전
+        {
+            Quaternion lookRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, rotateSpeed * Time.deltaTime);
+        }
+
+        // 목적지에 도착했는지 확인
+        if (transform.position == targetPosition)
+        {
+            // 대기 시간이 남아있다면 감소
+            if (waitTimer > 0)
+            {
+                waitTimer -= Time.deltaTime;
+            }
+            else
+            {
+                // 다음 웨이포인트로 이동
+                currentWaypointIndex = (currentWaypointIndex + 1) % waypoints.Length;
+                waitTimer = waitTime;
+            }
+        }
+    }
+
 
 }

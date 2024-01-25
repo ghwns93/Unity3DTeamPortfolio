@@ -762,10 +762,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95770979d874f9449b9dbdfe47050bf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  points:
+  waypoints:
   - {fileID: 628337322}
   - {fileID: 1586016245}
   - {fileID: 946938451}
+  waitTime: 0.1
+  rotateSpeed: 10
 --- !u!143 &1239054798
 CharacterController:
   m_ObjectHideFlags: 0

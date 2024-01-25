@@ -31,6 +31,7 @@ public class EnemyStat : MonoBehaviour
         Move0,                     // 이동 상태
         Move1,                     // 특수 이동 상태(점프 혹은 앉은 채로 이동)
         Find,                          // 플레이어 발견 시 발동 모션
+        Lost,                          // 플레이어 소실시 발동 모션
         Attack0,                   // 메인 공격
         Attack1,                   // 특수 공격1
         Attack2,                   // 특수 공격2
