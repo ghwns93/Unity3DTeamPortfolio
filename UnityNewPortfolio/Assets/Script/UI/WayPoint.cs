@@ -8,12 +8,15 @@ public class WayPoint : MonoBehaviour
     GameObject player;
 
     PlayerController playerController;
+    IslandGameManager manager;
 
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         playerController = player.GetComponent<PlayerController>();
+
+        manager = transform.parent.parent.parent.GetComponent<IslandGameManager>();
     }
 
     public void WayPointMove()
@@ -23,6 +26,9 @@ public class WayPoint : MonoBehaviour
             player.transform.position = wayPoint.position;
 
             if (playerController.isDodge == true) playerController.isDodge = false;
+            if (playerController.isAttack == true) playerController.isAttack = false;
+
+            manager.btnClicked = true;
         }
     }
 }

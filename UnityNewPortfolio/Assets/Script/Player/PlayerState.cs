@@ -83,7 +83,7 @@ public class PlayerState : MonoBehaviour
         if(playerInstance == null) 
         {
             playerInstance = this;
-            DontDestroyOnLoad(this.gameObject);
+            //DontDestroyOnLoad(this.gameObject);
         }
         else
         {

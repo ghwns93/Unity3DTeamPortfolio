@@ -67,5 +67,6 @@ public class Gate : MonoBehaviour
     public void ChangeScene()
     {
         LoadingSceneManager.LoadScene("Isle_01_LP");
+        //SceneManager.LoadScene("Isle_01_LP");
     }
 }
