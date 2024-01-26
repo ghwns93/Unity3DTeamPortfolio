@@ -5,8 +5,17 @@ using UnityEngine.UI;
 
 public class Shopslot : MonoBehaviour
 {
+    public Item iteem;
     public GameObject description;
-    public Image image_Item;
+    Image image;
+
+    public int price;
+
+    private void Start()
+    {
+        image = transform.GetChild(0).GetComponent<Image>();
+        image.sprite = iteem.itemImage;
+    }
 
     // 구매하려는 아이템 아이콘 클릭 시
     public void slotClicked()
@@ -19,7 +28,28 @@ public class Shopslot : MonoBehaviour
     // 구매 클릭 시
     public void buyClicked()
     {
-
+        if (PlayerState.Instance.Money < price)
+        {
+            Debug.Log("구매 실패");
+            return;
+        }
+        else
+        {
+            if (iteem.itemType == Item.ObjectType.Weapon)
+            {
+                EquipChest.echest.AddItem(iteem);
+                PlayerState.Instance.Money -= price;
+                Debug.Log("구매 성공");
+                exitClicked();
+            }
+            else if (iteem.itemType == Item.ObjectType.Potion)
+            {
+                ConsumablesChest.cchest.AddItem(iteem);
+                PlayerState.Instance.Money -= price;
+                Debug.Log("구매 성공");
+                exitClicked();
+            }
+        }
     }
 
     // 나가기 클릭 시
@@ -27,6 +57,4 @@ public class Shopslot : MonoBehaviour
     {
         description.SetActive(false);
     }
-
-
 }

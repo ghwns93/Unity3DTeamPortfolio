@@ -8,7 +8,8 @@ public class Item : ScriptableObject
     public enum ObjectType
     {
         Material,
-        Weapon
+        Weapon,
+        Potion
     }
 
     public string itemName;
