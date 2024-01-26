@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    GameObject startPos;
+    public GameObject startPos;
     GameObject player;
     GameObject playerBody;
     GameObject playerPos;
@@ -17,16 +17,15 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Awake()
     {
-        
+        if (startPos == null) startPos = GameObject.Find("UserStartPos");
+        player = GameObject.Find("Player");
+
+        playerBody = player.transform.Find("PlayerBody").gameObject;
     }
 
     private void Start()
     {
-        startPos = GameObject.Find("UserStartPos");
-        Debug.Log(startPos.transform.position); 
-        player = GameObject.Find("Player");
-
-        playerBody = player.transform.Find("PlayerBody").gameObject;
+        playerBody.transform.localPosition = Vector3.zero;
         DontDestroyOnLoad(player);
         //DontDestroyOnLoad(gameObject);
 

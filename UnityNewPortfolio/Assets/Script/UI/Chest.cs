@@ -13,7 +13,7 @@ public class Chest : MonoBehaviour
     public GameObject MaterialBox;      // 재료 상자
 
     public GameObject stat;             // 장비 및 스탯 창
-    public GameObject PotionSlot;       // 인벤토리
+    public GameObject PotionSlot;       // 포션 퀵슬롯
 
     public GameObject canvas;
 

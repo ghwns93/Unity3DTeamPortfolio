@@ -36,6 +36,8 @@ public class LoadingSceneManager : MonoBehaviour
                 if (progressBar.value >= op.progress)
                 {
                     timer = 0f;
+                    Debug.Log("2");
+
                 }
             }
             else
@@ -44,6 +46,8 @@ public class LoadingSceneManager : MonoBehaviour
                 if (progressBar.value == 1.0f)
                 {
                     op.allowSceneActivation = true;
+                    Debug.Log("3");
+
                     yield break;
                 }
             }
