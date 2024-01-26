@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+
     public float speed = 5.0f;
     public float runSpeed = 2.0f;       // 달리기 속도 (배속)
     public float jumpPower = 10.0f;
@@ -71,6 +73,9 @@ public class PlayerController : MonoBehaviour
 
                 animator.SetTrigger("AttackTrigger");
                 animator.SetBool("AttackEnd", false);
+
+
+                     
             }
         }
 
@@ -123,6 +128,7 @@ public class PlayerController : MonoBehaviour
                 animator.SetBool("Idle", false);
 
                 velocity = moveDir * nowSpeed;
+
             }
             else
             {
@@ -145,6 +151,7 @@ public class PlayerController : MonoBehaviour
         isAttack = false;
 
         animator.SetBool("AttackEnd", true);
+
     }
 
     void JumpTime()

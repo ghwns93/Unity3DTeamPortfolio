@@ -7,6 +7,9 @@ public class PlayerState : MonoBehaviour
     //싱글톤 구성
     private static PlayerState playerInstance = null;
 
+    // 적 정보를 전달받을 스크립트
+    public Enemy_VS efsm;
+
     [SerializeField]
     private float hp;
 
@@ -42,45 +45,11 @@ public class PlayerState : MonoBehaviour
         get { return money; }
         set { money = value; }
     }
-    
-    // ////////////////////////
-    public int power = 10;
-    public void DamageAction(int damage)
-    {
-        // 적의 공격력만큼 플레이어의 체력을 깎는다
-        hp -= damage;
-
-        // 플레이어의 HP가 0보다 크면 피격 효과 ON
-        if (hp > 0)
-        {
-            StartCoroutine(PlayHitEffect());
-        }
-    }
-
-    IEnumerator PlayHitEffect()
-    {
-        Debug.Log("피격이펙트 ON");
-
-        // 0.3초간 대기한다
-        yield return new WaitForSeconds(0.3f);
-
-        Debug.Log("피격이펙트 OFF");
-    }
-
-    // 적 정보를 전달받을 스크립트
-    public Enemy_VS efsm;
-
-    // 플레이어에게 데미지를 입힐 이벤트 함수
-    public void PlayerHit()
-    {
-        efsm.AttackAction();
-    }
-    // ////////////////////////
 
 
     void Awake()
     {
-        if(playerInstance == null) 
+        if (playerInstance == null)
         {
             playerInstance = this;
             DontDestroyOnLoad(this.gameObject);
@@ -95,8 +64,43 @@ public class PlayerState : MonoBehaviour
     {
         get
         {
-            if(null == playerInstance) return null;
+            if (null == playerInstance) return null;
             return playerInstance;
         }
+    }
+
+    // 플레이어에게 데미지를 입힐 이벤트 함수
+
+    public void PlayerHit()
+    {
+        efsm.AttackAction();
+    }
+
+    public void DamageAction(int damage)
+    {
+        float playerHp = Hp;
+
+        // 적의 공격력만큼 플레이어의 체력을 깎는다
+        playerHp -= damage;
+
+        Hp = playerHp;
+
+        //Debug.Log(playerHp);
+
+        // 플레이어의 HP가 0보다 크면 피격 효과 ON
+        if (playerHp > 0)
+        {
+            StartCoroutine(PlayHitEffect());
+        }
+    }
+
+    IEnumerator PlayHitEffect()
+    {
+        Debug.Log("피격이펙트 ON");
+
+        // 0.3초간 대기한다
+        yield return new WaitForSeconds(0.3f);
+
+        Debug.Log("피격이펙트 OFF");
     }
 }

@@ -54,9 +54,9 @@ public class Enemy_VS : EnemyStat
         defence = 5.0f;//LevelingStat(5.0f, pStat.Level);
         speed = 3.0f;
         exp = 50.0f;
-        sight = 20.0f;
-        lostSight = 30.0f;
-        attackRange1 = 2.5f;
+        sight = 15.0f;
+        lostSight = 22.0f;
+        attackRange1 = 1.0f;
         attackRange2 = 2.5f;
         morale = 100.0f;
 
@@ -224,6 +224,7 @@ public class Enemy_VS : EnemyStat
             // 플레이어를 향해 방향 전환
             transform.forward = dir;
 
+
         }
 
         // 플레이어와의 거리가 소실 거리 밖이면 원래대로 patrol 한다.
@@ -263,6 +264,7 @@ public class Enemy_VS : EnemyStat
 
     void Attack0()
     {
+        speed= 0;
         // 플레이어가 공격 범위 내라면 공격을 시작한다
         if (Vector3.Distance(transform.position, player.position) < attackRange1)
         {
@@ -271,8 +273,8 @@ public class Enemy_VS : EnemyStat
             currentTime += Time.deltaTime;
             if (currentTime > attackDelay)
             {
-                //player.GetComponent<PlayerMove>().DamageAction(attackPower);
                 print("공격!");
+                AttackAction();
                 currentTime = 0;
 
                 // 공격 애니메이션
@@ -282,6 +284,7 @@ public class Enemy_VS : EnemyStat
         // 공격 범위를 벗어났다면 현재 상태를 Move로 전환한다 (재추격)
         else
         {
+            speed = 3.0f;
             E_State = EnemyState.Move0;
             print("상태 전환 : Attack -> Move");
             currentTime = 0;
@@ -330,7 +333,7 @@ public class Enemy_VS : EnemyStat
     public void AttackAction()
     {
         player.GetComponent<PlayerState>().DamageAction(power);
-        Debug.Log(player.GetComponent<PlayerState>().Hp);
+        //Debug.Log(player.GetComponent<PlayerState>().Hp);
     }
 
     // 사망 상태
@@ -368,7 +371,7 @@ public class Enemy_VS : EnemyStat
         // 플레이어의 공격력만큼 적 체력을 감소시켜준다
         hp -= hitPower;
 
-
+        Debug.Log(hp);
 
         // 적 체력이 0보다 크면 피격 상태로 전환
         if (hp > 0)
