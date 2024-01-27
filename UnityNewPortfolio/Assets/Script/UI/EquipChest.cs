@@ -6,10 +6,10 @@ public class EquipChest : MonoBehaviour
 {
     [SerializeField]
     private GameObject go_SlotsParent;
-
+    [SerializeField]
     private Slot[] slots;
 
-    public static EquipChest echest = null;
+    public static EquipChest echest;
 
     public List<ItemInfo> items;
 

@@ -2,22 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ConsumablesChest : MonoBehaviour
+public class MaterialChest : MonoBehaviour
 {
     [SerializeField]
     private GameObject go_SlotsParent;
     [SerializeField]
     private Slot[] slots;
 
-    public static ConsumablesChest cchest;
+    public static MaterialChest mchest;
 
     public List<ItemInfo> items;
 
     private void Awake()
     {
-        if (cchest == null)
+        if (mchest == null)
         {
-            cchest = this;
+            mchest = this;
         }
 
         items = new List<ItemInfo>();

@@ -5,8 +5,9 @@ using UnityEngine.UIElements;
 
 public class Shop : MonoBehaviour
 {
-    public GameObject canvas;
+    Chest chest;
 
+    public GameObject canvas_shop;
     public GameObject slot_weapon;
     public GameObject slot_armor;
     public GameObject slot_item;
@@ -19,14 +20,14 @@ public class Shop : MonoBehaviour
 
     private void Awake()
     {
-        canvas.SetActive(true);
+        canvas_shop.SetActive(true);
         slot_weapon.SetActive(true);
         slot_armor.SetActive(true);
         slot_item.SetActive(true);
 
-        canvas.SetActive(false);
-        slot_armor.SetActive(false);
         slot_item.SetActive(false);
+        slot_armor.SetActive(false);
+        canvas_shop.SetActive(false);
     }
 
     private void Start()
@@ -42,15 +43,8 @@ public class Shop : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.E))
                 {
-                    canvas.SetActive(true);
+                    canvas_shop.SetActive(true);
                     shopOpened = true;
-                }
-            }
-            else
-            {
-                if (Input.GetKeyDown(KeyCode.Escape))
-                {
-                    Exitbuttonclick();
                 }
             }
         }
@@ -79,7 +73,8 @@ public class Shop : MonoBehaviour
 
     public void Exitbuttonclick()
     {
-        canvas.SetActive(false);
+        WeaponbuttonClick();
+        canvas_shop.SetActive(false);
         shopOpened = false;
     }
 

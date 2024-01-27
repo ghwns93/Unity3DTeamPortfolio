@@ -15,6 +15,16 @@ public class Shopslot : MonoBehaviour
     {
         image = transform.GetChild(0).GetComponent<Image>();
         image.sprite = iteem.itemImage;
+
+        iteem = GetComponent<Item>();
+        if (iteem != null)
+        {
+            image.color = new Color(1, 1, 1, 1);
+        }
+        else
+        {
+            image.color = new Color(1, 1, 1, 0);
+        }
     }
 
     // 구매하려는 아이템 아이콘 클릭 시

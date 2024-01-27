@@ -28,12 +28,12 @@ public class Chest : MonoBehaviour
         EquipBox.SetActive(true);
         ConsumablesBox.SetActive(true);
         MaterialBox.SetActive(true);
-        
-        canvas.SetActive(false);
-        panel_Box.SetActive(false);
-        EquipBox.SetActive(false);
-        ConsumablesBox.SetActive(false);
+
         MaterialBox.SetActive(false);
+        ConsumablesBox.SetActive(false);
+        EquipBox.SetActive(false);
+        panel_Box.SetActive(false);
+        canvas.SetActive(false);
     }
 
     void Start()
@@ -95,7 +95,7 @@ public class Chest : MonoBehaviour
         stat.GetComponent<RectTransform>().position = new Vector3(566f, 540f);
         stat.SetActive(false);
         Debug.Log("Àåºñ »óÀÚ ´ÝÈû");
-        StorageBoxOpen();
+        panel_Box.SetActive(true);
     }
 
     public void ConsumablesBoxOpenButtonClicked()
@@ -111,7 +111,7 @@ public class Chest : MonoBehaviour
         ConsumablesBox.SetActive(false);
         PotionSlot.SetActive(false);
         Debug.Log("¼Ò¸ðÇ° »óÀÚ ´ÝÈû");
-        StorageBoxOpen();
+        panel_Box.SetActive(true);
     }
 
     public void MaterialBoxOpenButtonClicked()
@@ -125,7 +125,7 @@ public class Chest : MonoBehaviour
     {
         MaterialBox.SetActive(false);
         Debug.Log("¼Ò¸ðÇ° »óÀÚ ´ÝÈû");
-        StorageBoxOpen();
+        panel_Box.SetActive(true);
     }
 
     // °Å¸® È®ÀÎ
