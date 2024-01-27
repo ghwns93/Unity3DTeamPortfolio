@@ -5,67 +5,59 @@ using UnityEngine;
 public class ConsumablesChest : MonoBehaviour
 {
     [SerializeField]
-    private GameObject go_SlotsParent;
+    private GameObject slotparent;
     [SerializeField]
-    private Slot[] slots;
+    private ChestSlot[] slots;
 
-    public List<ItemInfo> itemsC;
+    private static ConsumablesChest Cchest;
 
-#if UNITY_EDITOR
-    private void OnValidate()
+    public static ConsumablesChest Instance
     {
-        slots = go_SlotsParent.GetComponentsInChildren<Slot>();
+        get
+        {
+            if (Cchest == null)
+            {
+                Cchest = FindObjectOfType<ConsumablesChest>();
+            }
+            return Cchest;
+        }
     }
-#endif
 
     private void Awake()
     {
-        itemsC = new List<ItemInfo>();
+        slots = slotparent.GetComponentsInChildren<ChestSlot>();
     }
 
-    private void Start()
+    public void AcquireItem(Item _item, int _count = 1)
     {
-        FreshSlot();
-    }
-
-    public void FreshSlot()
-    {
-        int i = 0;
-
-        for (; i < itemsC.Count && i < slots.Length; i++)
+        if (_item == null)
         {
-            slots[i].Items = itemsC[i];
+            Debug.LogError("아이템이 null입니다.");
+            return;
         }
-        for (; i < slots.Length; i++)
-        {
-            slots[i].Items = null;
-        }
-    }
 
-    public void AddItem(Item item)
-    {
-        if (itemsC.Count < slots.Length)
+        if (_item.itemType != Item.ObjectType.Weapon)
         {
-            bool isDup = false;
-            foreach (var n in itemsC)
+            for (int i = 0; i < slots.Length; i++)
             {
-                if (n.item == item)
+                if (slots[i].item != null)
                 {
-                    n.count++;
-                    isDup = true;
+                    if (slots[i].item.itemName == _item.itemName)
+                    {
+                        slots[i].SetSlotCount(_count);
+                        return;
+                    }
                 }
             }
-
-            if (!isDup)
-            {
-                itemsC.Add(new ItemInfo { item = item, count = 1 });
-            }
-
-            FreshSlot();
         }
-        else
+
+        for (int i = 0; i < slots.Length; i++)
         {
-            Debug.Log("슬롯이 가득 차 있습니다.");
+            if (slots[i].item == null)
+            {
+                slots[i].AddItem(_item, _count);
+                return;
+            }
         }
     }
 }

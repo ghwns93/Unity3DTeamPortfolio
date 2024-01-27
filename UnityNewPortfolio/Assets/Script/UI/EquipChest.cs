@@ -1,71 +1,125 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class EquipChest : MonoBehaviour
 {
     [SerializeField]
-    private GameObject go_SlotsParent;
+    private GameObject slotparent;
     [SerializeField]
-    private Slot[] slots;
+    private ChestSlot[] slots;
 
-    public List<ItemInfo> itemsE;
+    private static EquipChest Echest;
 
-#if UNITY_EDITOR
-    private void OnValidate()
+    public static EquipChest Instance
     {
-        slots = go_SlotsParent.GetComponentsInChildren<Slot>();
+        get
+        {
+            if (Echest == null)
+            {
+                Echest = FindObjectOfType<EquipChest>();
+            }
+            return Echest;
+        }
     }
-#endif
 
     private void Awake()
     {
-        itemsE = new List<ItemInfo>();
+        slots = slotparent.GetComponentsInChildren<ChestSlot>();
     }
 
-    private void Start()
+    public void AcquireItem(Item _item, int _count = 1)
     {
-        FreshSlot();
-    }
-
-    public void FreshSlot()
-    {
-        int i = 0;
-
-        for (; i < itemsE.Count && i < slots.Length; i++)
+        if (_item == null)
         {
-            slots[i].Items = itemsE[i];
+            Debug.LogError("아이템이 null입니다.");
+            return;
         }
-        for (; i < slots.Length; i++)
-        {
-            slots[i].Items = null;
-        }
-    }
 
-    public void AddItem(Item item)
-    {
-        if (itemsE.Count < slots.Length)
+        if (_item.itemType != Item.ObjectType.Weapon)
         {
-            bool isDup = false;
-            foreach (var n in itemsE)
+            for (int i = 0; i < slots.Length; i++)
             {
-                if (n.item == item)
+                if (slots[i].item != null)
                 {
-                    n.count++;
-                    isDup = true;
+                    if (slots[i].item.itemName == _item.itemName)
+                    {
+                        slots[i].SetSlotCount(_count);
+                        return;
+                    }
                 }
             }
-
-            if (!isDup)
-            {
-                itemsE.Add(new ItemInfo { item = item, count = 1 });
-            }
-
-            FreshSlot();
         }
-        else
+
+        for (int i = 0; i < slots.Length; i++)
         {
-            Debug.Log("슬롯이 가득 차 있습니다.");
+            if (slots[i].item == null)
+            {
+                slots[i].AddItem(_item, _count);
+                return;
+            }
         }
     }
 }
+
+
+
+
+//#if UNITY_EDITOR
+//    private void OnValidate()
+//    {
+//        slots = go_SlotsParent.GetComponentsInChildren<Slot>();
+//    }
+//#endif
+
+//    private void Awake()
+//    {
+//        itemsE = new List<ItemInfo>();
+//    }
+
+//    private void Start()
+//    {
+//        FreshSlot();
+//    }
+
+//    public void FreshSlot()
+//    {
+//        int i = 0;
+
+//        for (; i < itemsE.Count && i < slots.Length; i++)
+//        {
+//            slots[i].Items = itemsE[i];
+//        }
+//        for (; i < slots.Length; i++)
+//        {
+//            slots[i].Items = null;
+//        }
+//    }
+
+//    public void AddItem(Item item)
+//    {
+//        if (itemsE.Count < slots.Length)
+//        {
+//            bool isDup = false;
+//            foreach (var n in itemsE)
+//            {
+//                if (n.item == item)
+//                {
+//                    n.count++;
+//                    isDup = true;
+//                }
+//            }
+
+//            if (!isDup)
+//            {
+//                itemsE.Add(new ItemInfo { item = item, count = 1 });
+//            }
+
+//            FreshSlot();
+//        }
+//        else
+//        {
+//            Debug.Log("슬롯이 가득 차 있습니다.");
+//        }
+//    }

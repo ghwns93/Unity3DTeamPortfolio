@@ -5,21 +5,19 @@ using UnityEngine.UI;
 
 public class Shopslot : MonoBehaviour
 {
-    public Item iteem;
+    public Item item;
     public GameObject description;
     Image image;
 
     public int price;
 
-    EquipChest Echest;
-    ConsumablesChest Cchest;
 
     private void Start()
     {
         image = transform.GetChild(0).GetComponent<Image>();
-        image.sprite = iteem.itemImage;
+        image.sprite = item.itemImage;
 
-        if (iteem != null)
+        if (item != null)
         {
             image.color = new Color(1, 1, 1, 1);
         }
@@ -29,7 +27,6 @@ public class Shopslot : MonoBehaviour
         }
     }
 
-    // 구매하려는 아이템 아이콘 클릭 시
     public void slotClicked()
     {
         Vector3 mPos = Input.mousePosition;
@@ -37,33 +34,29 @@ public class Shopslot : MonoBehaviour
         description.SetActive(true);
     }
 
-    // 구매 클릭 시
     public void buyClicked()
     {
         if (PlayerState.Instance.Money < price)
         {
             Debug.Log("구매 실패");
+            exitClicked();
             return;
         }
         else
         {
-            if (iteem.itemType == Item.ObjectType.Weapon)
+            if (item.itemType == Item.ObjectType.Weapon)
             {
-                Echest.AddItem(iteem);
+                EquipChest.Instance.AcquireItem(item);
                 PlayerState.Instance.Money -= price;
                 Debug.Log("구매 성공");
                 exitClicked();
             }
-            else if (iteem.itemType == Item.ObjectType.Potion)
+            else if (item.itemType == Item.ObjectType.Potion)
             {
-                Cchest.AddItem(iteem);
+                ConsumablesChest.Instance.AcquireItem(item);
                 PlayerState.Instance.Money -= price;
                 Debug.Log("구매 성공");
                 exitClicked();
-            }
-            else
-            {
-                return;
             }
         }
     }

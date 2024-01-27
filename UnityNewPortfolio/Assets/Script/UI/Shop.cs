@@ -12,6 +12,9 @@ public class Shop : MonoBehaviour
     public GameObject slot_armor;
     public GameObject slot_item;
 
+    public GameObject equipchest;
+    public GameObject Consumableschest;
+
     GameObject player;
 
     public float length = 2.0f;
@@ -45,6 +48,10 @@ public class Shop : MonoBehaviour
                 {
                     canvas_shop.SetActive(true);
                     shopOpened = true;
+                    slot_weapon.SetActive(true);
+
+                    equipchest.SetActive(true);
+                    equipchest.GetComponent<RectTransform>().position = new Vector3(1184f, 540f);
                 }
             }
         }
@@ -55,6 +62,13 @@ public class Shop : MonoBehaviour
         slot_weapon.SetActive(true);
         slot_armor.SetActive(false);
         slot_item.SetActive(false);
+        equipchest.SetActive(true);
+        equipchest.GetComponent<RectTransform>().position = new Vector3(1184f, 540f);
+        if(Consumableschest.activeSelf)
+        {
+            Consumableschest.GetComponent<RectTransform>().position = new Vector3(960f, 540f);
+            Consumableschest.SetActive(false);
+        }
     }
 
     public void ArmorbuttonClick()
@@ -62,6 +76,13 @@ public class Shop : MonoBehaviour
         slot_weapon.SetActive(false);
         slot_armor.SetActive(true);
         slot_item.SetActive(false);
+        equipchest.SetActive(true);
+        equipchest.GetComponent<RectTransform>().position = new Vector3(1184f, 540f);
+        if (Consumableschest.activeSelf)
+        {
+            Consumableschest.GetComponent<RectTransform>().position = new Vector3(960f, 540f);
+            Consumableschest.SetActive(false);
+        }
     }
 
     public void ItembuttonClick()
@@ -69,6 +90,14 @@ public class Shop : MonoBehaviour
         slot_weapon.SetActive(false);
         slot_armor.SetActive(false);
         slot_item.SetActive(true);
+
+        Consumableschest.SetActive(true);
+        Consumableschest.GetComponent<RectTransform>().position = new Vector3(1184f, 540f);
+        if (equipchest.activeSelf)
+        {
+            equipchest.GetComponent<RectTransform>().position = new Vector3(480f, 540f);
+            equipchest.SetActive(false);
+        }
     }
 
     public void Exitbuttonclick()
@@ -76,6 +105,17 @@ public class Shop : MonoBehaviour
         WeaponbuttonClick();
         canvas_shop.SetActive(false);
         shopOpened = false;
+
+        if (equipchest.activeSelf)
+        {
+            equipchest.GetComponent<RectTransform>().position = new Vector3(480f, 540f);
+            equipchest.SetActive(false);
+        }
+        else if (Consumableschest.activeSelf)
+        {
+            Consumableschest.GetComponent<RectTransform>().position = new Vector3(960f, 540f);
+            Consumableschest.SetActive(false);
+        }
     }
 
     // 거리 확인
