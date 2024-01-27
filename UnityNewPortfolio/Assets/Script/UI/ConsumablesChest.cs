@@ -9,23 +9,22 @@ public class ConsumablesChest : MonoBehaviour
     [SerializeField]
     private Slot[] slots;
 
-    public static ConsumablesChest cchest;
+    public List<ItemInfo> itemsC;
 
-    public List<ItemInfo> items;
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        slots = go_SlotsParent.GetComponentsInChildren<Slot>();
+    }
+#endif
 
     private void Awake()
     {
-        if (cchest == null)
-        {
-            cchest = this;
-        }
-
-        items = new List<ItemInfo>();
+        itemsC = new List<ItemInfo>();
     }
 
     private void Start()
     {
-        slots = go_SlotsParent.GetComponentsInChildren<Slot>();
         FreshSlot();
     }
 
@@ -33,9 +32,9 @@ public class ConsumablesChest : MonoBehaviour
     {
         int i = 0;
 
-        for (; i < items.Count && i < slots.Length; i++)
+        for (; i < itemsC.Count && i < slots.Length; i++)
         {
-            slots[i].Items = items[i];
+            slots[i].Items = itemsC[i];
         }
         for (; i < slots.Length; i++)
         {
@@ -45,10 +44,10 @@ public class ConsumablesChest : MonoBehaviour
 
     public void AddItem(Item item)
     {
-        if (items.Count < slots.Length)
+        if (itemsC.Count < slots.Length)
         {
             bool isDup = false;
-            foreach (var n in items)
+            foreach (var n in itemsC)
             {
                 if (n.item == item)
                 {
@@ -59,7 +58,7 @@ public class ConsumablesChest : MonoBehaviour
 
             if (!isDup)
             {
-                items.Add(new ItemInfo { item = item, count = 1 });
+                itemsC.Add(new ItemInfo { item = item, count = 1 });
             }
 
             FreshSlot();

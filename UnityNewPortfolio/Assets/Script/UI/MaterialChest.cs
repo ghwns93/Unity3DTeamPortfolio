@@ -9,23 +9,22 @@ public class MaterialChest : MonoBehaviour
     [SerializeField]
     private Slot[] slots;
 
-    public static MaterialChest mchest;
+    public List<ItemInfo> itemsM;
 
-    public List<ItemInfo> items;
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        slots = go_SlotsParent.GetComponentsInChildren<Slot>();
+    }
+#endif
 
     private void Awake()
     {
-        if (mchest == null)
-        {
-            mchest = this;
-        }
-
-        items = new List<ItemInfo>();
+        itemsM = new List<ItemInfo>();
     }
 
     private void Start()
     {
-        slots = go_SlotsParent.GetComponentsInChildren<Slot>();
         FreshSlot();
     }
 
@@ -33,9 +32,9 @@ public class MaterialChest : MonoBehaviour
     {
         int i = 0;
 
-        for (; i < items.Count && i < slots.Length; i++)
+        for (; i < itemsM.Count && i < slots.Length; i++)
         {
-            slots[i].Items = items[i];
+            slots[i].Items = itemsM[i];
         }
         for (; i < slots.Length; i++)
         {
@@ -45,10 +44,10 @@ public class MaterialChest : MonoBehaviour
 
     public void AddItem(Item item)
     {
-        if (items.Count < slots.Length)
+        if (itemsM.Count < slots.Length)
         {
             bool isDup = false;
-            foreach (var n in items)
+            foreach (var n in itemsM)
             {
                 if (n.item == item)
                 {
@@ -59,7 +58,7 @@ public class MaterialChest : MonoBehaviour
 
             if (!isDup)
             {
-                items.Add(new ItemInfo { item = item, count = 1 });
+                itemsM.Add(new ItemInfo { item = item, count = 1 });
             }
 
             FreshSlot();

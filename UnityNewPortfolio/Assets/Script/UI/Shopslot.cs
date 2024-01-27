@@ -11,12 +11,14 @@ public class Shopslot : MonoBehaviour
 
     public int price;
 
+    EquipChest Echest;
+    ConsumablesChest Cchest;
+
     private void Start()
     {
         image = transform.GetChild(0).GetComponent<Image>();
         image.sprite = iteem.itemImage;
 
-        iteem = GetComponent<Item>();
         if (iteem != null)
         {
             image.color = new Color(1, 1, 1, 1);
@@ -47,17 +49,21 @@ public class Shopslot : MonoBehaviour
         {
             if (iteem.itemType == Item.ObjectType.Weapon)
             {
-                EquipChest.echest.AddItem(iteem);
+                Echest.AddItem(iteem);
                 PlayerState.Instance.Money -= price;
                 Debug.Log("备概 己傍");
                 exitClicked();
             }
             else if (iteem.itemType == Item.ObjectType.Potion)
             {
-                ConsumablesChest.cchest.AddItem(iteem);
+                Cchest.AddItem(iteem);
                 PlayerState.Instance.Money -= price;
                 Debug.Log("备概 己傍");
                 exitClicked();
+            }
+            else
+            {
+                return;
             }
         }
     }
