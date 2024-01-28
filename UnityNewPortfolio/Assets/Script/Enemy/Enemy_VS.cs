@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,6 +6,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
 using static UnityEngine.InputManagerEntry;
+using static UnityEngine.Rendering.DebugUI;
 
 public class Enemy_VS : EnemyStat
 {
@@ -19,6 +21,9 @@ public class Enemy_VS : EnemyStat
 
     // 적 캐릭터 컨트롤러
     CharacterController cc;
+
+    // 적 HP 슬라이더
+    public Slider hpSlider;
 
     // 누적 시간
     protected float currentTime = 0.0f;
@@ -49,7 +54,7 @@ public class Enemy_VS : EnemyStat
         Unitname = "바이킹 약탈자";
         UnitKey = 11111;
         maxHp = 100;//LevelingStat(100 , pStat.Level.ge);
-        hp = maxHp;//LevelingStat(100, pStat.Level);
+        hp = 100;
         power = 10;//LevelingStat(10.0f, pStat.Level); ;
         defence = 5.0f;//LevelingStat(5.0f, pStat.Level);
         speed = 3.0f;
@@ -172,6 +177,9 @@ public class Enemy_VS : EnemyStat
                 MoveTowards(originPos);
             }
         }
+        // 현재 HP를 슬라이더의 value에 반영한다
+        hpSlider.value = (float)hp / (float)maxHp;
+
     }
 
     private void Idle()
@@ -339,8 +347,7 @@ public class Enemy_VS : EnemyStat
     // 사망 상태
     void Die()
     {
-        // 진행 중인 피격 코루틴 함수를 중지한다
-        StopAllCoroutines();
+        Debug.Log("사망");
 
         // 사망 상태를 처리하기 위한 코루틴을 실행한다
         StartCoroutine(DieProcess());
@@ -361,12 +368,7 @@ public class Enemy_VS : EnemyStat
     // 데미지 처리 함수
     public void HitEnemy(int hitPower)
     {
-        // 피격, 사망, 복귀 상태일 경우에는 함수 즉시 종료
-        if (E_State == EnemyState.Damaged ||
-            E_State == EnemyState.Die)
-        {
-            return;
-        }
+       
 
         // 플레이어의 공격력만큼 적 체력을 감소시켜준다
         hp -= hitPower;

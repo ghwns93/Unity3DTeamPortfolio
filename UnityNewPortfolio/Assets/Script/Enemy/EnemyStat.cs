@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Rendering.VirtualTexturing;
 using UnityEngine.UI;
+using static UnityEngine.Rendering.DebugUI;
 
 public class EnemyStat : MonoBehaviour
 {
@@ -11,7 +12,14 @@ public class EnemyStat : MonoBehaviour
     protected string Unitname;                   // 적 유닛 이름
         
     protected int maxHp;                      // 최대 체력
-    protected int hp;                               // 현재 체력
+    protected int hp;                           // 현재 체력
+
+    public int Hp
+            {
+            get { return hp; }
+            set{ hp = value; }
+            }
+    
     protected int power;                    // 적 데미지
     protected float defence;                 // 적 방어력
     protected float speed;                     // 적 속도

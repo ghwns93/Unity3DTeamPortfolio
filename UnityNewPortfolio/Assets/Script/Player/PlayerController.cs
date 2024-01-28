@@ -25,7 +25,6 @@ public class PlayerController : MonoBehaviour
     private CharacterController cc;
     private Transform tran;
     private Transform charaTran;
-
     private Animator animator;
 
     Transform weaponPos;
@@ -74,8 +73,8 @@ public class PlayerController : MonoBehaviour
                 animator.SetTrigger("AttackTrigger");
                 animator.SetBool("AttackEnd", false);
 
-
-                     
+               Debug.Log("공격판정");
+               
             }
         }
 
@@ -194,4 +193,5 @@ public class PlayerController : MonoBehaviour
         // 눌렸다면, boolean 변수를 True로 바꾼다.
         isContinueComboAttack = true;
     }
+
 }
