@@ -23,9 +23,9 @@ public class Tooltip : MonoBehaviour
         text_itemdesc.text = _item.itemDesc;
 
         if (_item.itemType == Item.ObjectType.Weapon)
-            text_itemused.text = "우 클릭 - 장착";
+            text_itemused.text = "클릭 - 장착";
         else if (_item.itemType == Item.ObjectType.Potion)
-            text_itemused.text = "우 클릭 - 퀵슬롯 등록";
+            text_itemused.text = "클릭 - 퀵슬롯 등록";
         else
             text_itemused.text = "";
     }
