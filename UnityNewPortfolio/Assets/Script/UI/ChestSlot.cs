@@ -16,16 +16,6 @@ public class ChestSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public Tooltip tooltip;
 
-    public void Update()
-    {
-        if (Input.GetMouseButtonDown(1))
-        {
-            if (item != null && item.itemType == Item.ObjectType.Potion)
-            {
-                PotionSlot.Instance.RegisterPotionToQuickSlot(item, itemCount);
-            }
-        }        
-    }
 
     private void SetColor(float _alpha)
     {
@@ -85,6 +75,21 @@ public class ChestSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        tooltip.HideToolTip();
+        if (tooltip != null)
+        {
+            tooltip.HideToolTip();
+        }        
+    }
+
+    public void slotClicked()
+    {
+        if (item != null && item.itemType == Item.ObjectType.Potion)
+        {
+            PotionSlot.Instance.RegisterPotionToQuickSlot(item, itemCount);
+        }
+        else if (item != null && item.itemType == Item.ObjectType.Weapon)
+        {
+            // ¿Â∫Ò UI ΩΩ∑‘ø° ¿Â¬¯
+        }
     }
 }
