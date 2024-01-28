@@ -1,20 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ChestSlot : MonoBehaviour
+public class ChestSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    public Item item; // 획득한 아이템
-    public int itemCount; // 획득한 아이템의 개수
-    public Image itemImage;  // 아이템의 이미지
+    public Item item;
+    public int itemCount;
+    public Image itemImage;
 
-    [SerializeField]
-    private Text text_Count;
+    public Text text_Count;
     [SerializeField]
     private GameObject go_CountImage;
 
-    // 아이템 이미지의 투명도 조절
+    public Tooltip tooltip;
+
+    public void Update()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            if (item != null && item.itemType == Item.ObjectType.Potion)
+            {
+                PotionSlot.Instance.RegisterPotionToQuickSlot(item, itemCount);
+            }
+        }        
+    }
+
     private void SetColor(float _alpha)
     {
         Color color = itemImage.color;
@@ -22,7 +34,6 @@ public class ChestSlot : MonoBehaviour
         itemImage.color = color;
     }
 
-    // 인벤토리에 새로운 아이템 슬롯 추가
     public void AddItem(Item _item, int _count = 1)
     {
         item = _item;
@@ -43,7 +54,6 @@ public class ChestSlot : MonoBehaviour
         SetColor(1);
     }
 
-    // 해당 슬롯의 아이템 갯수 업데이트
     public void SetSlotCount(int _count)
     {
         itemCount += _count;
@@ -53,8 +63,7 @@ public class ChestSlot : MonoBehaviour
             ClearSlot();
     }
 
-    // 해당 슬롯 하나 삭제
-    private void ClearSlot()
+    public void ClearSlot()
     {
         item = null;
         itemCount = 0;
@@ -65,4 +74,17 @@ public class ChestSlot : MonoBehaviour
         go_CountImage.SetActive(false);
     }
 
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if(tooltip != null)
+        {
+            if (item != null)
+                tooltip.ShowToolTip(item, transform.position);
+        }        
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        tooltip.HideToolTip();
+    }
 }

@@ -7,7 +7,7 @@ public class EquipChest : MonoBehaviour
 {
     [SerializeField]
     private GameObject slotparent;
-    [SerializeField]
+    //[SerializeField]
     private ChestSlot[] slots;
 
     private static EquipChest Echest;
