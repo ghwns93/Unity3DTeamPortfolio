@@ -4214,6 +4214,7 @@ GameObject:
   - component: {fileID: 5641655456616007224}
   - component: {fileID: 5641655456616007227}
   - component: {fileID: 5641655456616007226}
+  - component: {fileID: 654765943}
   m_Layer: 5
   m_Name: Canvas_UI_final
   m_TagString: Untagged
@@ -4349,6 +4350,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Inven: {fileID: 8348736235567777533}
   Equip: {fileID: 3535713733815406330}
+--- !u!114 &654765943
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5641655456616007170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4bb7c144dd1c2bd42b2398d92bdeb831, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hp_Bar: {fileID: 5641655457041724957}
+  sp_Bar: {fileID: 5641655457204940970}
 --- !u!1 &5641655456622519937
 GameObject:
   m_ObjectHideFlags: 0
