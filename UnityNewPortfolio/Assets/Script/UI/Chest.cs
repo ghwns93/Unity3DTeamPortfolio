@@ -84,6 +84,7 @@ public class Chest : MonoBehaviour
     {
         panel_Box.SetActive(false);
         EquipBox.SetActive(true);
+        EquipBox.GetComponent<RectTransform>().position = new Vector3(550f, 540f);
         stat.SetActive(true);
         stat.GetComponent<RectTransform>().position = new Vector3(1376.5f, 540f);        
         Debug.Log("장비 상자 열림");
