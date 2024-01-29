@@ -86,10 +86,24 @@ public class ChestSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         if (item != null && item.itemType == Item.ObjectType.Potion)
         {
             PotionSlot.Instance.RegisterPotionToQuickSlot(item, itemCount);
+            ClearSlot();
         }
         else if (item != null && item.itemType == Item.ObjectType.Weapon)
         {
-            // ¿Â∫Ò UI ΩΩ∑‘ø° ¿Â¬¯
+            if (WeaponslotController.Instance.slot.item == null)
+            {
+                WeaponslotController.Instance.RegisterWeaponToSlot(item, itemCount);
+                ClearSlot();
+            }
+            else
+            {
+                Item tempitem = WeaponslotController.Instance.slot.item;
+
+                WeaponslotController.Instance.RegisterWeaponToSlot(item, itemCount);
+
+                EquipChest.Instance.AcquireItem(tempitem);
+                ClearSlot();
+            }
         }
     }
 }
