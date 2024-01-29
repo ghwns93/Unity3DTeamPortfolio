@@ -35,7 +35,7 @@ public class CameraController : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (originCamera != null)
+        if (originCamera != null && !cbc.isUiOpen)
         {
             xRotateMove = -Input.GetAxis("Mouse Y") * Time.deltaTime * rotateSpeed;
             yRotateMove = Input.GetAxis("Mouse X") * Time.deltaTime * rotateSpeed;

@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour
     internal bool isDodge = false;
     internal bool isIdle = false;        // idle애니메이션 상태전환
 
+    public bool isUiOpen = false;
+
     public GameObject cameraOrigin;
 
     private CharacterController cc;
@@ -44,6 +46,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         #region [ Update ]
+
         Vector3 velocity = new Vector3(0f, 0f, 0f);
 
         float moveX = Input.GetAxisRaw("Horizontal");
@@ -62,7 +65,7 @@ public class PlayerController : MonoBehaviour
                 );
         }
 
-        if (Input.GetButtonDown("Fire1"))
+        if (Input.GetButtonDown("Fire1") && !isUiOpen)
         {
             if (!isAttack)
             {
@@ -98,7 +101,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // 스페이스 바를 입력했을 때 점프를 하지 않은 상태
-        if (Input.GetButtonDown("Jump") && !isDodge)
+        if (Input.GetButtonDown("Jump") && !isDodge && !isUiOpen)
         {
             // 캐릭터 Y축 속력에 점프력을 적용하고 상태 변경한다
             isDodge = true;
@@ -111,7 +114,7 @@ public class PlayerController : MonoBehaviour
         // 캐릭터 수직 속도에 중력을 적용한다
         yVelocity += gravity * Time.deltaTime;
 
-        if (!isAttack)
+        if (!isAttack && !isUiOpen)
         {
             if (moveAct != 0)
             {
@@ -137,6 +140,11 @@ public class PlayerController : MonoBehaviour
                 }
                 animator.SetBool("WalkFoward", false);
             }
+        }
+        else if(isUiOpen) 
+        {
+            animator.SetBool("WalkFoward", false);
+            animator.SetBool("Idle", true); 
         }
 
         velocity.y += yVelocity;

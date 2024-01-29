@@ -38,6 +38,8 @@ public class ItemBoxController : MonoBehaviour
                 }
                 else if (dropItem.itemType == Item.ObjectType.Weapon) 
                 {
+                    Inventory.Instance.AddItem(dropItem);
+
                     Transform weaponPos = GameObject.Find("WeaponPos").transform;
 
                     if(weaponPos.childCount > 0)

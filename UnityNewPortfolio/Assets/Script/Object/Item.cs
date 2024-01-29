@@ -16,5 +16,6 @@ public class Item : ScriptableObject
     public Sprite itemImage;
     public GameObject itemPrefab;
     public ObjectType itemType;
+    public int itemEnhance;
     [TextArea] public string itemDesc;
 }

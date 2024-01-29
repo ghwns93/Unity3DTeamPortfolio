@@ -10,6 +10,12 @@ public class UIInputController : MonoBehaviour
     public GameObject Inven;
     public GameObject Equip;
 
+    private void Start()
+    {
+        Inven.SetActive(false);
+        Equip.SetActive(false);
+    }
+
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.I)) // 인벤토리 오픈

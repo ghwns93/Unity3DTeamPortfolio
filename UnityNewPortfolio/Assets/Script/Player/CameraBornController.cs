@@ -9,22 +9,31 @@ public class CameraBornController : MonoBehaviour
     GameObject player;
     public float rotateSpeed = 500.0f;
 
+    PlayerController playerController;
+    public bool isUiOpen = false;
+
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.Find("PlayerBody");
+        playerController = player.GetComponent<PlayerController>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        isUiOpen = playerController.isUiOpen;
+
         Vector3 refVec = Vector3.zero;
         transform.position = Vector3.SmoothDamp(transform.position, player.transform.position, ref refVec, 0.02f);
     }
 
     private void LateUpdate()
     {
-        LookAround();
+        if (!isUiOpen)
+        {
+            LookAround();
+        }
     }
 
     private void LookAround()
