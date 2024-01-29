@@ -48,6 +48,9 @@ public class Enemy_VA : EnemyStat
 
     public float rotateSpeed = 2.0f; // 회전 속도
 
+    // 화살 오브젝트
+    public GameObject arrow;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -90,6 +93,9 @@ public class Enemy_VA : EnemyStat
         waitTimer = waitTime;
 
         isFinded= false;
+
+        // 초기 상태에서는 arrow를 비활성화합니다.
+        arrow.SetActive(false);
     }
 
     // Update is called once per frame
@@ -210,7 +216,7 @@ public class Enemy_VA : EnemyStat
 
     private void Find()
     {
-                E_State = EnemyState.Move0;
+        E_State = EnemyState.Move0;
         print("상태전환 : Find -> Move0");
 
         anim.SetTrigger("FindToMove0");
@@ -249,11 +255,16 @@ public class Enemy_VA : EnemyStat
 
         else
         {
+       
             E_State = EnemyState.Attack0;
             print("상태 전환 : Move -> Attack");
 
             // 누적 시간을 딜레이 시간만큼 미리 진행시켜둔다 (즉시 공격)
             currentTime = attackDelay;
+
+
+            // 공격 딜레이 상태에서는 arrow를 활성화합니다.
+            
 
             // 공격 대기 애니메이션
             anim.SetTrigger("MoveToAttackDelay");
@@ -277,14 +288,12 @@ public class Enemy_VA : EnemyStat
         // 플레이어가 공격 범위 내라면 공격을 시작한다
         if (Vector3.Distance(transform.position, player.position) < attackRange1)
         {
-                  
-
+  
             // 일정시간마.다 공격한다
             // 누적된 시간이 딜레이를 넘어설 때마다 초기화
             currentTime += Time.deltaTime;
             if (currentTime > attackDelay)
             {
-                Debug.Log("아아아");
                 Debug.Log(originRot);
                 transform.Rotate(0, 90, 0, Space.Self);
                 Debug.Log(transform.rotation);
@@ -293,15 +302,18 @@ public class Enemy_VA : EnemyStat
                 AttackAction();
                 currentTime = 0;
 
+
+                arrow.SetActive(true);
                 // 공격 애니메이션
                 anim.SetTrigger("StartAttack");
-
                 transform.rotation = originRot;
+
             }
-        }
+    }
         // 공격 범위를 벗어났다면 현재 상태를 Move로 전환한다 (재추격)
         else
         {
+
             speed = 3.0f;
             E_State = EnemyState.Move0;
             print("상태 전환 : Attack -> Move");
@@ -309,9 +321,11 @@ public class Enemy_VA : EnemyStat
 
             // 이동 애니메이션
             anim.SetTrigger("AttackToMove");
+        arrow.SetActive(false);
         }
-    }
 
+    }
+    
     /////////////////////////////////
 
     void MoveToNextWaypoint()
@@ -440,3 +454,24 @@ void MoveTowards(Vector3 target)
 
 
 }
+
+
+/*
+     // 투척 무기 (수류탄)
+     public GameObject bombFactory;
+    // 투척 강도
+    public float throwPower = 15.0f;
+    // 발사 무기 공격력
+    public int weaponPower = 5;
+    // 발사 위치
+    public GameObject firePosition;
+                   GameObject bomb = Instantiate(bombFactory);
+                    bomb.transform.position = firePosition.transform.position;
+
+                    // 수류탄 오브젝트의 RigidBody 컴포넌트를 전달받는다
+                    Rigidbody rb = bomb.GetComponent<Rigidbody>();
+
+                    // 카메라 정면 방향으로 던질 수 있도록 수류탄에 물리적인 힘을 가한다
+                    rb.AddForce(Camera.main.transform.forward * throwPower, ForceMode.Impulse);
+ 
+ */
