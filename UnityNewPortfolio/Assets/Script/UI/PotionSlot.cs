@@ -28,7 +28,7 @@ public class PotionSlot : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.Alpha4))
         {
             PotionUse();
         }
@@ -71,16 +71,7 @@ public class PotionSlot : MonoBehaviour
         {
             if (slot.item.itemName == _item.itemName)
             {
-                if(slot.itemCount < _count)
-                {
-                    slot.SetSlotCount(_count);
-
-                    if (slot.itemCount > _count)
-                    {
-                        slot.itemCount = _count;
-                    }
-                }
-                
+                slot.SetSlotCount(_count);
                 return;
             }
         }

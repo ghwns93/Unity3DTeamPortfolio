@@ -28,7 +28,7 @@ public class MaterialChest : MonoBehaviour
         slots = slotparent.GetComponentsInChildren<ChestSlot>();
     }
 
-    public void AcquireItem(Item _item, int _count = 1)
+    public void AcquireItem(Item _item, int _count)
     {
         if (_item == null)
         {

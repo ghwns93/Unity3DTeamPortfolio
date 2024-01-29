@@ -53,7 +53,7 @@ public class Shopslot : MonoBehaviour
             }
             else if (item.itemType == Item.ObjectType.Potion)
             {
-                ConsumablesChest.Instance.AcquireItem(item);
+                ConsumablesChest.Instance.AcquireItem(item, 1);
                 PlayerState.Instance.Money -= price;
                 Debug.Log("구매 성공");
                 exitClicked();

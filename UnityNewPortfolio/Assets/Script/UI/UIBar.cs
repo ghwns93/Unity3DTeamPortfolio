@@ -15,10 +15,9 @@ public class UIBar : MonoBehaviour
             hp_Bar.value = PlayerState.Instance.Hp / PlayerState.Instance.HpMax;
         }
 
-        if(sp_Bar != null)
+        if (sp_Bar != null)
         {
             sp_Bar.value = PlayerState.Instance.Stamina / PlayerState.Instance.StaminaMax;
-
         }
     }
 }
