@@ -20,6 +20,6 @@ public class Timer : MonoBehaviour
         hour = (int)currentTime / 3600;
         minute = (int)(currentTime / 60) % 60;
         second = (int)currentTime % 60;
-        text_Time.text = hour.ToString("00") + " : " + minute.ToString("00") + " : " + second.ToString("00");
+        if(text_Time != null) text_Time.text = hour.ToString("00") + " : " + minute.ToString("00") + " : " + second.ToString("00");
     }
 }
