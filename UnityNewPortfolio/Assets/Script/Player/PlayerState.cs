@@ -20,12 +20,30 @@ public class PlayerState : MonoBehaviour
     }
 
     [SerializeField]
+    private float hpmax;
+
+    public float HpMax
+    {
+        get { return hpmax; }
+        set { hpmax = value; }
+    }
+
+    [SerializeField]
     private float stamina;
 
     public float Stamina
     {
         get { return stamina; }
         set { stamina = value; }
+    }
+
+    [SerializeField]
+    private float staminamax;
+
+    public float StaminaMax
+    {
+        get { return staminamax; }
+        set { staminamax = value; }
     }
 
     [SerializeField]
