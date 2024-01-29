@@ -8,7 +8,7 @@ using UnityEngine.UI;
 using static UnityEngine.InputManagerEntry;
 using static UnityEngine.Rendering.DebugUI;
 
-public class Enemy_VS : EnemyStat
+public class Enemy_VA : EnemyStat
 {
     // 플레이어 스크립트
     PlayerState pStat;
@@ -29,7 +29,7 @@ public class Enemy_VS : EnemyStat
     protected float currentTime = 0.0f;
 
     // 딜레이
-    protected float attackDelay = 2.0f;
+    protected float attackDelay = 3.0f;
 
     // 적 초기 위치
     Vector3 originPos;
@@ -61,8 +61,8 @@ public class Enemy_VS : EnemyStat
         exp = 50.0f;
         sight = 15.0f;
         lostSight = 22.0f;
-        attackRange1 = 1.0f;
-        attackRange2 = 2.5f;
+        attackRange1 = 10.0f;
+        attackRange2 = 10.0f;
         morale = 100.0f;
 
 
@@ -90,8 +90,6 @@ public class Enemy_VS : EnemyStat
         waitTimer = waitTime;
 
         isFinded= false;
-
-        GameObject arrow = GameObject.FindGameObjectWithTag("Arrow");
     }
 
     // Update is called once per frame
@@ -234,7 +232,7 @@ public class Enemy_VS : EnemyStat
             // 플레이어를 향해 방향 전환
             transform.forward = dir;
 
-
+            return;
         }
 
         // 플레이어와의 거리가 소실 거리 밖이면 원래대로 patrol 한다.
@@ -259,6 +257,7 @@ public class Enemy_VS : EnemyStat
 
             // 공격 대기 애니메이션
             anim.SetTrigger("MoveToAttackDelay");
+
         }
     }
 
@@ -278,17 +277,26 @@ public class Enemy_VS : EnemyStat
         // 플레이어가 공격 범위 내라면 공격을 시작한다
         if (Vector3.Distance(transform.position, player.position) < attackRange1)
         {
-            // 일정시간마다 공격한다
+                  
+
+            // 일정시간마.다 공격한다
             // 누적된 시간이 딜레이를 넘어설 때마다 초기화
             currentTime += Time.deltaTime;
             if (currentTime > attackDelay)
             {
+                Debug.Log("아아아");
+                Debug.Log(originRot);
+                transform.Rotate(0, 90, 0, Space.Self);
+                Debug.Log(transform.rotation);
+
                 print("공격!");
                 AttackAction();
                 currentTime = 0;
 
                 // 공격 애니메이션
                 anim.SetTrigger("StartAttack");
+
+                transform.rotation = originRot;
             }
         }
         // 공격 범위를 벗어났다면 현재 상태를 Move로 전환한다 (재추격)
@@ -370,7 +378,14 @@ public class Enemy_VS : EnemyStat
     // 데미지 처리 함수
     public void HitEnemy(int hitPower)
     {
-       
+
+        // 피격, 사망, 복귀 상태일 경우에는 함수 즉시 종료
+        if (E_State == EnemyState.Damaged ||
+            E_State == EnemyState.Die ||
+            E_State == EnemyState.Return)
+        {
+            return;
+        }
 
         // 플레이어의 공격력만큼 적 체력을 감소시켜준다
         hp -= hitPower;

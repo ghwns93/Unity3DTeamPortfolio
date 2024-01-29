@@ -38,15 +38,23 @@ public class PotionSlot : MonoBehaviour
     {
         if (slot.item != null)
         {
-            PlayerState.Instance.Hp += 50;
-
-            slot.itemCount--;
-
-            slot.text_Count.text = slot.itemCount.ToString();
-
-            if (slot.itemCount < 1)
+            if (PlayerState.Instance.Hp < PlayerState.Instance.HpMax)
             {
-                slot.ClearSlot();
+                PlayerState.Instance.Hp += 50;
+
+                if(PlayerState.Instance.Hp >= PlayerState.Instance.HpMax) 
+                {
+                    PlayerState.Instance.Hp = PlayerState.Instance.HpMax;
+                }
+
+                slot.itemCount--;
+
+                slot.text_Count.text = slot.itemCount.ToString();
+
+                if (slot.itemCount < 1)
+                {
+                    slot.ClearSlot();
+                }
             }
         }
     }
