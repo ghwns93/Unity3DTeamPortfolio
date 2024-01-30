@@ -9,7 +9,9 @@ public class ConsumablesChest : MonoBehaviour
     [SerializeField]
     private ChestSlot[] slots;
 
-    private static ConsumablesChest Cchest;
+    public List<Item> cItem;
+
+    private static ConsumablesChest Cchest = null;
 
     public static ConsumablesChest Instance
     {
@@ -18,6 +20,7 @@ public class ConsumablesChest : MonoBehaviour
             if (Cchest == null)
             {
                 Cchest = FindObjectOfType<ConsumablesChest>();
+                
             }
             return Cchest;
         }
@@ -25,6 +28,10 @@ public class ConsumablesChest : MonoBehaviour
 
     private void Awake()
     {
+        if (Cchest == null)
+        {
+            DontDestroyOnLoad(gameObject);
+        }
         slots = slotparent.GetComponentsInChildren<ChestSlot>();
     }
 

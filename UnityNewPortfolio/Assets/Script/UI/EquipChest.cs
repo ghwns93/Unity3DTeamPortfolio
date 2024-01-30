@@ -1,32 +1,46 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class EquipChest : MonoBehaviour
 {
     [SerializeField]
     private GameObject slotparent;
-    //[SerializeField]
+    [SerializeField]
     private ChestSlot[] slots;
 
-    private static EquipChest Echest;
+    public List<Item> eItem;
+
+    private static EquipChest Echest = null;
+
+    private void Awake()
+    {
+        if (null == Echest)
+        {
+            Echest = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
+    private void Start()
+    {
+        slots = slotparent.GetComponentsInChildren<ChestSlot>();
+    }
 
     public static EquipChest Instance
     {
         get
         {
-            if (Echest == null)
+            if (null == Echest)
             {
-                Echest = FindObjectOfType<EquipChest>();
+                return null;
             }
             return Echest;
         }
-    }
-
-    private void Awake()
-    {
-        slots = slotparent.GetComponentsInChildren<ChestSlot>();
     }
 
     public void AcquireItem(Item _item, int _count = 1)
