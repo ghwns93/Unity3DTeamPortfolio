@@ -12,6 +12,10 @@ public class AnvilController : MonoBehaviour
     public GameObject Inven;
     public Image itemImage;
     public Text informationText;
+    public Image stateBackground;
+    public Text stateText;
+
+    public int priceGold = 500;
 
     GameObject target;
     Text text;
@@ -20,6 +24,8 @@ public class AnvilController : MonoBehaviour
     PlayerController playerController;
 
     Slot selectedSlot;
+
+    IEnumerator nowCoroutine;
 
     // Start is called before the first frame update
     void Start()
@@ -147,8 +153,23 @@ public class AnvilController : MonoBehaviour
             ItemInfo items = selectedSlot.Items;
             if (items != null) 
             {
-                items.item.itemEnhance++;
-                InfoTextView(items);
+                int money = PlayerState.Instance.Money;
+
+                if (money >= priceGold)
+                {
+                    items.item.itemEnhance++;
+                    money -= priceGold;
+                    InfoTextView(items);
+
+                    PlayerState.Instance.Money = money;
+                }
+                else
+                {
+                    if(nowCoroutine != null) StopCoroutine(nowCoroutine);
+                    Debug.Log("골드 없음");
+                    nowCoroutine = FadeOut();
+                    StartCoroutine(nowCoroutine);
+                }
             }
         }
     }
@@ -163,5 +184,17 @@ public class AnvilController : MonoBehaviour
         informationText.text = "강화 수치\n";
         itemImage.sprite = null;
         itemImage.color = new Color(1, 1, 1, 0);
+    }
+
+    IEnumerator FadeOut()
+    {
+        float fadeCount = 1; // 처음 알파값
+        while(fadeCount > 0.0f) // 알파 값이 0일 될때까지 반복
+        {
+            fadeCount -= 0.005f;
+            yield return new WaitForSeconds(0.005f); // 0.01초 마다 실행
+            stateBackground.color = new Color(0, 0, 0, fadeCount);
+            stateText.color = new Color(1,1,1, fadeCount);
+        }
     }
 }
