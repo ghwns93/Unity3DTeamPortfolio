@@ -16,11 +16,11 @@ public class StatText : MonoBehaviour
     //public Text text_ms;    // ¿Ãµøº”µµ
     public Text text_gold;  // µ∑
 
-    void Update()
+    void LateUpdate()
     {
-        //text_lv.text = PlayerState.Instance.Level.ToString("00");
-        //text_hp.text = PlayerState.Instance.Hp.ToString("00000");
-        //text_sp.text = PlayerState.Instance.Stamina.ToString("00000");
-        //text_gold = PlayerState.Instance.Money.ToString("00000") + " G";
+        text_lv.text = PlayerState.Instance.Level.ToString("00");
+        text_hp.text = PlayerState.Instance.Hp.ToString("00000");
+        text_sp.text = PlayerState.Instance.Stamina.ToString("00000");
+        text_gold.text = PlayerState.Instance.Money.ToString("00000") + " G";
     }
 }

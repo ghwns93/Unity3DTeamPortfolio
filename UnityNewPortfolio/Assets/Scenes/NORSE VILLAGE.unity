@@ -37461,6 +37461,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 1042696183885465556, guid: 090fcd9439994e0488a0fbd57a4bab07, type: 3}
+      propertyPath: money
+      value: 1500
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 090fcd9439994e0488a0fbd57a4bab07, type: 3}
 --- !u!1001 &1129026106
@@ -62943,6 +62947,37 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4624827604402262038, guid: 96ebe577fc1324e479a1c5a309ea02d7, type: 3}
   m_PrefabInstance: {fileID: 1872483204}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1875736261
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1875736262}
+  m_Layer: 0
+  m_Name: QuestManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1875736262
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1875736261}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 960, y: 540, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 18
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1880331322
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -70686,7 +70721,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1449696250939385996, guid: ceae5396bed806f498ceb53c72aa4678, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -54
+      value: -52
       objectReference: {fileID: 0}
     - target: {fileID: 1449696250939385996, guid: ceae5396bed806f498ceb53c72aa4678, type: 3}
       propertyPath: m_LocalPosition.y
