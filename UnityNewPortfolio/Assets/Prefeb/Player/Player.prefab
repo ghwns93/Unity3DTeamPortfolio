@@ -92,6 +92,10 @@ PrefabInstance:
       propertyPath: rotateSpeed
       value: 300
       objectReference: {fileID: 0}
+    - target: {fileID: 1373365737234726464, guid: f42f96647b045dc4f92a875384748f71, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 119
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f42f96647b045dc4f92a875384748f71, type: 3}
 --- !u!1 &2192991543281519974 stripped
@@ -111,6 +115,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 963839504918572288}
     m_Modifications:
+    - target: {fileID: 1754739158, guid: af2bfbce2b4b86841ad819130804c923, type: 3}
+      propertyPath: money
+      value: 1500
+      objectReference: {fileID: 0}
     - target: {fileID: 5638788334328055081, guid: af2bfbce2b4b86841ad819130804c923, type: 3}
       propertyPath: m_Name
       value: PlayerBody

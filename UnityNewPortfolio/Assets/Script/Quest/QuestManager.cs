@@ -2,42 +2,34 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class QuestManager : MonoBehaviour
 {
     public Quest nowQuest;
 
-    public GameObject questUi;
+    private static QuestManager instance = null;
 
-    private Text qProgress;
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
 
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
-        questUi = GameObject.Find("Image_Quest").gameObject;
-        if(questUi != null) qProgress = questUi.transform.GetChild(3).GetComponent<Text>();
-
-        ShowQuest();
     }
 
-    private void LateUpdate()
+    public static QuestManager Instance
     {
-        if(nowQuest != null && qProgress != null)
+        get
         {
-            qProgress.text = nowQuest.questNowCount.ToString() + "/" + nowQuest.questCount.ToString();
+            if (null == instance) return null;
+            return instance;
         }
     }
 
-    private void ShowQuest()
-    {
-        if (nowQuest != null)
-        {
-            Text qName = questUi.transform.GetChild(1).GetComponent<Text>();
-            Text qDesc = questUi.transform.GetChild(2).GetComponent<Text>();
-
-            qName.text = nowQuest.questName;
-            qDesc.text = nowQuest.questDesc;
-            qProgress.text = nowQuest.questNowCount.ToString() + "/" + nowQuest.questCount.ToString();
-        }
-    }
 }
