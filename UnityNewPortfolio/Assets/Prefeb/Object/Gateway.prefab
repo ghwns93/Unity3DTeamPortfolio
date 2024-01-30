@@ -193,7 +193,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Worldmap: {fileID: 0}
   length: 6
-  canvas: {fileID: 0}
+  canvas: {fileID: 7691083273158737960}
 --- !u!1 &7691083272992262420
 GameObject:
   m_ObjectHideFlags: 0
