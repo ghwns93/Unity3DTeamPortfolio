@@ -9,7 +9,7 @@ public class Inventory : MonoBehaviour
     [SerializeField]
     private Transform slotParent;
     [SerializeField]
-    public Slot[] slots;
+    private Slot[] slots;
 
     private static Inventory instance = null;
 
