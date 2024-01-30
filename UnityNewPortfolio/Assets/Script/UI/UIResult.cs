@@ -34,67 +34,56 @@ public class UIResult : MonoBehaviour
 
         for (int i = 0; i < Inventory.Instance.slots.Length; i++)
         {
-            slots[i].Items = Inventory.Instance.slots[i].Items;
+            slots[i].Itemc = Inventory.Instance.slots[i].Items;
         }
-
-        EquipchestPrefab.SetActive(true);
-        ConsumablechestPrefab.SetActive(true);
-        MaterialchestPrefab.SetActive(true);
-
-        EquipchestPrefab.GetComponent<RectTransform>().position = new Vector3(3000f, 2000f);
-        ConsumablechestPrefab.GetComponent<RectTransform>().position = new Vector3(3000f, 2000f);
-        MaterialchestPrefab.GetComponent<RectTransform>().position = new Vector3(3000f, 2000f);
     }
 
     public void GetallItem()        // 모두 받기 클릭
     {
         for (int i = 0; i < Inventory.Instance.slots.Length; i++)
         {
-            if (slots[i].Items != null)
-            {
-                while (slots[i].Items != null)
-                {
-                    if (slots[i].Items.item.itemType == Item.ObjectType.Weapon)
-                    {
-                        EquipChest.Instance.AcquireItem(slots[i].Items.item);
-                        Inventory.Instance.slots[i].Items = null;
-                        slots[i].Items = null;
-                        return;
-                    }
-                    if (slots[i].Items.item.itemType == Item.ObjectType.Material)
-                    {
-                        MaterialChest.Instance.AcquireItem(slots[i].Items.item, slots[i].Items.count);
-                        Inventory.Instance.slots[i].Items = null;
-                        slots[i].Items = null;
-                        return;
-                    }
+            ItemInfo currentItem = Inventory.Instance.slots[i].Items;
 
-                    if (slots[i].Items.item.itemType == Item.ObjectType.Potion)
-                    {
-                        ConsumablesChest.Instance.AcquireItem(slots[i].Items.item, slots[i].Items.count);
-                        Inventory.Instance.slots[i].Items = null;
-                        slots[i].Items = null;
-                        return;
-                    }
-                }                
-            }
-            if (slots[i].Items == null)
+            if (currentItem != null)
             {
-                getitem.interactable = false;
-                villagemove.interactable = true;
+                switch (currentItem.item.itemType)
+                {
+                    case Item.ObjectType.Weapon:
+                        EquipChest.Instance.AddItem(currentItem.item);
+                        break;
+
+                    case Item.ObjectType.Material:
+                        MaterialChest.Instance.AddItem(currentItem.item, currentItem.count);
+                        break;
+
+                    case Item.ObjectType.Potion:
+                        ConsumablesChest.Instance.AddItem(currentItem.item, currentItem.count);
+                        break;
+                }
+
+                // 인벤토리 슬롯 초기화
+                Inventory.Instance.slots[i].Items = null;
             }
-        }        
+        }
+
+        // 인벤토리 슬롯 갱신
+        for (int i = 0; i < slots.Length; i++)
+        {
+            slots[i].Itemc = null;
+        }
+
+        // UI 버튼 상태 조정
+        getitem.interactable = false;
+        villagemove.interactable = true;
     }
+
+
 
     public void VillageMoveButtonClicked()  // 마을로 이동 클릭
     {
         pc.isUiOpen = false;
         getitem.interactable = true;
         villagemove.interactable = false;
-
-        EquipchestPrefab.SetActive(false);
-        ConsumablechestPrefab.SetActive(false);
-        MaterialchestPrefab.SetActive(false);
 
         LoadingSceneManager.LoadScene(nextScene);
     }

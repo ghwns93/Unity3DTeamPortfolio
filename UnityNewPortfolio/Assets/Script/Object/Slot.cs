@@ -1,17 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using static UnityEditor.Progress;
 
-public class Slot : MonoBehaviour
+public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
 	Image image;
-	Text count;
+	public Text count;
 	public GameObject countobject;
 
-	ItemInfo items;
+    public Tooltip tooltip;
+
+    ItemInfo items;
 
     private void Awake()
     {
@@ -64,5 +66,90 @@ public class Slot : MonoBehaviour
                 countobject.SetActive(false);
             }
         }
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (tooltip != null)
+        {
+            if (Itemc != null)
+            {
+                tooltip.ShowToolTip(items.item, transform.position);
+            }
+        }
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (tooltip != null)
+        {
+            tooltip.HideToolTip();
+        }
+    }
+
+    public void slotClicked()
+    {
+        //if (items != null && items.item.itemType == Item.ObjectType.Potion)
+        //{
+        //    PotionSlot.Instance.RegisterPotionToQuickSlot(items);
+
+        //    items = null;
+        //}
+        //else if (items != null && items.item.itemType == Item.ObjectType.Weapon)
+        //{
+        //    if (WeaponslotController.Instance.slot.Itemc.item == null)    // 장착중인 무기가 없을 때
+        //    {
+        //        WeaponslotController.Instance.RegisterWeaponToSlot(items);
+
+        //        items = null;
+        //    }
+        //    else        // 장착중인 무기가 있을 때
+        //    {
+        //        ItemInfo tempitem = WeaponslotController.Instance.slot.items;
+
+        //        WeaponslotController.Instance.RegisterWeaponToSlot(items);
+        //        items = tempitem;
+        //    }
+        //}
+
+        Debug.Log("slotClicked - Start");
+
+        if (items != null)
+        {
+            if (items.item != null)
+            {
+                Debug.Log("item is not null");
+
+                if (items.item.itemType == Item.ObjectType.Potion)
+                {
+                    PotionSlot.Instance.RegisterPotionToQuickSlot(items);
+                    items = null;
+                }
+                else if (items.item.itemType == Item.ObjectType.Weapon)
+                {
+                    if (WeaponslotController.Instance.slot.Itemc.item == null)
+                    {
+                        WeaponslotController.Instance.RegisterWeaponToSlot(items);
+                        items = null;
+                    }
+                    else
+                    {
+                        ItemInfo tempitem = WeaponslotController.Instance.slot.items;
+                        WeaponslotController.Instance.RegisterWeaponToSlot(items);
+                        items = tempitem;
+                    }
+                }
+            }
+            else
+            {
+                Debug.Log("item is null");
+            }
+        }
+        else
+        {
+            Debug.Log("items is null");
+        }
+
+        Debug.Log("slotClicked - End");
     }
 }

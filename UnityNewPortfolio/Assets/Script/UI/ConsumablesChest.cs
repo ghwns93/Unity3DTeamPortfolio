@@ -7,64 +7,87 @@ public class ConsumablesChest : MonoBehaviour
     [SerializeField]
     private GameObject slotparent;
     [SerializeField]
-    private ChestSlot[] slots;
+    private Slot[] slots;
 
-    public List<Item> cItem;
+    public List<ItemInfo> cItem = new List<ItemInfo>();
 
     private static ConsumablesChest Cchest = null;
+
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        slots = slotparent.GetComponentsInChildren<Slot>();
+    }
+#endif
+
+    private void Awake()
+    {
+        if (null == Cchest)
+        {
+            Cchest = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
+    private void Start()
+    {
+        FreshSlot();
+    }    
+
+    public void AddItem(Item item, int count)
+    {
+        if (cItem.Count < slots.Length)
+        {
+            bool isDup = false;
+            foreach (var n in cItem)
+            {
+                if (n.item == item)
+                {
+                    n.count += count;
+                    isDup = true;
+                }
+            }
+
+            if (!isDup)
+            {
+                cItem.Add(new ItemInfo { item = item, count = count });
+            }
+
+            FreshSlot();
+        }
+        else
+        {
+            Debug.Log("슬롯이 가득 차 있습니다.");
+        }
+    }
+
+    public void FreshSlot()
+    {
+        int i = 0;
+
+        for (; i < cItem.Count && i < slots.Length; i++)
+        {
+            slots[i].Itemc = cItem[i];
+        }
+        for (; i < slots.Length; i++)
+        {
+            slots[i].Itemc = null;
+        }
+    }
 
     public static ConsumablesChest Instance
     {
         get
         {
-            if (Cchest == null)
+            if (null == Cchest)
             {
-                Cchest = FindObjectOfType<ConsumablesChest>();
-                
+                return null;
             }
             return Cchest;
-        }
-    }
-
-    private void Awake()
-    {
-        if (Cchest == null)
-        {
-            DontDestroyOnLoad(gameObject);
-        }
-        slots = slotparent.GetComponentsInChildren<ChestSlot>();
-    }
-
-    public void AcquireItem(Item _item, int _count)
-    {
-        if (_item == null)
-        {
-            Debug.LogError("아이템이 null입니다.");
-            return;
-        }
-
-        if (_item.itemType != Item.ObjectType.Weapon)
-        {
-            for (int i = 0; i < slots.Length; i++)
-            {
-                if (slots[i].item != null)
-                {
-                    if (slots[i].item.itemName == _item.itemName)
-                    {
-                        slots[i].SetSlotCount(_count);
-                        return;
-                    }
-                }
-            }
-        }
-
-        for (int i = 0; i < slots.Length; i++)
-        {
-            if (slots[i].item == null)
-            {
-                slots[i].AddItem(_item, _count);
-                return;
-            }
         }
     }
 }

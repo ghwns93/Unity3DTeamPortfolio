@@ -7,11 +7,18 @@ public class EquipChest : MonoBehaviour
     [SerializeField]
     private GameObject slotparent;
     [SerializeField]
-    private ChestSlot[] slots;
+    private Slot[] slots;
 
-    public List<Item> eItem;
+    public List<ItemInfo> eItem = new List<ItemInfo>();
 
     private static EquipChest Echest = null;
+
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        slots = slotparent.GetComponentsInChildren<Slot>();
+    }
+#endif
 
     private void Awake()
     {
@@ -28,7 +35,49 @@ public class EquipChest : MonoBehaviour
 
     private void Start()
     {
-        slots = slotparent.GetComponentsInChildren<ChestSlot>();
+        FreshSlot();
+    }    
+
+    public void AddItem(Item item)
+    {
+        if (eItem.Count < slots.Length)
+        {
+            bool isDup = false;
+            foreach (var n in eItem)
+            {
+                if (n.item == item)
+                {
+                    n.count++;
+                    isDup = true;
+                }
+            }
+
+            if (!isDup)
+            {
+                eItem.Add(new ItemInfo { item = item, count = 1 });
+            }
+
+            FreshSlot();
+        }
+        else
+        {
+            Debug.Log("슬롯이 가득 차 있습니다.");
+        }
+    }
+
+
+    public void FreshSlot()
+    {
+        int i = 0;
+
+        for (; i < eItem.Count && i < slots.Length; i++)
+        {
+            slots[i].Itemc = eItem[i];
+        }
+        for (; i < slots.Length; i++)
+        {
+            slots[i].Itemc = null;
+        }
     }
 
     public static EquipChest Instance
@@ -40,39 +89,6 @@ public class EquipChest : MonoBehaviour
                 return null;
             }
             return Echest;
-        }
-    }
-
-    public void AcquireItem(Item _item, int _count = 1)
-    {
-        if (_item == null)
-        {
-            Debug.LogError("아이템이 null입니다.");
-            return;
-        }
-
-        if (_item.itemType != Item.ObjectType.Weapon)
-        {
-            for (int i = 0; i < slots.Length; i++)
-            {
-                if (slots[i].item != null)
-                {
-                    if (slots[i].item.itemName == _item.itemName)
-                    {
-                        slots[i].SetSlotCount(_count);
-                        return;
-                    }
-                }
-            }
-        }
-
-        for (int i = 0; i < slots.Length; i++)
-        {
-            if (slots[i].item == null)
-            {
-                slots[i].AddItem(_item, _count);
-                return;
-            }
         }
     }
 }

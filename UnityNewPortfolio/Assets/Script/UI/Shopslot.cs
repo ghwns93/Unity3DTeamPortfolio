@@ -46,14 +46,14 @@ public class Shopslot : MonoBehaviour
         {
             if (item.itemType == Item.ObjectType.Weapon)
             {
-                EquipChest.Instance.AcquireItem(item);
+                EquipChest.Instance.AddItem(item);
                 PlayerState.Instance.Money -= price;
                 Debug.Log("备概 己傍");
                 exitClicked();
             }
             else if (item.itemType == Item.ObjectType.Potion)
             {
-                ConsumablesChest.Instance.AcquireItem(item, 1);
+                ConsumablesChest.Instance.AddItem(item, 1);
                 PlayerState.Instance.Money -= price;
                 Debug.Log("备概 己傍");
                 exitClicked();

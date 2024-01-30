@@ -5,25 +5,39 @@ using UnityEngine;
 
 public class PotionSlot : MonoBehaviour
 {
-    private ChestSlot slot;
+    private Slot slot;
 
-    private static PotionSlot Pqs;
+    private static PotionSlot instance = null;
+
+    void Awake()
+    {
+        if (null == instance)
+        {
+            instance = this;
+
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+    }
 
     public static PotionSlot Instance
     {
         get
         {
-            if (Pqs == null)
+            if (null == instance)
             {
-                Pqs = FindObjectOfType<PotionSlot>();
+                return null;
             }
-            return Pqs;
+            return instance;
         }
     }
 
     private void Start()
     {
-        slot = GetComponent<ChestSlot>();
+        slot = GetComponent<Slot>();
     }
 
     private void Update()
@@ -36,7 +50,7 @@ public class PotionSlot : MonoBehaviour
 
     public void PotionUse()
     {
-        if (slot.item != null)
+        if (slot.Itemc.item != null)
         {
             if (PlayerState.Instance.Hp < PlayerState.Instance.HpMax)
             {
@@ -47,39 +61,54 @@ public class PotionSlot : MonoBehaviour
                     PlayerState.Instance.Hp = PlayerState.Instance.HpMax;
                 }
 
-                slot.itemCount--;
+                slot.Itemc.count--;
 
-                slot.text_Count.text = slot.itemCount.ToString();
+                slot.count.text = slot.Itemc.count.ToString();
 
-                if (slot.itemCount < 1)
+                if (slot.Itemc.count < 1)
                 {
-                    slot.ClearSlot();
+                    slot.Itemc = null;
                 }
             }
         }
     }
 
-    public void RegisterPotionToQuickSlot(Item _item, int _count)
+    public void RegisterPotionToQuickSlot(ItemInfo iteminfo)
     {
-        if (_item == null)
+        //if (iteminfo == null)
+        //{
+        //    Debug.Log("아이템이 null입니다.");
+        //    return;
+        //}
+
+        //if (slot.Itemc != null)
+        //{
+        //    if (slot.Itemc.item.itemName == iteminfo.item.itemName)
+        //    {
+        //        iteminfo.count = slot.Itemc.count;
+        //    }
+        //}
+        //else if (slot.Itemc == null)
+        //{
+        //    slot.Itemc = iteminfo;
+        //}
+
+        if (iteminfo == null)
         {
             Debug.Log("아이템이 null입니다.");
             return;
         }
 
-        if (slot.item != null)
+        if (slot != null && slot.Itemc != null)
         {
-            if (slot.item.itemName == _item.itemName)
+            if (slot.Itemc.item != null && iteminfo.item != null && slot.Itemc.item.itemName == iteminfo.item.itemName)
             {
-                slot.SetSlotCount(_count);
-                return;
+                iteminfo.count = slot.Itemc.count;
             }
         }
-
-        if (slot.item == null)
+        else if (slot != null && slot.Itemc == null)
         {
-            slot.AddItem(_item, _count);
-            return;
+            slot.Itemc = iteminfo;
         }
     }
 }

@@ -81,29 +81,29 @@ public class ChestSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
         }        
     }
 
-    public void slotClicked()
-    {
-        if (item != null && item.itemType == Item.ObjectType.Potion)
-        {
-            PotionSlot.Instance.RegisterPotionToQuickSlot(item, itemCount);
-            ClearSlot();
-        }
-        else if (item != null && item.itemType == Item.ObjectType.Weapon)
-        {
-            if (WeaponslotController.Instance.slot.item == null)
-            {
-                WeaponslotController.Instance.RegisterWeaponToSlot(item, itemCount);
-                ClearSlot();
-            }
-            else
-            {
-                Item tempitem = WeaponslotController.Instance.slot.item;
+    //public void slotClicked()
+    //{
+    //    if (item != null && item.itemType == Item.ObjectType.Potion)
+    //    {
+    //        PotionSlot.Instance.RegisterPotionToQuickSlot(item, itemCount);
+    //        ClearSlot();
+    //    }
+    //    else if (item != null && item.itemType == Item.ObjectType.Weapon)
+    //    {
+    //        if (WeaponslotController.Instance.slot.item == null)
+    //        {
+    //            WeaponslotController.Instance.RegisterWeaponToSlot(item, itemCount);
+    //            ClearSlot();
+    //        }
+    //        else
+    //        {
+    //            Item tempitem = WeaponslotController.Instance.slot.item;
 
-                WeaponslotController.Instance.RegisterWeaponToSlot(item, itemCount);
+    //            WeaponslotController.Instance.RegisterWeaponToSlot(item, itemCount);
 
-                EquipChest.Instance.AcquireItem(tempitem);
-                ClearSlot();
-            }
-        }
-    }
+    //            //EquipChest.Instance.AcquireItem(tempitem);
+    //            ClearSlot();
+    //        }
+    //    }
+    //}
 }
