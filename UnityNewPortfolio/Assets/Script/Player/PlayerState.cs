@@ -8,7 +8,8 @@ public class PlayerState : MonoBehaviour
     private static PlayerState playerInstance = null;
 
     // 적 정보를 전달받을 스크립트
-    public Enemy_VS efsm;
+    public Enemy_VS VS;
+    public Enemy_VA VA;
 
     [SerializeField]
     private float hp;
@@ -91,8 +92,16 @@ public class PlayerState : MonoBehaviour
 
     public void PlayerHit()
     {
-        efsm.AttackAction();
+        if (VS != null)
+        {
+            VS.AttackAction();
+        }
+        else if (VA != null)
+        {
+            VA.AttackAction();
+        }
     }
+
 
     public void DamageAction(int damage)
     {

@@ -7,6 +7,7 @@ public class WeaponPower : MonoBehaviour
 {
    
     Enemy_VS EV;
+    Enemy_VA EA;
     PlayerController PCR;
 
     // 플레이어 정보를 전달받을 스크립트
@@ -53,6 +54,12 @@ public class WeaponPower : MonoBehaviour
 
             // Enemy_VS 스크립트가 있다면, hp를 감소시킵니다.
             if (EV != null)
+            {
+                Debug.Log("충돌판정 체력감소");
+                EV.HitEnemy(power);
+            }
+            // Enemy_VS 스크립트가 있다면, hp를 감소시킵니다.
+            else if (EA != null)
             {
                 Debug.Log("충돌판정 체력감소");
                 EV.HitEnemy(power);

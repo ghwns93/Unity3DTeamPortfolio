@@ -2,6 +2,7 @@ using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -15,7 +16,7 @@ public class Enemy_VA : EnemyStat
     ArrowManager AM;
     // 적 상태 구조체
     EnemyState E_State;
-    
+
     // 플레이어 위치
     Transform player;
 
@@ -39,17 +40,22 @@ public class Enemy_VA : EnemyStat
     Animator anim;
 
     public Transform[] waypoints; // 웨이포인트 배열
-    
+
     public float waitTime = 0.5f; // 각 웨이포인트에서 대기하는 시간
 
     private int currentWaypointIndex = 0; // 현재 웨이포인트 인덱스
-    
+
     private float waitTimer;               // 대기 타이머
 
     public float rotateSpeed = 2.0f; // 회전 속도
 
     // 화살 오브젝트
-    public GameObject arrow;
+    public GameObject ArrowPrefab;
+
+    public Transform m_pullingHand;
+    public ArrowManager m_CurrentArrow;
+    float m_PullValue = 0.0f;
+
 
 
     // Start is called before the first frame update
@@ -79,7 +85,7 @@ public class Enemy_VA : EnemyStat
         {
             player = playerObject.transform;
         }
-        
+
 
         // 캐릭터 컨트롤러 가져오기
         cc = GetComponent<CharacterController>();
@@ -93,10 +99,12 @@ public class Enemy_VA : EnemyStat
 
         waitTimer = waitTime;
 
-        isFinded= false;
+        isFinded = false;
 
         // 초기 상태에서는 arrow를 비활성화합니다.
-        arrow.SetActive(false);
+        ArrowPrefab.SetActive(false);
+
+
     }
 
     // Update is called once per frame
@@ -191,13 +199,13 @@ public class Enemy_VA : EnemyStat
 
     private void Idle()
     {
-            print("상태 : Idle");
-            //enum 변수의 상태 전환
-            E_State = EnemyState.Patrol;
-            print("상태 전환 : Idle -> Patrol");
+        print("상태 : Idle");
+        //enum 변수의 상태 전환
+        E_State = EnemyState.Patrol;
+        print("상태 전환 : Idle -> Patrol");
 
-            //이동 애니메이션 전환하기
-            anim.SetTrigger("IdleToPatrol");
+        //이동 애니메이션 전환하기
+        anim.SetTrigger("IdleToPatrol");
     }
     private void Patrol()
     {
@@ -256,7 +264,7 @@ public class Enemy_VA : EnemyStat
 
         else
         {
-       
+
             E_State = EnemyState.Attack0;
             print("상태 전환 : Move -> Attack");
 
@@ -265,7 +273,7 @@ public class Enemy_VA : EnemyStat
 
 
             // 공격 딜레이 상태에서는 arrow를 활성화합니다.
-            
+
 
             // 공격 대기 애니메이션
             anim.SetTrigger("MoveToAttackDelay");
@@ -273,44 +281,44 @@ public class Enemy_VA : EnemyStat
         }
     }
 
-        private void Lost()
-        {
-            // enum 변수의 상태 전환
-            E_State = EnemyState.Patrol;
-            print("상태 전환 : Lost -> Patrol");
+    private void Lost()
+    {
+        // enum 변수의 상태 전환
+        E_State = EnemyState.Patrol;
+        print("상태 전환 : Lost -> Patrol");
 
-            // 이동 애니메이션 전환하기
-            anim.SetTrigger("LostToPatrol");
-       }
+        // 이동 애니메이션 전환하기
+        anim.SetTrigger("LostToPatrol");
+    }
 
     void Attack0()
     {
-        speed= 0;
+        speed = 0;
         // 플레이어가 공격 범위 내라면 공격을 시작한다
         if (Vector3.Distance(transform.position, player.position) < attackRange1)
         {
-  
+
             // 일정시간마.다 공격한다
             // 누적된 시간이 딜레이를 넘어설 때마다 초기화
             currentTime += Time.deltaTime;
             if (currentTime > attackDelay)
             {
-                Debug.Log(originRot);
                 transform.Rotate(0, 90, 0, Space.Self);
-                Debug.Log(transform.rotation);
 
                 print("공격!");
-                //AM.LaunchArrow();
+
                 currentTime = 0;
 
+                ArrowPrefab.SetActive(true);
 
-                arrow.SetActive(true);
+                FireArrow();
+
                 // 공격 애니메이션
                 anim.SetTrigger("StartAttack");
                 transform.rotation = originRot;
 
             }
-    }
+        }
         // 공격 범위를 벗어났다면 현재 상태를 Move로 전환한다 (재추격)
         else
         {
@@ -322,7 +330,7 @@ public class Enemy_VA : EnemyStat
 
             // 이동 애니메이션
             anim.SetTrigger("AttackToMove");
-        arrow.SetActive(false);
+            ArrowPrefab.SetActive(false);
         }
 
     }
@@ -447,32 +455,16 @@ public class Enemy_VA : EnemyStat
         print("상태 전환 : Damaged -> Move");
     }
 
-void MoveTowards(Vector3 target)
+    void MoveTowards(Vector3 target)
     {
         Vector3 direction = (target - transform.position).normalized;
         transform.position += direction * speed * Time.deltaTime;
     }
 
+    private void FireArrow()
+    {
+      
+    }
 
 }
 
-
-/*
-     // 투척 무기 (수류탄)
-     public GameObject bombFactory;
-    // 투척 강도
-    public float throwPower = 15.0f;
-    // 발사 무기 공격력
-    public int weaponPower = 5;
-    // 발사 위치
-    public GameObject firePosition;
-                   GameObject bomb = Instantiate(bombFactory);
-                    bomb.transform.position = firePosition.transform.position;
-
-                    // 수류탄 오브젝트의 RigidBody 컴포넌트를 전달받는다
-                    Rigidbody rb = bomb.GetComponent<Rigidbody>();
-
-                    // 카메라 정면 방향으로 던질 수 있도록 수류탄에 물리적인 힘을 가한다
-                    rb.AddForce(Camera.main.transform.forward * throwPower, ForceMode.Impulse);
- 
- */
