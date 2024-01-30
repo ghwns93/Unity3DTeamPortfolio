@@ -9,23 +9,36 @@ public class MaterialChest : MonoBehaviour
     [SerializeField]
     private ChestSlot[] slots;
 
-    private static MaterialChest Mchest;
+    private static MaterialChest Mchest = null;
+
+    private void Awake()
+    {
+        if (null == Mchest)
+        {
+            Mchest = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
+        }
+    }
+
+    private void Start()
+    {
+        slots = slotparent.GetComponentsInChildren<ChestSlot>();
+    }
 
     public static MaterialChest Instance
     {
         get
         {
-            if (Mchest == null)
+            if (null == Mchest)
             {
-                Mchest = FindObjectOfType<MaterialChest>();
+                return null;
             }
             return Mchest;
         }
-    }
-
-    private void Awake()
-    {
-        slots = slotparent.GetComponentsInChildren<ChestSlot>();
     }
 
     public void AcquireItem(Item _item, int _count)
@@ -60,4 +73,6 @@ public class MaterialChest : MonoBehaviour
             }
         }
     }
+
+
 }

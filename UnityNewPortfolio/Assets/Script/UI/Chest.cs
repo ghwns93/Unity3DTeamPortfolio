@@ -20,6 +20,7 @@ public class Chest : MonoBehaviour
     public float length = 5.0f;
 
     GameObject player;
+    PlayerController pc;
 
     private void Awake()
     {
@@ -39,6 +40,7 @@ public class Chest : MonoBehaviour
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        pc = player.GetComponent<PlayerController>();
         canvas.SetActive(false);
     }
 
@@ -67,6 +69,7 @@ public class Chest : MonoBehaviour
         panel_Box.SetActive(true);
         Debug.Log("창고 열림");
         OpenBox = true;
+        pc.isUiOpen = true;
         playerUI.SetActive(false);
         PotionSlot.SetActive(false);
     }
@@ -76,6 +79,7 @@ public class Chest : MonoBehaviour
         panel_Box.SetActive(false);
         Debug.Log("창고 닫힘");
         OpenBox = false;
+        pc.isUiOpen = false;
         playerUI.SetActive(true);
         PotionSlot.SetActive(true);
     }
@@ -84,7 +88,7 @@ public class Chest : MonoBehaviour
     {
         panel_Box.SetActive(false);
         EquipBox.SetActive(true);
-        EquipBox.GetComponent<RectTransform>().position = new Vector3(550f, 540f);
+        EquipBox.GetComponent<RectTransform>().position = new Vector3(500f, 540f);
         stat.SetActive(true);
         stat.GetComponent<RectTransform>().position = new Vector3(1376.5f, 540f);        
         Debug.Log("장비 상자 열림");

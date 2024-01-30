@@ -19,8 +19,16 @@ public class Tooltip : MonoBehaviour
                             0);
         tooltip_base.transform.position = _pos;
 
-        text_itemname.text = _item.itemName;
         text_itemdesc.text = _item.itemDesc;
+
+        if(_item.itemType==Item.ObjectType.Weapon)
+        {
+            text_itemname.text = _item.itemName + " + " + _item.itemEnhance;
+        }
+        else
+        {
+            text_itemname.text = _item.itemName;
+        }
 
         if (_item.itemType == Item.ObjectType.Weapon)
             text_itemused.text = "Å¬¸¯ - ÀåÂø";

@@ -21,6 +21,8 @@ public class Shop : MonoBehaviour
 
     bool shopOpened = false;    // false = ´ÝÈû true = ¿­¸²
 
+    PlayerController pc;
+
     private void Awake()
     {
         canvas_shop.SetActive(true);
@@ -36,6 +38,7 @@ public class Shop : MonoBehaviour
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
+        pc = player.GetComponent<PlayerController>();
     }
 
     private void Update()
@@ -46,6 +49,7 @@ public class Shop : MonoBehaviour
             {
                 if (Input.GetKeyDown(KeyCode.E))
                 {
+                    pc.isUiOpen = true;
                     canvas_shop.SetActive(true);
                     shopOpened = true;
                     slot_weapon.SetActive(true);
@@ -105,6 +109,7 @@ public class Shop : MonoBehaviour
         WeaponbuttonClick();
         canvas_shop.SetActive(false);
         shopOpened = false;
+        pc.isUiOpen = false;
 
         if (equipchest.activeSelf)
         {
