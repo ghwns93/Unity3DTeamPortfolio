@@ -12,7 +12,7 @@ public class Enemy_VA : EnemyStat
 {
     // 플레이어 스크립트
     PlayerState pStat;
-        
+    ArrowManager AM;
     // 적 상태 구조체
     EnemyState E_State;
     
@@ -50,6 +50,7 @@ public class Enemy_VA : EnemyStat
 
     // 화살 오브젝트
     public GameObject arrow;
+
 
     // Start is called before the first frame update
     void Start()
@@ -299,7 +300,7 @@ public class Enemy_VA : EnemyStat
                 Debug.Log(transform.rotation);
 
                 print("공격!");
-                AttackAction();
+                //AM.LaunchArrow();
                 currentTime = 0;
 
 
@@ -325,7 +326,7 @@ public class Enemy_VA : EnemyStat
         }
 
     }
-    
+
     /////////////////////////////////
 
     void MoveToNextWaypoint()
