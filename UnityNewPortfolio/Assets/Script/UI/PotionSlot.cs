@@ -75,24 +75,6 @@ public class PotionSlot : MonoBehaviour
 
     public void RegisterPotionToQuickSlot(ItemInfo iteminfo)
     {
-        //if (iteminfo == null)
-        //{
-        //    Debug.Log("아이템이 null입니다.");
-        //    return;
-        //}
-
-        //if (slot.Itemc != null)
-        //{
-        //    if (slot.Itemc.item.itemName == iteminfo.item.itemName)
-        //    {
-        //        iteminfo.count = slot.Itemc.count;
-        //    }
-        //}
-        //else if (slot.Itemc == null)
-        //{
-        //    slot.Itemc = iteminfo;
-        //}
-
         if (iteminfo == null)
         {
             Debug.Log("아이템이 null입니다.");
@@ -111,4 +93,21 @@ public class PotionSlot : MonoBehaviour
             slot.Itemc = iteminfo;
         }
     }
+
+    public void AddItem(ItemInfo iteminfo)
+    {
+        bool isDup = false;
+        if (slot.Itemc == iteminfo)
+        {
+            slot.Itemc.count += iteminfo.count;
+            isDup = true;
+        }
+
+        if (!isDup)
+        {
+            slot.Itemc = new ItemInfo { item = iteminfo.item, count = iteminfo.count };
+        }
+    }
 }
+
+

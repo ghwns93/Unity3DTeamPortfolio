@@ -89,67 +89,53 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void slotClicked()
     {
-        //if (items != null && items.item.itemType == Item.ObjectType.Potion)
+        //if (Itemc != null)
         //{
-        //    PotionSlot.Instance.RegisterPotionToQuickSlot(items);
-
-        //    items = null;
-        //}
-        //else if (items != null && items.item.itemType == Item.ObjectType.Weapon)
-        //{
-        //    if (WeaponslotController.Instance.slot.Itemc.item == null)    // 장착중인 무기가 없을 때
+        //    if (Itemc.item != null)
         //    {
-        //        WeaponslotController.Instance.RegisterWeaponToSlot(items);
-
-        //        items = null;
-        //    }
-        //    else        // 장착중인 무기가 있을 때
-        //    {
-        //        ItemInfo tempitem = WeaponslotController.Instance.slot.items;
-
-        //        WeaponslotController.Instance.RegisterWeaponToSlot(items);
-        //        items = tempitem;
+        //        if (Itemc.item.itemType == Item.ObjectType.Potion)
+        //        {
+        //            PotionSlot.Instance.AddItem(Itemc);
+        //            Itemc = null;
+        //        }
+        //        else if (Itemc.item.itemType == Item.ObjectType.Weapon)
+        //        {
+        //            if (WeaponslotController.Instance.slot.Itemc.item == null)
+        //            {
+        //                WeaponslotController.Instance.RegisterWeaponToSlot(Itemc);
+        //                Itemc = null;
+        //            }
+        //            else
+        //            {
+        //                ItemInfo tempitem = WeaponslotController.Instance.slot.Itemc;
+        //                WeaponslotController.Instance.RegisterWeaponToSlot(Itemc);
+        //                Itemc = tempitem;
+        //            }
+        //        }
         //    }
         //}
 
-        Debug.Log("slotClicked - Start");
-
-        if (items != null)
+        if (Itemc != null && Itemc.item.itemType == Item.ObjectType.Potion)
         {
-            if (items.item != null)
+            if (PotionSlot.Instance != null)
             {
-                Debug.Log("item is not null");
-
-                if (items.item.itemType == Item.ObjectType.Potion)
-                {
-                    PotionSlot.Instance.RegisterPotionToQuickSlot(items);
-                    items = null;
-                }
-                else if (items.item.itemType == Item.ObjectType.Weapon)
-                {
-                    if (WeaponslotController.Instance.slot.Itemc.item == null)
-                    {
-                        WeaponslotController.Instance.RegisterWeaponToSlot(items);
-                        items = null;
-                    }
-                    else
-                    {
-                        ItemInfo tempitem = WeaponslotController.Instance.slot.items;
-                        WeaponslotController.Instance.RegisterWeaponToSlot(items);
-                        items = tempitem;
-                    }
-                }
-            }
-            else
-            {
-                Debug.Log("item is null");
+                PotionSlot.Instance.AddItem(Itemc);
+                Itemc = null;
             }
         }
-        else
+        else if (Itemc != null && Itemc.item.itemType == Item.ObjectType.Weapon)
         {
-            Debug.Log("items is null");
+            WeaponslotController.Instance.RegisterWeaponToSlot(Itemc);
+            Itemc = null;
         }
+    }
 
-        Debug.Log("slotClicked - End");
+    public void disrobebuttonClicked()
+    {
+        if (Itemc != null)
+        {
+            EquipChest.Instance.AddItem(Itemc.item);
+            Itemc = null;
+        }
     }
 }

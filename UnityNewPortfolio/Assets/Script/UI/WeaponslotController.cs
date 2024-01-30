@@ -42,12 +42,15 @@ public class WeaponslotController : MonoBehaviour
 
     public void RegisterWeaponToSlot(ItemInfo iteminfo)
     {
-        if (iteminfo == null)
+        if (slot.Itemc != null)
         {
-            Debug.LogError("아이템이 null입니다.");
-            return;
+            ItemInfo tempiteminfo = slot.Itemc;
+            slot.Itemc = new ItemInfo { item = iteminfo.item, count = iteminfo.count };
+            EquipChest.Instance.AddItem(tempiteminfo.item);
         }
-
-        slot.Itemc = iteminfo;
+        else if(slot.Itemc==null)
+        {
+            slot.Itemc = new ItemInfo { item = iteminfo.item, count = iteminfo.count };
+        }
     }
 }

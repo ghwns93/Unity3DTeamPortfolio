@@ -123,13 +123,13 @@ public class Chest : MonoBehaviour
     {
         panel_Box.SetActive(false);
         MaterialBox.SetActive(true);
-        Debug.Log("소모품 상자 열림");
+        Debug.Log("재료 상자 열림");
     }
 
     public void MaterialBoxCloseButtonClicked()
     {
         MaterialBox.SetActive(false);
-        Debug.Log("소모품 상자 닫힘");
+        Debug.Log("재료 상자 닫힘");
         panel_Box.SetActive(true);
     }
 
