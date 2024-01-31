@@ -9,5 +9,8 @@ public class Quest : ScriptableObject
     public GameObject questSubject;
     public int questCount;
     public int questNowCount;
+    public int questPriceGold;
+    public Sprite mapImage;
     [TextArea] public string questDesc;
+    [TextArea] public string questStory;
 }

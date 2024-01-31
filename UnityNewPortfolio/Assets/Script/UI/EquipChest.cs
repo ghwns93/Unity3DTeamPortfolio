@@ -25,11 +25,6 @@ public class EquipChest : MonoBehaviour
         if (null == Echest)
         {
             Echest = this;
-            DontDestroyOnLoad(this.gameObject);
-        }
-        else
-        {
-            Destroy(this.gameObject);
         }
     }
 
@@ -72,11 +67,11 @@ public class EquipChest : MonoBehaviour
 
         for (; i < eItem.Count && i < slots.Length; i++)
         {
-            slots[i].Itemc = eItem[i];
+            slots[i].Items = eItem[i];
         }
         for (; i < slots.Length; i++)
         {
-            slots[i].Itemc = null;
+            slots[i].Items = null;
         }
     }
 

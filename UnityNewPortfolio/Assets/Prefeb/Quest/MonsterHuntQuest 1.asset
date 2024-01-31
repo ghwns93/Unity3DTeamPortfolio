@@ -10,14 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e845f93abc8f8584cb87fd506be411f1, type: 3}
-  m_Name: CollectQuest
+  m_Name: MonsterHuntQuest 1
   m_EditorClassIdentifier: 
-  questName: "\uBC14\uC704 \uCE90\uC624\uAE30"
-  questSubject: {fileID: 1588397796655271313, guid: acf5c21cad2d2f841b4c42d158d3ba0b, type: 3}
+  questName: "\uBAAC\uC2A4\uD130 \uC7A1\uAE30"
+  questSubject: {fileID: 0}
   questCount: 3
   questNowCount: 0
-  questPriceGold: 1500
+  questPriceGold: 2000
   mapImage: {fileID: 21300000, guid: 9d077cd863058724882b933b575051b2, type: 3}
-  questDesc: "\uBC14\uC704\uB97C 3\uAC1C \uC218\uC9D1."
-  questStory: "\uC758\uB8B0\uC778 : \uB300\uC7A5\uC7A5\uC774\n\n\uAC11\uC791\uC2A4\uB7EC\uC6B4
-    \uBB3C\uB7C9\uC73C\uB85C \uC778\uD574 \uB3CC\uC774 \uCD94\uAC00\uB85C \uD544\uC694\uD568"
+  questDesc: "\uC8FC\uBBFC\uC744 \uAD34\uB86D\uD788\uB294 \uBAAC\uC2A4\uD130\uB97C
+    3\uB9C8\uB9AC \uD1A0\uBC8C."
+  questStory: "\uC758\uB8B0\uC778 : \uCD0C\uC7A5\n\n\uC8FC\uBBFC\uC744 \uAD34\uB86D\uD788\uB294
+    \uBAAC\uC2A4\uD130\uAC00 \uB9CE\uC544\uC838\uC11C \uD1A0\uBC8C \uC694\uCCAD."

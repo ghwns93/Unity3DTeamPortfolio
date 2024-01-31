@@ -2,15 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEditor.Progress;
 
 public class Shopslot : MonoBehaviour
 {
     public Item item;
-    public GameObject description;
     Image image;
 
-    public int price;
-
+    public GameObject shopDesc;
+    public Text text_itemName;
+    public Text text_itemDesc;
+    public Text text_itemPrice;
 
     private void Start()
     {
@@ -27,16 +29,32 @@ public class Shopslot : MonoBehaviour
         }
     }
 
-    public void slotClicked()
+    public void slotClicked(Vector3 _pos)
     {
-        Vector3 mPos = Input.mousePosition;
-        description.transform.position = mPos;
-        description.SetActive(true);
+        shopDesc.SetActive(true);
+
+        _pos += new Vector3(shopDesc.GetComponent<RectTransform>().rect.width * 0.5f,
+                            -shopDesc.GetComponent<RectTransform>().rect.height * 0.5f,
+                            0);
+        shopDesc.transform.position = _pos;
+
+        text_itemDesc.text = item.itemDesc;
+
+        text_itemPrice.text = item.itemprice.ToString() + "G";
+
+        if (item.itemType == Item.ObjectType.Weapon)
+        {
+            text_itemName.text = item.itemName + " + " + item.itemEnhance;
+        }
+        else
+        {
+            text_itemName.text = item.itemName;
+        }
     }
 
     public void buyClicked()
     {
-        if (PlayerState.Instance.Money < price)
+        if (PlayerState.Instance.Money < item.itemprice)
         {
             Debug.Log("구매 실패");
             exitClicked();
@@ -47,14 +65,14 @@ public class Shopslot : MonoBehaviour
             if (item.itemType == Item.ObjectType.Weapon)
             {
                 EquipChest.Instance.AddItem(item);
-                PlayerState.Instance.Money -= price;
+                PlayerState.Instance.Money -= item.itemprice;
                 Debug.Log("구매 성공");
                 exitClicked();
             }
             else if (item.itemType == Item.ObjectType.Potion)
             {
                 ConsumablesChest.Instance.AddItem(item, 1);
-                PlayerState.Instance.Money -= price;
+                PlayerState.Instance.Money -= item.itemprice;
                 Debug.Log("구매 성공");
                 exitClicked();
             }
@@ -64,6 +82,6 @@ public class Shopslot : MonoBehaviour
     // 나가기 클릭 시
     public void exitClicked()
     {
-        description.SetActive(false);
+        shopDesc.SetActive(false);
     }
 }

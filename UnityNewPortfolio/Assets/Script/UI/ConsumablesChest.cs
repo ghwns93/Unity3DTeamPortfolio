@@ -25,11 +25,6 @@ public class ConsumablesChest : MonoBehaviour
         if (null == Cchest)
         {
             Cchest = this;
-            DontDestroyOnLoad(this.gameObject);
-        }
-        else
-        {
-            Destroy(this.gameObject);
         }
     }
 
@@ -71,11 +66,11 @@ public class ConsumablesChest : MonoBehaviour
 
         for (; i < cItem.Count && i < slots.Length; i++)
         {
-            slots[i].Itemc = cItem[i];
+            slots[i].Items = cItem[i];
         }
         for (; i < slots.Length; i++)
         {
-            slots[i].Itemc = null;
+            slots[i].Items = null;
         }
     }
 

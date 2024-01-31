@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class Shop : MonoBehaviour
 {
@@ -9,7 +8,6 @@ public class Shop : MonoBehaviour
 
     public GameObject canvas_shop;
     public GameObject slot_weapon;
-    public GameObject slot_armor;
     public GameObject slot_item;
 
     public GameObject equipchest;
@@ -27,11 +25,9 @@ public class Shop : MonoBehaviour
     {
         canvas_shop.SetActive(true);
         slot_weapon.SetActive(true);
-        slot_armor.SetActive(true);
         slot_item.SetActive(true);
 
         slot_item.SetActive(false);
-        slot_armor.SetActive(false);
         canvas_shop.SetActive(false);
     }
 
@@ -64,7 +60,6 @@ public class Shop : MonoBehaviour
     public void WeaponbuttonClick()
     {
         slot_weapon.SetActive(true);
-        slot_armor.SetActive(false);
         slot_item.SetActive(false);
         equipchest.SetActive(true);
         equipchest.GetComponent<RectTransform>().position = new Vector3(1184f, 540f);
@@ -78,7 +73,6 @@ public class Shop : MonoBehaviour
     public void ArmorbuttonClick()
     {
         slot_weapon.SetActive(false);
-        slot_armor.SetActive(true);
         slot_item.SetActive(false);
         equipchest.SetActive(true);
         equipchest.GetComponent<RectTransform>().position = new Vector3(1184f, 540f);
@@ -92,7 +86,6 @@ public class Shop : MonoBehaviour
     public void ItembuttonClick()
     {
         slot_weapon.SetActive(false);
-        slot_armor.SetActive(false);
         slot_item.SetActive(true);
 
         Consumableschest.SetActive(true);

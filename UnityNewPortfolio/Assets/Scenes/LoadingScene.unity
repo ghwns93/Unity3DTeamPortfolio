@@ -368,6 +368,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   progressBar: {fileID: 2120738244}
+  percentText: {fileID: 2146029666}
 --- !u!4 &438624259
 Transform:
   m_ObjectHideFlags: 0

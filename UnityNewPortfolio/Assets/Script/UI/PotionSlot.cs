@@ -50,7 +50,7 @@ public class PotionSlot : MonoBehaviour
 
     public void PotionUse()
     {
-        if (slot.Itemc.item != null)
+        if (slot.Items.item != null)
         {
             if (PlayerState.Instance.Hp < PlayerState.Instance.HpMax)
             {
@@ -61,13 +61,13 @@ public class PotionSlot : MonoBehaviour
                     PlayerState.Instance.Hp = PlayerState.Instance.HpMax;
                 }
 
-                slot.Itemc.count--;
+                slot.Items.count--;
 
-                slot.count.text = slot.Itemc.count.ToString();
+                slot.count.text = slot.Items.count.ToString();
 
-                if (slot.Itemc.count < 1)
+                if (slot.Items.count < 1)
                 {
-                    slot.Itemc = null;
+                    slot.Items = null;
                 }
             }
         }
@@ -81,31 +81,31 @@ public class PotionSlot : MonoBehaviour
             return;
         }
 
-        if (slot != null && slot.Itemc != null)
+        if (slot != null && slot.Items != null)
         {
-            if (slot.Itemc.item != null && iteminfo.item != null && slot.Itemc.item.itemName == iteminfo.item.itemName)
+            if (slot.Items.item != null && iteminfo.item != null && slot.Items.item.itemName == iteminfo.item.itemName)
             {
-                iteminfo.count = slot.Itemc.count;
+                iteminfo.count = slot.Items.count;
             }
         }
-        else if (slot != null && slot.Itemc == null)
+        else if (slot != null && slot.Items == null)
         {
-            slot.Itemc = iteminfo;
+            slot.Items = iteminfo;
         }
     }
 
     public void AddItem(ItemInfo iteminfo)
     {
         bool isDup = false;
-        if (slot.Itemc == iteminfo)
+        if (slot.Items == iteminfo)
         {
-            slot.Itemc.count += iteminfo.count;
+            slot.Items.count += iteminfo.count;
             isDup = true;
         }
 
         if (!isDup)
         {
-            slot.Itemc = new ItemInfo { item = iteminfo.item, count = iteminfo.count };
+            slot.Items = new ItemInfo { item = iteminfo.item, count = iteminfo.count };
         }
     }
 }
