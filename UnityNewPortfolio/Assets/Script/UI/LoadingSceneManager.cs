@@ -8,6 +8,7 @@ public class LoadingSceneManager : MonoBehaviour
 {
     public static string nextScene;
     [SerializeField] Slider progressBar;
+    [SerializeField] Text percentText;
 
     private void Start()
     {
@@ -33,20 +34,23 @@ public class LoadingSceneManager : MonoBehaviour
             if (op.progress < 0.9f)
             {
                 progressBar.value = Mathf.Lerp(progressBar.value, op.progress, timer);
+
+                percentText.text = (int)(progressBar.value * 100) + "%";
+
                 if (progressBar.value >= op.progress)
                 {
                     timer = 0f;
-                    Debug.Log("2");
-
                 }
             }
             else
             {
                 progressBar.value = Mathf.Lerp(progressBar.value, 1f, timer);
+
+                percentText.text = (int)(progressBar.value * 100) + "%";
+
                 if (progressBar.value == 1.0f)
                 {
                     op.allowSceneActivation = true;
-                    Debug.Log("3");
 
                     yield break;
                 }
