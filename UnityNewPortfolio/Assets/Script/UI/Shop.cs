@@ -13,6 +13,8 @@ public class Shop : MonoBehaviour
     public GameObject equipchest;
     public GameObject Consumableschest;
 
+    public GameObject shopDesc;
+
     GameObject player;
 
     public float length = 2.0f;
@@ -61,22 +63,10 @@ public class Shop : MonoBehaviour
     {
         slot_weapon.SetActive(true);
         slot_item.SetActive(false);
+        shopDesc.SetActive(false);
         equipchest.SetActive(true);
         equipchest.GetComponent<RectTransform>().position = new Vector3(1184f, 540f);
         if(Consumableschest.activeSelf)
-        {
-            Consumableschest.GetComponent<RectTransform>().position = new Vector3(960f, 540f);
-            Consumableschest.SetActive(false);
-        }
-    }
-
-    public void ArmorbuttonClick()
-    {
-        slot_weapon.SetActive(false);
-        slot_item.SetActive(false);
-        equipchest.SetActive(true);
-        equipchest.GetComponent<RectTransform>().position = new Vector3(1184f, 540f);
-        if (Consumableschest.activeSelf)
         {
             Consumableschest.GetComponent<RectTransform>().position = new Vector3(960f, 540f);
             Consumableschest.SetActive(false);
@@ -87,7 +77,7 @@ public class Shop : MonoBehaviour
     {
         slot_weapon.SetActive(false);
         slot_item.SetActive(true);
-
+        shopDesc.SetActive(false);
         Consumableschest.SetActive(true);
         Consumableschest.GetComponent<RectTransform>().position = new Vector3(1184f, 540f);
         if (equipchest.activeSelf)
