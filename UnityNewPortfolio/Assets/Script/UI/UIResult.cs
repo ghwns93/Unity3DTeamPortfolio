@@ -11,10 +11,6 @@ public class UIResult : MonoBehaviour
     [SerializeField]
     private Slot[] slots;
 
-    public GameObject EquipchestPrefab;
-    public GameObject ConsumablechestPrefab;
-    public GameObject MaterialchestPrefab;
-
     GameObject player;
     PlayerController pc;
 

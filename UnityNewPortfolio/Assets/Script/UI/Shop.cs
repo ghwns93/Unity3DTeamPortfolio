@@ -23,6 +23,9 @@ public class Shop : MonoBehaviour
 
     PlayerController pc;
 
+    public GameObject canvas;
+    GameObject target;
+
     private void Awake()
     {
         canvas_shop.SetActive(true);
@@ -37,12 +40,17 @@ public class Shop : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         pc = player.GetComponent<PlayerController>();
+
+        target = GameObject.FindGameObjectWithTag("MainCamera");
     }
 
     private void Update()
     {
         if (CheckLength(player.transform.position))
         {
+            canvas.SetActive(true);
+            canvas.transform.forward = target.transform.forward;
+
             if (!shopOpened)
             {
                 if (Input.GetKeyDown(KeyCode.E))
@@ -57,6 +65,8 @@ public class Shop : MonoBehaviour
                 }
             }
         }
+        else
+            canvas.SetActive(false);
     }
 
     public void WeaponbuttonClick()

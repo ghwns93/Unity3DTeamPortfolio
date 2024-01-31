@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEngine.GraphicsBuffer;
 
 public class Chest : MonoBehaviour
 {
@@ -18,6 +19,8 @@ public class Chest : MonoBehaviour
     GameObject player;
     PlayerController pc;
 
+    GameObject target;
+
     private void Awake()
     {
         canvas.SetActive(true);
@@ -31,6 +34,8 @@ public class Chest : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         pc = player.GetComponent<PlayerController>();
+
+        target = GameObject.FindGameObjectWithTag("MainCamera");
     }
 
     void Update()
@@ -38,6 +43,7 @@ public class Chest : MonoBehaviour
         if(CheckLength(player.transform.position))
         {
             canvas.SetActive(true);
+            canvas.transform.forward = target.transform.forward;
 
             if (Input.GetKeyDown(KeyCode.E))
             {
