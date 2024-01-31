@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -51,10 +52,11 @@ public class Enemy_VA : EnemyStat
 
     // 화살 오브젝트
     public GameObject ArrowPrefab;
+    public GameObject Arrows;
 
-    public Transform m_pullingHand;
+    public Transform firePoint;
     public ArrowManager m_CurrentArrow;
-    float m_PullValue = 0.0f;
+    public float m_PullValue = 0.0f;
 
 
 
@@ -102,7 +104,7 @@ public class Enemy_VA : EnemyStat
         isFinded = false;
 
         // 초기 상태에서는 arrow를 비활성화합니다.
-        ArrowPrefab.SetActive(false);
+        //ArrowPrefab.SetActive(false);
 
 
     }
@@ -309,7 +311,6 @@ public class Enemy_VA : EnemyStat
 
                 currentTime = 0;
 
-                ArrowPrefab.SetActive(true);
 
                 FireArrow();
 
@@ -463,7 +464,22 @@ public class Enemy_VA : EnemyStat
 
     private void FireArrow()
     {
-        //AM.Fire(m_PullValue);
+        try
+        {
+        Debug.Log("활 쐇음?");
+        GameObject _arrow = Instantiate(Arrows, firePoint.position, firePoint.rotation);
+        AM = _arrow.GetComponent<ArrowManager>();
+        if(AM)
+        {
+                AM.target = player;
+        }
+
+        }
+        catch
+        {
+            Debug.Log("ㄴㄴ 못쏨");
+        }
+    
     }
 
 }
