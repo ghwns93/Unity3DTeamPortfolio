@@ -463,7 +463,7 @@ public class Enemy_VA : EnemyStat
 
     private void FireArrow()
     {
-      
+        //AM.Fire(m_PullValue);
     }
 
 }
