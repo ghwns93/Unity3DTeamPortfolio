@@ -34,7 +34,7 @@ public class UIResult : MonoBehaviour
 
         for (int i = 0; i < Inventory.Instance.slots.Length; i++)
         {
-            slots[i].Itemc = Inventory.Instance.slots[i].Items;
+            slots[i].Items = Inventory.Instance.slots[i].Items;
         }
     }
 
@@ -69,7 +69,7 @@ public class UIResult : MonoBehaviour
         // 인벤토리 슬롯 갱신
         for (int i = 0; i < slots.Length; i++)
         {
-            slots[i].Itemc = null;
+            slots[i].Items = null;
         }
 
         // UI 버튼 상태 조정
