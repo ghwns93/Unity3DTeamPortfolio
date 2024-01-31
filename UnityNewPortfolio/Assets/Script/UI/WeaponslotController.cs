@@ -42,15 +42,15 @@ public class WeaponslotController : MonoBehaviour
 
     public void RegisterWeaponToSlot(ItemInfo iteminfo)
     {
-        if (slot.Itemc != null)
+        if (slot.Items != null)
         {
-            ItemInfo tempiteminfo = slot.Itemc;
-            slot.Itemc = new ItemInfo { item = iteminfo.item, count = iteminfo.count };
+            ItemInfo tempiteminfo = slot.Items;
+            slot.Items = new ItemInfo { item = iteminfo.item, count = iteminfo.count };
             EquipChest.Instance.AddItem(tempiteminfo.item);
         }
-        else if(slot.Itemc==null)
+        else if(slot.Items==null)
         {
-            slot.Itemc = new ItemInfo { item = iteminfo.item, count = iteminfo.count };
+            slot.Items = new ItemInfo { item = iteminfo.item, count = iteminfo.count };
         }
     }
 }

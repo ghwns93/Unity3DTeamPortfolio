@@ -30,49 +30,35 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 			{
                 image.sprite = items.item.itemImage;
                 image.color = new Color(1, 1, 1, 1);
-				count.text = items.count.ToString();
-			}
+                if (countobject != null)
+                {
+                    if (items.item.itemType != Item.ObjectType.Weapon)
+                    {
+                        countobject.SetActive(true);
+                        count.text = items.count.ToString();
+                    }
+                }
+                else
+                    count.text = items.count.ToString();
+            }
 			else
 			{
 				image.sprite = null;
                 image.color = new Color(1, 1, 1, 0);
 				count.text = "0";
+                if (countobject != null)
+                {
+                    countobject.SetActive(false);
+                }
             }
 		}
 	}
-
-    public ItemInfo Itemc
-    {
-        get { return items; }
-        set
-        {
-            items = value;
-            if (items != null)
-            {
-                image.sprite = items.item.itemImage;
-                image.color = new Color(1, 1, 1, 1);
-
-                if (items.item.itemType != Item.ObjectType.Weapon)
-                {
-                    countobject.SetActive(true);
-                    count.text = items.count.ToString();
-                }
-            }
-            else
-            {
-                image.sprite = null;
-                image.color = new Color(1, 1, 1, 0);
-                count.text = "0";
-                countobject.SetActive(false);
-            }
-        }
-    }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (tooltip != null)
         {
-            if (Itemc != null)
+            if (Items != null)
             {
                 tooltip.ShowToolTip(items.item, transform.position);
             }
@@ -89,53 +75,27 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void slotClicked()
     {
-        //if (Itemc != null)
-        //{
-        //    if (Itemc.item != null)
-        //    {
-        //        if (Itemc.item.itemType == Item.ObjectType.Potion)
-        //        {
-        //            PotionSlot.Instance.AddItem(Itemc);
-        //            Itemc = null;
-        //        }
-        //        else if (Itemc.item.itemType == Item.ObjectType.Weapon)
-        //        {
-        //            if (WeaponslotController.Instance.slot.Itemc.item == null)
-        //            {
-        //                WeaponslotController.Instance.RegisterWeaponToSlot(Itemc);
-        //                Itemc = null;
-        //            }
-        //            else
-        //            {
-        //                ItemInfo tempitem = WeaponslotController.Instance.slot.Itemc;
-        //                WeaponslotController.Instance.RegisterWeaponToSlot(Itemc);
-        //                Itemc = tempitem;
-        //            }
-        //        }
-        //    }
-        //}
-
-        if (Itemc != null && Itemc.item.itemType == Item.ObjectType.Potion)
+        if (Items != null && Items.item.itemType == Item.ObjectType.Potion)
         {
             if (PotionSlot.Instance != null)
             {
-                PotionSlot.Instance.AddItem(Itemc);
-                Itemc = null;
+                PotionSlot.Instance.AddItem(Items);
+                Items = null;
             }
         }
-        else if (Itemc != null && Itemc.item.itemType == Item.ObjectType.Weapon)
+        else if (Items != null && Items.item.itemType == Item.ObjectType.Weapon)
         {
-            WeaponslotController.Instance.RegisterWeaponToSlot(Itemc);
-            Itemc = null;
+            WeaponslotController.Instance.RegisterWeaponToSlot(Items);
+            Items = null;
         }
     }
 
     public void disrobebuttonClicked()
     {
-        if (Itemc != null)
+        if (Items != null)
         {
-            EquipChest.Instance.AddItem(Itemc.item);
-            Itemc = null;
+            EquipChest.Instance.AddItem(Items.item);
+            Items = null;
         }
     }
 }

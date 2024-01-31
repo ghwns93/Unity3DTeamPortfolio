@@ -25,11 +25,6 @@ public class MaterialChest : MonoBehaviour
         if (null == Mchest)
         {
             Mchest = this;
-            DontDestroyOnLoad(this.gameObject);
-        }
-        else
-        {
-            Destroy(this.gameObject);
         }
     }
 
@@ -71,11 +66,11 @@ public class MaterialChest : MonoBehaviour
 
         for (; i < mItem.Count && i < slots.Length; i++)
         {
-            slots[i].Itemc = mItem[i];
+            slots[i].Items = mItem[i];
         }
         for (; i < slots.Length; i++)
         {
-            slots[i].Itemc = null;
+            slots[i].Items = null;
         }
     }
 
