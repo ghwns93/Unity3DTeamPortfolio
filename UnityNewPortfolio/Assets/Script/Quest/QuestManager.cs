@@ -7,6 +7,7 @@ using static UnityEditor.Progress;
 public class QuestManager : MonoBehaviour
 {
     public Quest nowQuest;
+    public List<Quest> allQuests;
 
     private static QuestManager instance = null;
 
