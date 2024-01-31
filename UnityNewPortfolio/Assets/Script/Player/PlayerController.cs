@@ -253,6 +253,6 @@ public class PlayerController : MonoBehaviour
 
         staminarecovery = true;
 
-        StopCoroutine(StaminaRecovery(0.0f));
+        yield break;
     }
 }

@@ -36,9 +36,13 @@ public class UIResult : MonoBehaviour
 
     public void GetallItem()        // 모두 받기 클릭
     {
-        for (int i = 0; i < Inventory.Instance.slots.Length; i++)
+        // UI 버튼 상태 조정
+        getitem.interactable = false;
+        villagemove.interactable = true;
+
+        for (int i = 0; i < slots.Length; i++)
         {
-            ItemInfo currentItem = Inventory.Instance.slots[i].Items;
+            ItemInfo currentItem = slots[i].Items;
 
             if (currentItem != null)
             {
@@ -46,14 +50,17 @@ public class UIResult : MonoBehaviour
                 {
                     case Item.ObjectType.Weapon:
                         EquipChest.Instance.AddItem(currentItem.item);
+                        Inventory.Instance.items.Remove(currentItem);
                         break;
 
                     case Item.ObjectType.Material:
                         MaterialChest.Instance.AddItem(currentItem.item, currentItem.count);
+                        Inventory.Instance.items.Remove(currentItem);
                         break;
 
                     case Item.ObjectType.Potion:
                         ConsumablesChest.Instance.AddItem(currentItem.item, currentItem.count);
+                        Inventory.Instance.items.Remove(currentItem);
                         break;
                 }
 
@@ -67,10 +74,6 @@ public class UIResult : MonoBehaviour
         {
             slots[i].Items = null;
         }
-
-        // UI 버튼 상태 조정
-        getitem.interactable = false;
-        villagemove.interactable = true;
     }
 
 

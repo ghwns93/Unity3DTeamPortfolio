@@ -9,7 +9,7 @@ public class EquipChest : MonoBehaviour
     [SerializeField]
     private Slot[] slots;
 
-    public List<ItemInfo> eItem = new List<ItemInfo>();
+    private List<ItemInfo> eItem = new List<ItemInfo>();
 
     private static EquipChest Echest = null;
 
@@ -25,11 +25,18 @@ public class EquipChest : MonoBehaviour
         if (null == Echest)
         {
             Echest = this;
+
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else
+        {
+            Destroy(this.gameObject);
         }
     }
 
     private void Start()
     {
+        DontDestroyOnLoad(gameObject);
         FreshSlot();
     }    
 

@@ -30393,7 +30393,7 @@ PrefabInstance:
       objectReference: {fileID: 896844701}
     - target: {fileID: 1581625214, guid: cb83689540f2ed34d9f77147c825a530, type: 3}
       propertyPath: nextScene
-      value: NORSE VILLAGE
+      value: UITest
       objectReference: {fileID: 0}
     - target: {fileID: 1753757481, guid: cb83689540f2ed34d9f77147c825a530, type: 3}
       propertyPath: m_AnchorMax.y
@@ -36887,30 +36887,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 8649320026884231808, guid: 5041f220a82f5414da1fd17a251283e5, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8649320026884231808, guid: 5041f220a82f5414da1fd17a251283e5, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8649320026884231808, guid: 5041f220a82f5414da1fd17a251283e5, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 8649320026884231808, guid: 5041f220a82f5414da1fd17a251283e5, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 90
-      objectReference: {fileID: 0}
-    - target: {fileID: 8649320026884231808, guid: 5041f220a82f5414da1fd17a251283e5, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 73
-      objectReference: {fileID: 0}
-    - target: {fileID: 8649320026884231808, guid: 5041f220a82f5414da1fd17a251283e5, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -47
-      objectReference: {fileID: 0}
     - target: {fileID: 8649320026910960200, guid: 5041f220a82f5414da1fd17a251283e5, type: 3}
       propertyPath: equipchest
       value: 
@@ -36965,10 +36941,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8649320026910960212, guid: 5041f220a82f5414da1fd17a251283e5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8649320027702064683, guid: 5041f220a82f5414da1fd17a251283e5, type: 3}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

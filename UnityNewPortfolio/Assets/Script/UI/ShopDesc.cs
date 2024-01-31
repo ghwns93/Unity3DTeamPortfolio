@@ -26,11 +26,6 @@ public class ShopDesc : MonoBehaviour
 
     public void buyitem()
     {
-        if (currentItem != null)
-        {
-            EquipChest.Instance.AddItem(currentItem);
-        }
-
         if (PlayerState.Instance.Money < currentItem.itemprice)
         {
             Debug.Log("구매 실패");
