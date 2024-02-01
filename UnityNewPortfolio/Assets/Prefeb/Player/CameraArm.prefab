@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotateSpeed: 500
+  isUiOpen: 1
 --- !u!1 &1373365737234726466
 GameObject:
   m_ObjectHideFlags: 0
@@ -147,5 +148,4 @@ MonoBehaviour:
   startRotation: {x: 15, y: 0, z: 0}
   minXRotate: -45
   maxXRotate: 45
-  rotateSpeed: 500
   fovRate: 10

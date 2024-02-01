@@ -35,6 +35,9 @@ public class ChestConroller : MonoBehaviour
     {
         player = GameObject.FindGameObjectWithTag("Player");
         pc = player.GetComponent<PlayerController>();
+
+
+        WeaponslotController.Instance.FreshSlot();
     }
 
     public void StorageBoxselectCloseButtonClicked()

@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PotionSlot : MonoBehaviour
 {
-    private Slot slot;
+    public Slot slot;
 
     private static PotionSlot instance = null;
 
@@ -38,6 +38,8 @@ public class PotionSlot : MonoBehaviour
     private void Start()
     {
         slot = GetComponent<Slot>();
+
+        FreshSlot();
     }
 
     private void Update()
@@ -107,6 +109,11 @@ public class PotionSlot : MonoBehaviour
         {
             slot.Items = new ItemInfo { item = iteminfo.item, count = iteminfo.count };
         }
+    }
+
+    public void FreshSlot()
+    {
+        slot.Items = ChestItemDataManager.Instance.potionslot;
     }
 }
 

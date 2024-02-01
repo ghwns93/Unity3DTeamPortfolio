@@ -9,7 +9,8 @@ public class ConsumablesChest : MonoBehaviour
     [SerializeField]
     private Slot[] slots;
 
-    private List<ItemInfo> cItem = new List<ItemInfo>();
+    //private List<ItemInfo> cItem = new List<ItemInfo>();
+    private List<ItemInfo> cItem = ChestItemDataManager.Instance.cChestItems;
 
     private static ConsumablesChest Cchest = null;
 
@@ -24,18 +25,15 @@ public class ConsumablesChest : MonoBehaviour
     {
         if (null == Cchest)
         {
-            DontDestroyOnLoad(this.gameObject);
-        }
-        else
-        {
-            Destroy(this.gameObject);
+            Cchest = this;
         }
     }
 
     private void Start()
     {
+        cItem = ChestItemDataManager.Instance.cChestItems;
         FreshSlot();
-    }    
+    }
 
     public void AddItem(Item item, int count)
     {

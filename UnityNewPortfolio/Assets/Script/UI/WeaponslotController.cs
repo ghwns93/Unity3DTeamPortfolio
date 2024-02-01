@@ -14,12 +14,6 @@ public class WeaponslotController : MonoBehaviour
         if (null == instance)
         {
             instance = this;
-
-            DontDestroyOnLoad(this.gameObject);
-        }
-        else
-        {
-            Destroy(this.gameObject);
         }
     }
 
@@ -38,19 +32,24 @@ public class WeaponslotController : MonoBehaviour
     private void Start()
     {
         slot = GetComponent<Slot>();
+        FreshSlot();
     }
 
-    public void RegisterWeaponToSlot(ItemInfo iteminfo)
+    public void FreshSlot()
     {
-        if (slot.Items != null)
+        slot.Items = ChestItemDataManager.Instance.weaponslot;
+
+        if(slot.Items != null)
         {
-            ItemInfo tempiteminfo = slot.Items;
-            slot.Items = new ItemInfo { item = iteminfo.item, count = iteminfo.count };
-            EquipChest.Instance.AddItem(tempiteminfo.item);
-        }
-        else if(slot.Items==null)
-        {
-            slot.Items = new ItemInfo { item = iteminfo.item, count = iteminfo.count };
+            Transform weaponPos = GameObject.Find("WeaponPos").transform;
+
+            if (weaponPos.childCount > 0)
+            {
+                Destroy(weaponPos.GetChild(0).gameObject);
+            }
+
+            //Quaternion rotate = Quaternion.Euler(0, 0, 90);
+            GameObject weaponIns = Instantiate(ChestItemDataManager.Instance.weaponslot.item.itemPrefab, weaponPos);
         }
     }
 }
