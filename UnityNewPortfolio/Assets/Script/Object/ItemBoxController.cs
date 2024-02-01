@@ -35,6 +35,15 @@ public class ItemBoxController : MonoBehaviour
                 if (dropItem.itemType == Item.ObjectType.Material)
                 {
                     Inventory.Instance.AddItem(dropItem);
+
+                    if (QuestManager.Instance.nowQuest != null)
+                    {
+                        if (QuestManager.Instance.nowQuest.questSubject != null &&
+                            dropItem.itemPrefab == QuestManager.Instance.nowQuest.questSubject)
+                        {
+                            QuestManager.Instance.nowQuest.questNowCount++;
+                        }
+                    }
                 }
                 else if (dropItem.itemType == Item.ObjectType.Weapon) 
                 {
@@ -42,6 +51,7 @@ public class ItemBoxController : MonoBehaviour
 
                     Transform weaponPos = GameObject.Find("WeaponPos").transform;
 
+                    //만약에 무기를 끼고있을경우 삭제
                     if(weaponPos.childCount > 0)
                     {
                         Destroy(weaponPos.GetChild(0).gameObject);

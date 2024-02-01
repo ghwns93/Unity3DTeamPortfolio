@@ -23,7 +23,7 @@ public class AnvilController : MonoBehaviour
     GameObject player;
     PlayerController playerController;
 
-    Slot selectedSlot;
+    ItemInfo selectedItem;
 
     IEnumerator nowCoroutine;
 
@@ -50,7 +50,10 @@ public class AnvilController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E))
             {
                 enhanceCanvas.enabled = true;
+                playerController.isUiOpen = true;
+
                 Inven.SetActive(true);
+                Inven.GetComponent<RectTransform>().position = new Vector3(1200f, 540f);
             }
         }
 
@@ -62,8 +65,6 @@ public class AnvilController : MonoBehaviour
                 ItemClick();
             }
         }
-
-        playerController.isUiOpen = enhanceCanvas.enabled;
     }
 
     private void OnTriggerStay(Collider other)
@@ -80,6 +81,7 @@ public class AnvilController : MonoBehaviour
         {
             canvas.enabled = false;
             enhanceCanvas.enabled = false;
+            playerController.isUiOpen = false;
             Inven.SetActive(false);
             ResetEnhanceInfo();
         }
@@ -88,6 +90,7 @@ public class AnvilController : MonoBehaviour
     public void CloseEnhance()
     {
         enhanceCanvas.enabled = false;
+        playerController.isUiOpen = false;
         Inven.SetActive(false);
         ResetEnhanceInfo();
     }
@@ -119,7 +122,7 @@ public class AnvilController : MonoBehaviour
                 {
                     Debug.Log("½½·Ô Å¬¸¯!");
 
-                    selectedSlot = slot;
+                    selectedItem = slot.Items;
 
                     ItemInfo items = slot.Items;
 
@@ -148,9 +151,9 @@ public class AnvilController : MonoBehaviour
 
     public void UpgradeItem()
     {
-        if(selectedSlot != null)
+        if(selectedItem != null)
         {
-            ItemInfo items = selectedSlot.Items;
+            ItemInfo items = selectedItem;
             if (items != null) 
             {
                 int money = PlayerState.Instance.Money;
