@@ -22,6 +22,11 @@ public class QuestManager : MonoBehaviour
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
+
+        foreach(Quest quest in allQuests) 
+        {
+            quest.questNowCount = 0;
+        }
     }
 
     public static QuestManager Instance

@@ -42,11 +42,13 @@ public class QuestBoardController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.E) && !questCanvas.enabled)
             {
                 questCanvas.enabled = true;
+                playerController.isUiOpen = true;
                 QuestListSetting();
             }
             else if (Input.GetKeyDown(KeyCode.Escape)  && questCanvas.enabled)
             {
                 questCanvas.enabled = false;
+                playerController.isUiOpen = false;
             }
         }
 
@@ -58,8 +60,6 @@ public class QuestBoardController : MonoBehaviour
                 QuestClick();
             }
         }
-
-        playerController.isUiOpen = questCanvas.enabled;
     }
 
     private void OnTriggerStay(Collider other)
@@ -76,6 +76,7 @@ public class QuestBoardController : MonoBehaviour
         {
             canvas.enabled = false;
             questCanvas.enabled = false;
+            playerController.isUiOpen = false;
         }
     }
 
@@ -129,12 +130,14 @@ public class QuestBoardController : MonoBehaviour
     public void CloseQuestBoard()
     {
         questCanvas.enabled = false;
+        playerController.isUiOpen = false;
     }
 
     public void AcceptQuest()
     {
         QuestManager.Instance.nowQuest = selectedQuest;
         questCanvas.enabled = false;
+        playerController.isUiOpen = false;
     }
 
     private void QuestSelect(Quest quest)
