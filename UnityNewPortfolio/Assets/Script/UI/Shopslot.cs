@@ -9,8 +9,6 @@ public class Shopslot : MonoBehaviour
     public Item item;
     Image image;
 
-    
-
     public ShopDesc shopdesc;
 
     private void Start()
