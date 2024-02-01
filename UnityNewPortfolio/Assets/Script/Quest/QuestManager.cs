@@ -9,6 +9,8 @@ public class QuestManager : MonoBehaviour
     public Quest nowQuest;
     public List<Quest> allQuests;
 
+    GameObject Result;
+
     private static QuestManager instance = null;
 
     private void Awake()
@@ -17,15 +19,45 @@ public class QuestManager : MonoBehaviour
         {
             instance = this;
         }
+
+        var obj = FindObjectsOfType<QuestManager>();
+
+        if (obj.Length == 1)
+        {
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void Start()
     {
         DontDestroyOnLoad(gameObject);
+        ResetAllQuest();
+    }
 
-        foreach(Quest quest in allQuests) 
+    private void LateUpdate()
+    {
+        if(nowQuest != null) 
         {
-            quest.questNowCount = 0;
+            if (nowQuest.questClear == false)
+            {
+                if (nowQuest.questCount <= nowQuest.questNowCount)
+                {
+                    Debug.Log("퀘스트 완료!");
+
+                    nowQuest.questClear = true;
+
+                    PlayerState.Instance.Money += nowQuest.questPriceGold;
+
+                    Result = GameObject.Find("Canvas_UI_final").transform.Find("Result").gameObject;
+                    Result.SetActive(true);
+
+                    nowQuest = null;
+                }
+            }
         }
     }
 
@@ -38,4 +70,12 @@ public class QuestManager : MonoBehaviour
         }
     }
 
+    public void ResetAllQuest()
+    {
+        foreach (Quest quest in allQuests)
+        {
+            quest.questNowCount = 0;
+            quest.questClear = false;
+        }
+    }
 }

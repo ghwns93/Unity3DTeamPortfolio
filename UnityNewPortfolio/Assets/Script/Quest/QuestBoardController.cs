@@ -113,7 +113,9 @@ public class QuestBoardController : MonoBehaviour
 
     private void QuestListSetting()
     {
-        for(int i = 0; i < questList.transform.childCount; i++)
+        QuestManager.Instance.ResetAllQuest();
+
+        for (int i = 0; i < questList.transform.childCount; i++)
         {
             QuestSlot questSlot = questList.transform.GetChild(i).GetComponent<QuestSlot>();
 

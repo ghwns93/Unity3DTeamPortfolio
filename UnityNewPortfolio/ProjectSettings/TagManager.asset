@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Arrow
   - AnimTag
+  - UserStartPos
   layers:
   - Default
   - TransparentFX

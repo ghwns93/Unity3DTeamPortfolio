@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Isle_01_LP.unity
     guid: 78b4b2f865fe03749ae015905ec9e3ab
+  - enabled: 1
+    path: Assets/Scenes/SNOWLANDS.unity
+    guid: cc4fbf0514d91fa49aa4428c448d250b
   m_configObjects: {}

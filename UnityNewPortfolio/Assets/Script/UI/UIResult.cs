@@ -87,6 +87,6 @@ public class UIResult : MonoBehaviour
         getitem.interactable = true;
         villagemove.interactable = false;
 
-        LoadingSceneManager.LoadScene(nextScene);
+        SceneManager.LoadScene(nextScene);
     }
 }
