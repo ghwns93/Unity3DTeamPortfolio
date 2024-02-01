@@ -77,16 +77,59 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         if (Items != null && Items.item.itemType == Item.ObjectType.Potion)
         {
-            if (PotionSlot.Instance != null)
+            if (PotionSlot.Instance.slot.Items == null)
             {
-                PotionSlot.Instance.AddItem(Items);
-                Items = null;
+                ChestItemDataManager.Instance.potionslot = Items;
             }
+            else
+            {
+                ChestItemDataManager.Instance.potionslot.count += Items.count;
+            }
+
+            ChestItemDataManager.Instance.cChestItems.Remove(Items);
+            ConsumablesChest.Instance.FreshSlot();
+            PotionSlot.Instance.FreshSlot();
         }
         else if (Items != null && Items.item.itemType == Item.ObjectType.Weapon)
         {
-            WeaponslotController.Instance.RegisterWeaponToSlot(Items);
-            Items = null;
+            if (WeaponslotController.Instance.slot.Items == null)
+            {
+                ChestItemDataManager.Instance.weaponslot = Items;
+                ChestItemDataManager.Instance.eChestItems.Remove(Items);
+                EquipChest.Instance.FreshSlot();
+                WeaponslotController.Instance.FreshSlot();
+
+                Transform weaponPos = GameObject.Find("WeaponPos").transform;
+
+                if (weaponPos.childCount > 0)
+                {
+                    Destroy(weaponPos.GetChild(0).gameObject);
+                }
+
+                //Quaternion rotate = Quaternion.Euler(0, 0, 90);
+                GameObject weaponIns = Instantiate(ChestItemDataManager.Instance.weaponslot.item.itemPrefab, weaponPos);
+            }
+            else
+            {
+                ItemInfo tempitem = ChestItemDataManager.Instance.weaponslot;
+                ChestItemDataManager.Instance.weaponslot = null;
+                ChestItemDataManager.Instance.weaponslot = Items;                
+                ChestItemDataManager.Instance.eChestItems.Remove(Items);
+                ChestItemDataManager.Instance.AddItem(tempitem.item, 1);
+
+                EquipChest.Instance.FreshSlot();
+                WeaponslotController.Instance.FreshSlot();
+
+                Transform weaponPos = GameObject.Find("WeaponPos").transform;
+
+                if (weaponPos.childCount > 0)
+                {
+                    Destroy(weaponPos.GetChild(0).gameObject);
+                }
+
+                //Quaternion rotate = Quaternion.Euler(0, 0, 90);
+                GameObject weaponIns = Instantiate(ChestItemDataManager.Instance.weaponslot.item.itemPrefab, weaponPos);
+            }
         }
     }
 

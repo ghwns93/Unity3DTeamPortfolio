@@ -49,17 +49,20 @@ public class UIResult : MonoBehaviour
                 switch (currentItem.item.itemType)
                 {
                     case Item.ObjectType.Weapon:
-                        EquipChest.Instance.AddItem(currentItem.item);
+                        ChestItemDataManager.Instance.AddItem(currentItem.item,1);
+                        EquipChest.Instance.FreshSlot();
                         Inventory.Instance.items.Remove(currentItem);
                         break;
 
                     case Item.ObjectType.Material:
-                        MaterialChest.Instance.AddItem(currentItem.item, currentItem.count);
+                        ChestItemDataManager.Instance.AddItem(currentItem.item, currentItem.count);
+                        MaterialChest.Instance.FreshSlot();
                         Inventory.Instance.items.Remove(currentItem);
                         break;
 
                     case Item.ObjectType.Potion:
-                        ConsumablesChest.Instance.AddItem(currentItem.item, currentItem.count);
+                        ChestItemDataManager.Instance.AddItem(currentItem.item, currentItem.count);
+                        ConsumablesChest.Instance.FreshSlot();
                         Inventory.Instance.items.Remove(currentItem);
                         break;
                 }

@@ -10,8 +10,11 @@ public class UIInputController : MonoBehaviour
     public GameObject Inven;
     public GameObject Equip;
 
-    private void Start()
+    private void Awake()
     {
+        Inven.SetActive(true);
+        Equip.SetActive(true);
+
         Inven.SetActive(false);
         Equip.SetActive(false);
     }

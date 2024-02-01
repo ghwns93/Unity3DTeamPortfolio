@@ -35,20 +35,16 @@ public class ShopDesc : MonoBehaviour
         {
             if (currentItem.itemType == Item.ObjectType.Weapon)
             {
-                if (currentItem == null)
-                {
-                    Debug.LogError("Item is null.");
-                    return;
-                }
-
-                EquipChest.Instance.AddItem(currentItem);
+                ChestItemDataManager.Instance.AddItem(currentItem, 1);
+                EquipChest.Instance.FreshSlot();
                 PlayerState.Instance.Money -= currentItem.itemprice;
                 Debug.Log(currentItem.itemName + " 备概 己傍");
                 exitClicked();
             }
             else if (currentItem.itemType == Item.ObjectType.Potion)
             {
-                ConsumablesChest.Instance.AddItem(currentItem, 1);
+                ChestItemDataManager.Instance.AddItem(currentItem, 1);
+                ConsumablesChest.Instance.FreshSlot();
                 PlayerState.Instance.Money -= currentItem.itemprice;
                 Debug.Log(currentItem.itemName + " 备概 己傍");
             }
