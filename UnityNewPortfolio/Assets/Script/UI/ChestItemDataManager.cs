@@ -34,20 +34,22 @@ public class ChestItemDataManager
     {
         if(item.itemType==Item.ObjectType.Weapon)
         {
-            bool isDup = false;
-            foreach (var n in eChestItems)
-            {
-                if (n.item == item)
-                {
-                    n.count++;
-                    isDup = true;
-                }
-            }
+            eChestItems.Add(new ItemInfo { item = item, count = count = 1 });
 
-            if (!isDup)
-            {
-                eChestItems.Add(new ItemInfo { item = item, count = count = 1 });
-            }
+            //bool isDup = false;
+            //foreach (var n in eChestItems)
+            //{
+            //    if (n.item == item)
+            //    {
+            //        n.count++;
+            //        isDup = true;
+            //    }
+            //}
+
+            //if (!isDup)
+            //{
+            //    eChestItems.Add(new ItemInfo { item = item, count = count = 1 });
+            //}
         }
         else if (item.itemType == Item.ObjectType.Material)
         {

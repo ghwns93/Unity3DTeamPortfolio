@@ -48,7 +48,6 @@ public class WeaponslotController : MonoBehaviour
                 Destroy(weaponPos.GetChild(0).gameObject);
             }
 
-            //Quaternion rotate = Quaternion.Euler(0, 0, 90);
             GameObject weaponIns = Instantiate(ChestItemDataManager.Instance.weaponslot.item.itemPrefab, weaponPos);
         }
     }
