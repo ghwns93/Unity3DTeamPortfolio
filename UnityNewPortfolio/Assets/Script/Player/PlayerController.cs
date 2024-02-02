@@ -43,6 +43,8 @@ public class PlayerController : MonoBehaviour
         //animator = transform.GetChild(0).GetComponent<Animator>();
         animator = GetComponent<Animator>();
         charaTran = transform.GetChild(0).GetComponent<Transform>();
+
+        WeaponslotController.Instance.FreshSlot();
     }
 
     void Update()
