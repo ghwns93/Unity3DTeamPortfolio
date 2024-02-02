@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -5,7 +6,8 @@ using UnityEngine;
 
 public class WeaponPower : MonoBehaviour
 {
-   
+    public GameObject hitPaticle;
+
     Enemy_VS EV;
     Enemy_VA EA;
     PlayerController PCR;
@@ -45,6 +47,25 @@ public class WeaponPower : MonoBehaviour
                 Debug.Log("충돌판정 체력감소");
                 EV.HitEnemy(power);
             }
+
+            PlayParticleEffect();
         }
+    }
+
+    void PlayParticleEffect()
+    {
+        // 파티클을 생성할 위치
+        Vector3 spawnPosition = transform.position;
+
+        // 파티클을 생성하고 변수에 할당
+        GameObject particleObject = Instantiate((GameObject)hitPaticle, spawnPosition, Quaternion.identity);
+
+        // 파티클 시스템 컴포넌트 가져오기
+        ParticleSystem particleSystem = particleObject.GetComponent<ParticleSystem>();
+
+        // 파티클이 재생되는 동안 대기
+        float duration = particleSystem.main.duration;
+
+        Destroy(particleObject, duration);
     }
 }
