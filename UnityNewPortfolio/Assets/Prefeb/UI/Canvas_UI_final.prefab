@@ -12302,6 +12302,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  questName: {fileID: 656069794}
+  questDesc: {fileID: 1100370961}
   getitem: {fileID: 276433541}
   villagemove: {fileID: 1262980290}
   nextScene: NORSE VILLAGE

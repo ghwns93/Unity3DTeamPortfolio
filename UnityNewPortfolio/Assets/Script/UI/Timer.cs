@@ -15,8 +15,8 @@ public class Timer : MonoBehaviour
 
     public Text Result_Time;
 
-    bool Questing = false;
-    bool questclear = false;        // 임시
+    public bool Questing = false;
+    public bool questclear = false;        // 임시
 
     float clearTime = 0f;
 

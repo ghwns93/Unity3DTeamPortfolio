@@ -11,6 +11,11 @@ public class UIResult : MonoBehaviour
     [SerializeField]
     private Slot[] slots;
 
+    [SerializeField]
+    public Text questName;
+    [SerializeField]
+    public Text questDesc;
+
     GameObject player;
     PlayerController pc;
 
