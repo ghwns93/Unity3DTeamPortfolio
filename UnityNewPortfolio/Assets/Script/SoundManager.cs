@@ -12,8 +12,11 @@ public class SoundManager : MonoBehaviour
         float savedVolume = PlayerPrefs.GetFloat("SoundVolume", 1.0f);
         SetVolume(savedVolume);
 
-        volumeSlider.value = savedVolume;
-        volumeSlider.onValueChanged.AddListener(ChangeVolume);
+        if(volumeSlider != null )
+        {
+            volumeSlider.value = savedVolume;
+            volumeSlider.onValueChanged.AddListener(ChangeVolume);
+        }        
     }
 
     public void ChangeVolume(float volume)

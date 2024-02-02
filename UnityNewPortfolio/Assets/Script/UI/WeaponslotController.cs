@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
@@ -8,6 +9,10 @@ public class WeaponslotController : MonoBehaviour
     public Slot slot;
 
     private static WeaponslotController instance = null;
+
+    public bool open;
+
+
 
     void Awake()
     {
@@ -37,9 +42,12 @@ public class WeaponslotController : MonoBehaviour
 
     public void FreshSlot()
     {
-        slot.Items = ChestItemDataManager.Instance.weaponslot;
+        if (ChestItemDataManager.Instance.weaponslot != null)
+        {
+            slot.Items = ChestItemDataManager.Instance.weaponslot;
+        }
 
-        if(slot.Items != null)
+        if (slot.Items != null)
         {
             Transform weaponPos = GameObject.Find("WeaponPos").transform;
 
@@ -49,6 +57,29 @@ public class WeaponslotController : MonoBehaviour
             }
 
             GameObject weaponIns = Instantiate(ChestItemDataManager.Instance.weaponslot.item.itemPrefab, weaponPos);
+        }
+        else
+        {
+            if (ChestItemDataManager.Instance.weaponslot == null)
+                Debug.Log("장착 무기 없음");
+
+            Transform weaponPos = GameObject.Find("WeaponPos").transform;
+
+            if (weaponPos.childCount > 0)
+            {
+                Destroy(weaponPos.GetChild(0).gameObject);
+            }
+        }
+    }
+
+    public void UnmountingWeapon()
+    {
+        if (slot.Items != null)
+        {
+            ChestItemDataManager.Instance.AddItem(slot.Items.item, 1);
+            EquipChest.Instance.FreshSlot();
+            ChestItemDataManager.Instance.weaponslot = null;
+            FreshSlot();
         }
     }
 }

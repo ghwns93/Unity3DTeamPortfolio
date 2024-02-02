@@ -61,6 +61,7 @@ public class ChestConroller : MonoBehaviour
         EquipBox.GetComponent<RectTransform>().position = new Vector3(500f, 540f);
         stat.SetActive(true);
         stat.GetComponent<RectTransform>().position = new Vector3(1376.5f, 540f);
+        WeaponslotController.Instance.open = true;
         Debug.Log("장비 상자 열림");
     }
 
@@ -68,6 +69,7 @@ public class ChestConroller : MonoBehaviour
     {
         EquipBox.SetActive(false);
         stat.GetComponent<RectTransform>().position = new Vector3(566f, 540f);
+        WeaponslotController.Instance.open = false;
         stat.SetActive(false);
         Debug.Log("장비 상자 닫힘");
         panel_Box.SetActive(true);

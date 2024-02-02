@@ -31,7 +31,12 @@ public class TitleManager : MonoBehaviour
     public GameObject option;
 
     public GameObject option_Audio;
-    public GameObject option_Vidio;    
+    public GameObject option_Vidio;
+
+    //////////////////////////////////////////////////
+
+    
+
 
     //////////////////////////////////////////////////
 
@@ -40,7 +45,7 @@ public class TitleManager : MonoBehaviour
         menu.SetActive(false);
         option.SetActive(false);
         option_Audio.SetActive(true);
-        option_Vidio.SetActive(false);        
+        option_Vidio.SetActive(false);
 
         logoRectTransform = Logo.GetComponent<RectTransform>();
         initwidth = logoRectTransform.sizeDelta.x;
@@ -55,7 +60,7 @@ public class TitleManager : MonoBehaviour
 
     private void Update()
     {
-        if(timeon)
+        if (timeon)
         {
             currentTime += Time.deltaTime;
 
@@ -116,7 +121,7 @@ public class TitleManager : MonoBehaviour
     }
 
     //////////////////////////////////////////////////
-    
+
     public void optionVideoClicked()
     {
         option_Vidio.SetActive(true);
@@ -134,4 +139,7 @@ public class TitleManager : MonoBehaviour
         option.SetActive(false);
         menu.SetActive(true);
     }
+
+    //////////////////////////////////////////////////
+
 }

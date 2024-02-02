@@ -15,6 +15,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     ItemInfo items;
 
+
     private void Awake()
     {
         image = transform.GetChild(0).GetComponent<Image>();
@@ -75,6 +76,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void slotClicked()
     {
+        
         if (Items != null && Items.item.itemType == Item.ObjectType.Potion)
         {
             if (PotionSlot.Instance.slot.Items == null)
@@ -92,24 +94,27 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         }
         else if (Items != null && Items.item.itemType == Item.ObjectType.Weapon)
         {
-            if (WeaponslotController.Instance.slot.Items == null)
+            if (WeaponslotController.Instance.open)
             {
-                ChestItemDataManager.Instance.weaponslot = Items;
-                ChestItemDataManager.Instance.eChestItems.Remove(Items);
-                EquipChest.Instance.FreshSlot();
-                WeaponslotController.Instance.FreshSlot();
-            }
-            else
-            {
-                ItemInfo tempitem = ChestItemDataManager.Instance.weaponslot;
-                ChestItemDataManager.Instance.weaponslot = null;
-                ChestItemDataManager.Instance.weaponslot = Items;                
-                ChestItemDataManager.Instance.eChestItems.Remove(Items);
-                ChestItemDataManager.Instance.AddItem(tempitem.item, 1);
+                if (WeaponslotController.Instance.slot.Items == null)
+                {
+                    ChestItemDataManager.Instance.weaponslot = Items;
+                    ChestItemDataManager.Instance.eChestItems.Remove(Items);
+                    EquipChest.Instance.FreshSlot();
+                    WeaponslotController.Instance.FreshSlot();
+                }
+                else
+                {
+                    ItemInfo tempitem = ChestItemDataManager.Instance.weaponslot;
+                    ChestItemDataManager.Instance.weaponslot = null;
+                    ChestItemDataManager.Instance.weaponslot = Items;
+                    ChestItemDataManager.Instance.eChestItems.Remove(Items);
+                    ChestItemDataManager.Instance.AddItem(tempitem.item, 1);
 
-                EquipChest.Instance.FreshSlot();
-                WeaponslotController.Instance.FreshSlot();
-            }
+                    EquipChest.Instance.FreshSlot();
+                    WeaponslotController.Instance.FreshSlot();
+                }
+            }            
         }
     }
 

@@ -61,11 +61,13 @@ public class UIInputController : MonoBehaviour
     public void EquipOpen()
     {
         Equip.SetActive(true);
+        WeaponslotController.Instance.open = true;
         EquipOpened = true;
     }
 
     public void EquipClose()
     {
+        WeaponslotController.Instance.open = false;
         Equip.SetActive(false);
         EquipOpened = false;
     }
