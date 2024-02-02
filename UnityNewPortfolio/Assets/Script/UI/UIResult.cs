@@ -24,15 +24,6 @@ public class UIResult : MonoBehaviour
 
     public string nextScene;
 
-    ///////////////////////////////////////////////////////
-
-    Quest quest;
-
-    public Text text_questname;
-    public Text text_questdesc;
-
-    ///////////////////////////////////////////////////////
-
     private void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
@@ -46,11 +37,6 @@ public class UIResult : MonoBehaviour
         {
             slots[i].Items = Inventory.Instance.slots[i].Items;
         }
-
-        quest = QuestManager.Instance.nowQuest;
-
-        text_questname.text = quest.questName;
-        text_questdesc.text = quest.questDesc;
     }
 
     public void GetallItem()        // 모두 받기 클릭
@@ -103,6 +89,7 @@ public class UIResult : MonoBehaviour
     public void VillageMoveButtonClicked()  // 마을로 이동 클릭
     {
         pc.isUiOpen = false;
+        pc.questClear = false;
         getitem.interactable = true;
         villagemove.interactable = false;
         gameObject.SetActive(false);

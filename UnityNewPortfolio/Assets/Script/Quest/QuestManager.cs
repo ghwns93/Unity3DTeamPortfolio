@@ -59,6 +59,12 @@ public class QuestManager : MonoBehaviour
                     uIResult.questName.text = nowQuest.questName;
                     uIResult.questDesc.text = nowQuest.questDesc;
 
+                    Timer time = GameObject.Find("Canvas_UI_final").GetComponent<Timer>();
+                    time.questclear = true;
+
+                    PlayerController pc = GameObject.Find("PlayerBody").GetComponent<PlayerController>();
+                    pc.questClear = true;
+
                     nowQuest = null;
                 }
             }

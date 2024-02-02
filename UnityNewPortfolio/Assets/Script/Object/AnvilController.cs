@@ -99,7 +99,7 @@ public class AnvilController : MonoBehaviour
     {
         #region [ 아이템 확인 후 강화창으로 옮김 ]
         //인벤토리 상위 캔버스에 있는 그래픽 레이케스트 찾기
-        GraphicRaycaster ray = Inven.transform.parent.GetComponent<GraphicRaycaster>();
+        GraphicRaycaster ray = Inven.transform.parent.parent.GetComponent<GraphicRaycaster>();
 
         if (ray != null)
         {
@@ -143,6 +143,10 @@ public class AnvilController : MonoBehaviour
                             Debug.Log("무기 아님!");
                         }
                     }
+                }
+                else
+                {
+                    Debug.Log(result.gameObject.name);
                 }
             }
         }

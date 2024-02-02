@@ -15,32 +15,13 @@ public class WeaponPower : MonoBehaviour
     
     private void Start()
     {
-        SetPower();
         PCR = FindObjectOfType<PlayerController>();
-    }
 
-
-    void SetPower()
-    {
-        string name = gameObject.name;
-
-        switch (name)
+        if (GetComponent<Collider>() == null)
         {
-            case "SM_sword_norse_03(Clone)" :
-                power= 10;
-                Debug.Log("[칼 장착] 무기데미지 : " + power);
-                break;
-            case "SM_axe_norse_04(Clone)":
-                power = 20;
-                Debug.Log("[도끼 장착] 무기데미지 : " + power);
-                break;
-            case "SM_hammer_03(Clone)":
-                power = 15;
-                Debug.Log("[오함마 장착] 무기데미지 : " + power);
-                break;
-
+            gameObject.AddComponent<Collider>();
         }
-     }
+    }
 
     void OnTriggerEnter(Collider other)
     {

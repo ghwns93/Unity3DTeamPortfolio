@@ -31,6 +31,8 @@ public class PlayerController : MonoBehaviour
     private Transform charaTran;
     private Animator animator;
 
+    public bool questClear;
+
     Transform weaponPos;
 
     void Start()
@@ -49,155 +51,162 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        #region [ Update ]
-
-        Vector3 velocity = new Vector3(0f, 0f, 0f);
-
-        float moveX = Input.GetAxisRaw("Horizontal");
-        float moveY = Input.GetAxisRaw("Vertical");
-
-        float moveAct = moveX != 0 ? moveX : moveY;
-        moveAct = Mathf.Abs(moveAct);
-
-        if (!isAttack)
+        if (questClear)
         {
-            transform.forward =
-                new Vector3(
-                    Camera.main.transform.forward.x,
-                transform.forward.y,
-                Camera.main.transform.forward.z
-                );
-        }
-
-        if (Input.GetButtonDown("Fire1") && !isUiOpen)
-        {
-            if (!isAttack)
-            {
-                if (PlayerState.Instance.Stamina >= PlayerState.Instance.StaminaMax * 0.2f)
-                {
-                    StopCoroutine(StaminaRecovery(0f));
-                    staminarecovery = false;
-
-                    PlayerState.Instance.Stamina -= PlayerState.Instance.StaminaMax * 0.2f;
-
-                    if (PlayerState.Instance.Stamina < 0)
-                        PlayerState.Instance.Stamina = 0;
-
-                    moveAct = 0;
-
-                    isAttack = true;
-
-                    animator.SetTrigger("AttackTrigger");
-                    animator.SetBool("AttackEnd", false);
-
-                    Debug.Log("공격판정");
-
-                    StartCoroutine(StaminaRecovery(2.0f));
-                }
-            }
-        }
-
-        // 캐릭터가 바닥에 착지한 경우
-        if (cc.collisionFlags == CollisionFlags.Below)
-        {
-            // 캐릭터 Y축 속도를 0으로 설정한다
-            yVelocity = 0;
-        }
-
-        // 스태미나 관련
-        if(staminarecovery)
-        {
-            PlayerState.Instance.Stamina += 5.0f * Time.deltaTime;
-
-            if (PlayerState.Instance.Stamina >= PlayerState.Instance.StaminaMax)
-            {
-                PlayerState.Instance.Stamina = PlayerState.Instance.StaminaMax;
-                staminarecovery = false;
-            }
-        }
-
-        //달리기
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            StopCoroutine(StaminaRecovery(0f));
-            staminarecovery = false;
-            if (PlayerState.Instance.Stamina > 0)
-            {
-                nowSpeed = speed * runSpeed;
-                animator.SetBool("RunFoward", true);
-                PlayerState.Instance.Stamina -= 5 * Time.deltaTime;
-            }
+            animator.Play("QuestClear");
         }
         else
         {
-            nowSpeed = speed;
-            animator.SetBool("RunFoward", false);
-            StartCoroutine(StaminaRecovery(1.0f));
-        }
+            #region [ Normal Update ]
 
-        // 스페이스 바를 입력했을 때 점프를 하지 않은 상태
-        if (Input.GetButtonDown("Jump") && !isDodge && !isUiOpen)
-        {
-            StopCoroutine(StaminaRecovery(0f));
-            staminarecovery = false;
-            if (PlayerState.Instance.Stamina >= PlayerState.Instance.StaminaMax * 0.1f)
+            Vector3 velocity = new Vector3(0f, 0f, 0f);
+
+            float moveX = Input.GetAxisRaw("Horizontal");
+            float moveY = Input.GetAxisRaw("Vertical");
+
+            float moveAct = moveX != 0 ? moveX : moveY;
+            moveAct = Mathf.Abs(moveAct);
+
+            if (!isAttack)
             {
-                PlayerState.Instance.Stamina -= PlayerState.Instance.StaminaMax * 0.1f;
-
-                if (PlayerState.Instance.Stamina < 0)
-                    PlayerState.Instance.Stamina = 0;
+                transform.forward =
+                    new Vector3(
+                        Camera.main.transform.forward.x,
+                    transform.forward.y,
+                    Camera.main.transform.forward.z
+                    );
             }
 
-            // 캐릭터 Y축 속력에 점프력을 적용하고 상태 변경한다
-            isDodge = true;
-
-            animator.SetTrigger("JumpTrigger");
-
-            nowSpeed *= 0.7f;
-
-            StartCoroutine(StaminaRecovery(1.5f));
-        }
-
-        // 캐릭터 수직 속도에 중력을 적용한다
-        yVelocity += gravity * Time.deltaTime;
-
-        if (!isAttack && !isUiOpen)
-        {
-            if (moveAct != 0)
+            if (Input.GetButtonDown("Fire1") && !isUiOpen)
             {
-                Vector3 lookForward = new Vector3(cameraOrigin.transform.forward.x, 0f, cameraOrigin.transform.forward.z).normalized;
-                Vector3 lookRight = new Vector3(cameraOrigin.transform.right.x, 0f, cameraOrigin.transform. right.z).normalized;
-                Vector3 moveDir = lookForward * moveY + lookRight * moveX;
-
-                transform.forward = lookForward;
-                if (!isDodge)
+                if (!isAttack)
                 {
-                    animator.SetBool("WalkFoward", true);
+                    if (PlayerState.Instance.Stamina >= PlayerState.Instance.StaminaMax * 0.2f)
+                    {
+                        StopCoroutine(StaminaRecovery(0f));
+                        staminarecovery = false;
+
+                        PlayerState.Instance.Stamina -= PlayerState.Instance.StaminaMax * 0.2f;
+
+                        if (PlayerState.Instance.Stamina < 0)
+                            PlayerState.Instance.Stamina = 0;
+
+                        moveAct = 0;
+
+                        isAttack = true;
+
+                        animator.SetTrigger("AttackTrigger");
+                        animator.SetBool("AttackEnd", false);
+
+                        Debug.Log("공격판정");
+
+                        StartCoroutine(StaminaRecovery(2.0f));
+                    }
                 }
-                animator.SetBool("Idle", false);
+            }
 
-                velocity = moveDir * nowSpeed;
+            // 캐릭터가 바닥에 착지한 경우
+            if (cc.collisionFlags == CollisionFlags.Below)
+            {
+                // 캐릭터 Y축 속도를 0으로 설정한다
+                yVelocity = 0;
+            }
 
+            // 스태미나 관련
+            if (staminarecovery)
+            {
+                PlayerState.Instance.Stamina += 5.0f * Time.deltaTime;
+
+                if (PlayerState.Instance.Stamina >= PlayerState.Instance.StaminaMax)
+                {
+                    PlayerState.Instance.Stamina = PlayerState.Instance.StaminaMax;
+                    staminarecovery = false;
+                }
+            }
+
+            //달리기
+            if (Input.GetKey(KeyCode.LeftShift))
+            {
+                StopCoroutine(StaminaRecovery(0f));
+                staminarecovery = false;
+                if (PlayerState.Instance.Stamina > 0)
+                {
+                    nowSpeed = speed * runSpeed;
+                    animator.SetBool("RunFoward", true);
+                    PlayerState.Instance.Stamina -= 5 * Time.deltaTime;
+                }
             }
             else
             {
-                if (!isDodge)
-                {
-                    animator.SetBool("Idle", true);
-                }
-                animator.SetBool("WalkFoward", false);
+                nowSpeed = speed;
+                animator.SetBool("RunFoward", false);
+                StartCoroutine(StaminaRecovery(1.0f));
             }
-        }
-        else if(isUiOpen) 
-        {
-            animator.SetBool("WalkFoward", false);
-            animator.SetBool("Idle", true); 
-        }
 
-        velocity.y += yVelocity;
+            // 스페이스 바를 입력했을 때 점프를 하지 않은 상태
+            if (Input.GetButtonDown("Jump") && !isDodge && !isUiOpen)
+            {
+                StopCoroutine(StaminaRecovery(0f));
+                staminarecovery = false;
+                if (PlayerState.Instance.Stamina >= PlayerState.Instance.StaminaMax * 0.1f)
+                {
+                    PlayerState.Instance.Stamina -= PlayerState.Instance.StaminaMax * 0.1f;
 
-        cc.Move(velocity * Time.deltaTime);
-        #endregion
+                    if (PlayerState.Instance.Stamina < 0)
+                        PlayerState.Instance.Stamina = 0;
+                }
+
+                // 캐릭터 Y축 속력에 점프력을 적용하고 상태 변경한다
+                isDodge = true;
+
+                animator.SetTrigger("JumpTrigger");
+
+                nowSpeed *= 0.7f;
+
+                StartCoroutine(StaminaRecovery(1.5f));
+            }
+
+            // 캐릭터 수직 속도에 중력을 적용한다
+            yVelocity += gravity * Time.deltaTime;
+
+            if (!isAttack && !isUiOpen)
+            {
+                if (moveAct != 0)
+                {
+                    Vector3 lookForward = new Vector3(cameraOrigin.transform.forward.x, 0f, cameraOrigin.transform.forward.z).normalized;
+                    Vector3 lookRight = new Vector3(cameraOrigin.transform.right.x, 0f, cameraOrigin.transform.right.z).normalized;
+                    Vector3 moveDir = lookForward * moveY + lookRight * moveX;
+
+                    transform.forward = lookForward;
+                    if (!isDodge)
+                    {
+                        animator.SetBool("WalkFoward", true);
+                    }
+                    animator.SetBool("Idle", false);
+
+                    velocity = moveDir * nowSpeed;
+
+                }
+                else
+                {
+                    if (!isDodge)
+                    {
+                        animator.SetBool("Idle", true);
+                    }
+                    animator.SetBool("WalkFoward", false);
+                }
+            }
+            else if (isUiOpen)
+            {
+                animator.SetBool("WalkFoward", false);
+                animator.SetBool("Idle", true);
+            }
+
+            velocity.y += yVelocity;
+
+            cc.Move(velocity * Time.deltaTime);
+            #endregion
+        }
     }
 
     void AttackEnd()

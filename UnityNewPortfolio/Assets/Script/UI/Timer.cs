@@ -16,7 +16,7 @@ public class Timer : MonoBehaviour
     public Text Result_Time;
 
     bool Questing = false;
-    bool questclear = false;        // 임시
+    public bool questclear = false;        // 임시
 
     float clearTime = 0f;
 
@@ -31,13 +31,11 @@ public class Timer : MonoBehaviour
 
     private void Update()
     {
-        currentTime += Time.deltaTime;
+        if(!questclear) currentTime += Time.deltaTime;
         hour = (int)currentTime / 3600;
         minute = (int)(currentTime / 60) % 60;
         second = (int)currentTime % 60;
         if (text_Time != null) text_Time.text = hour.ToString("00") + " : " + minute.ToString("00") + " : " + second.ToString("00");
-
-
 
         clearTime = currentTime;
 

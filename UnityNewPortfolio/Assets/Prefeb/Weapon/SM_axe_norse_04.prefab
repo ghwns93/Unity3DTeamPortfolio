@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 3725594792507087145}
   - component: {fileID: 5471072091310106305}
   - component: {fileID: 6644853782241346755}
+  - component: {fileID: 4210264923962576079}
   m_Layer: 0
   m_Name: SM_axe_norse_04
   m_TagString: Weapon
@@ -115,3 +116,16 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &4210264923962576079
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2932693046883629308}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18a7fecd2a37c1e4bbfbcb80ff26b7ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  power: 20
