@@ -11,6 +11,11 @@ public class UIResult : MonoBehaviour
     [SerializeField]
     private Slot[] slots;
 
+    [SerializeField]
+    public Text questName;
+    [SerializeField]
+    public Text questDesc;
+
     GameObject player;
     PlayerController pc;
 
@@ -18,6 +23,15 @@ public class UIResult : MonoBehaviour
     public Button villagemove;
 
     public string nextScene;
+
+    ///////////////////////////////////////////////////////
+
+    Quest quest;
+
+    public Text text_questname;
+    public Text text_questdesc;
+
+    ///////////////////////////////////////////////////////
 
     private void Start()
     {
@@ -32,6 +46,11 @@ public class UIResult : MonoBehaviour
         {
             slots[i].Items = Inventory.Instance.slots[i].Items;
         }
+
+        quest = QuestManager.Instance.nowQuest;
+
+        text_questname.text = quest.questName;
+        text_questdesc.text = quest.questDesc;
     }
 
     public void GetallItem()        // 모두 받기 클릭
@@ -86,6 +105,7 @@ public class UIResult : MonoBehaviour
         pc.isUiOpen = false;
         getitem.interactable = true;
         villagemove.interactable = false;
+        gameObject.SetActive(false);
 
         SceneManager.LoadScene(nextScene);
     }

@@ -15,16 +15,20 @@ public class ChestConroller : MonoBehaviour
     public GameObject stat;             // Àåºñ ¹× ½ºÅÈ Ã¢
     public GameObject PotionSlot;       // Æ÷¼Ç Äü½½·Ô
 
+    public GameObject inventory;
+
     GameObject player;
     PlayerController pc;
 
     private void Awake()
     {
+        inventory.SetActive(true);
         panel_Box.SetActive(true);
         EquipBox.SetActive(true);
         ConsumablesBox.SetActive(true);
         MaterialBox.SetActive(true);
 
+        inventory.SetActive(true);
         panel_Box.SetActive(false);
         EquipBox.SetActive(false);
         ConsumablesBox.SetActive(false);

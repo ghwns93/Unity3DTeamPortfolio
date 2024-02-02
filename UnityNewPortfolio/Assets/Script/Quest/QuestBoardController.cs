@@ -82,7 +82,7 @@ public class QuestBoardController : MonoBehaviour
 
     private void QuestClick()
     {
-        #region [ 아이템 확인 후 강화창으로 옮김 ]
+        #region [ 퀘스트 정보 로드 ]
         //인벤토리 상위 캔버스에 있는 그래픽 레이케스트 찾기
         GraphicRaycaster ray = questList.transform.parent.parent.GetComponent<GraphicRaycaster>();
 

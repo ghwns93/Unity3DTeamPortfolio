@@ -98,16 +98,6 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 ChestItemDataManager.Instance.eChestItems.Remove(Items);
                 EquipChest.Instance.FreshSlot();
                 WeaponslotController.Instance.FreshSlot();
-
-                Transform weaponPos = GameObject.Find("WeaponPos").transform;
-
-                if (weaponPos.childCount > 0)
-                {
-                    Destroy(weaponPos.GetChild(0).gameObject);
-                }
-
-                //Quaternion rotate = Quaternion.Euler(0, 0, 90);
-                GameObject weaponIns = Instantiate(ChestItemDataManager.Instance.weaponslot.item.itemPrefab, weaponPos);
             }
             else
             {
@@ -119,16 +109,6 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
                 EquipChest.Instance.FreshSlot();
                 WeaponslotController.Instance.FreshSlot();
-
-                Transform weaponPos = GameObject.Find("WeaponPos").transform;
-
-                if (weaponPos.childCount > 0)
-                {
-                    Destroy(weaponPos.GetChild(0).gameObject);
-                }
-
-                //Quaternion rotate = Quaternion.Euler(0, 0, 90);
-                GameObject weaponIns = Instantiate(ChestItemDataManager.Instance.weaponslot.item.itemPrefab, weaponPos);
             }
         }
     }

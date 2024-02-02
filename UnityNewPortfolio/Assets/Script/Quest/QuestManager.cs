@@ -55,6 +55,10 @@ public class QuestManager : MonoBehaviour
                     Result = GameObject.Find("Canvas_UI_final").transform.Find("Result").gameObject;
                     Result.SetActive(true);
 
+                    UIResult uIResult = Result.GetComponent<UIResult>();
+                    uIResult.questName.text = nowQuest.questName;
+                    uIResult.questDesc.text = nowQuest.questDesc;
+
                     nowQuest = null;
                 }
             }
