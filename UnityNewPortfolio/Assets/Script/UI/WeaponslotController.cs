@@ -42,10 +42,7 @@ public class WeaponslotController : MonoBehaviour
 
     public void FreshSlot()
     {
-        if (ChestItemDataManager.Instance.weaponslot != null)
-        {
-            slot.Items = ChestItemDataManager.Instance.weaponslot;
-        }
+        slot.Items = ChestItemDataManager.Instance.weaponslot;
 
         if (slot.Items != null)
         {

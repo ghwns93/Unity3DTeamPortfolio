@@ -14010,9 +14010,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 980086060}
-        m_TargetAssemblyTypeName: Slot, Assembly-CSharp
-        m_MethodName: disrobe
+      - m_Target: {fileID: 1753757483}
+        m_TargetAssemblyTypeName: WeaponslotController, Assembly-CSharp
+        m_MethodName: UnmountingWeapon
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -14035,6 +14035,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slot: {fileID: 980086060}
+  open: 0
 --- !u!114 &980086060
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -68129,8 +68130,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81ea62e343cbb44478ed1991179967c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  count: {fileID: 0}
-  countobject: {fileID: 8649529320142380109}
+  count: {fileID: 8740797899665670664}
+  countobject: {fileID: 1727012238905287279}
   tooltip: {fileID: 0}
 --- !u!1 &5641655456037386051
 GameObject:
@@ -68608,6 +68609,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   text_Time: {fileID: 5641655456270634075}
   Result_Time: {fileID: 944797860}
+  questclear: 0
 --- !u!114 &5641655456616007227
 MonoBehaviour:
   m_ObjectHideFlags: 0

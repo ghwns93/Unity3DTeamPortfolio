@@ -7,6 +7,11 @@ public class SoundManager : MonoBehaviour
 {
     public Slider volumeSlider;
 
+    void Awake()
+    {
+        DontDestroyOnLoad(gameObject);
+    }
+
     void Start()
     {
         float savedVolume = PlayerPrefs.GetFloat("SoundVolume", 1.0f);
