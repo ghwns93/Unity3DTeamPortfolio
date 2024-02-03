@@ -87,12 +87,18 @@ public class Gate : MonoBehaviour
 
     public void ChangeScene()
     {
+        // BGM 변경
+        //SoundManager.soundManager.PlayBGM(BGMType.InField);
+
         //LoadingSceneManager.LoadScene("Isle_01_LP");
         SceneManager.LoadScene("Isle_01_LP");
     }
 
     public void ChangeSnowScene()
     {
+        // BGM 변경
+        //SoundManager.soundManager.PlayBGM(BGMType.InBoss);
+
         SceneManager.LoadScene("SNOWLANDS");
     }
 }

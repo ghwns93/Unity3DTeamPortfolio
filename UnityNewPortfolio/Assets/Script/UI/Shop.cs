@@ -62,6 +62,8 @@ public class Shop : MonoBehaviour
 
                     equipchest.SetActive(true);
                     equipchest.GetComponent<RectTransform>().position = new Vector3(1184f, 540f);
+
+                    SoundManager.soundManager.SEPlay(SEType.OpenShop);
                 }
             }
         }
@@ -71,6 +73,7 @@ public class Shop : MonoBehaviour
 
     public void WeaponbuttonClick()
     {
+        SoundManager.soundManager.SEPlay(SEType.ButtonClick);
         slot_weapon.SetActive(true);
         slot_item.SetActive(false);
         shopDesc.SetActive(false);
@@ -85,6 +88,7 @@ public class Shop : MonoBehaviour
 
     public void ItembuttonClick()
     {
+        SoundManager.soundManager.SEPlay(SEType.ButtonClick);
         slot_weapon.SetActive(false);
         slot_item.SetActive(true);
         shopDesc.SetActive(false);
@@ -99,6 +103,7 @@ public class Shop : MonoBehaviour
 
     public void Exitbuttonclick()
     {
+        SoundManager.soundManager.SEPlay(SEType.OpenShop);
         WeaponbuttonClick();
         canvas_shop.SetActive(false);
         shopOpened = false;

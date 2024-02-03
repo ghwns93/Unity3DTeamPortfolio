@@ -75,10 +75,11 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     }
 
     public void slotClicked()
-    {
-        
+    {        
         if (Items != null && Items.item.itemType == Item.ObjectType.Potion)
         {
+            SoundManager.soundManager.SEPlay(SEType.ButtonClick);
+
             if (PotionSlot.Instance.slot.Items == null)
             {
                 ChestItemDataManager.Instance.potionslot = Items;
@@ -96,6 +97,8 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         {
             if (WeaponslotController.Instance.open)
             {
+                SoundManager.soundManager.SEPlay(SEType.ButtonClick);
+
                 if (WeaponslotController.Instance.slot.Items == null)
                 {
                     ChestItemDataManager.Instance.weaponslot = Items;
@@ -116,14 +119,18 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 }
             }            
         }
-    }
-
-    public void disrobebuttonClicked()
-    {
-        if (Items != null)
+        else
         {
-            EquipChest.Instance.AddItem(Items.item);
-            Items = null;
+            SoundManager.soundManager.SEPlay(SEType.WrongButtonClick);
         }
     }
+
+    //public void disrobebuttonClicked()
+    //{
+    //    if (Items != null)
+    //    {
+    //        EquipChest.Instance.AddItem(Items.item);
+    //        Items = null;
+    //    }
+    //}
 }

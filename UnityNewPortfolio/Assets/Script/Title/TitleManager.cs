@@ -31,7 +31,8 @@ public class TitleManager : MonoBehaviour
     public GameObject option;
 
     public GameObject option_Audio;
-    public GameObject option_Vidio;
+    //public GameObject option_Vidio;
+    //public GameObject option_Key;
 
     //////////////////////////////////////////////////
 
@@ -45,7 +46,8 @@ public class TitleManager : MonoBehaviour
         menu.SetActive(false);
         option.SetActive(false);
         option_Audio.SetActive(true);
-        option_Vidio.SetActive(false);
+        //option_Vidio.SetActive(false);
+        //option_Key.SetActive(false);
 
         logoRectTransform = Logo.GetComponent<RectTransform>();
         initwidth = logoRectTransform.sizeDelta.x;
@@ -56,6 +58,8 @@ public class TitleManager : MonoBehaviour
 
         currentTime = 0;
         timeon = true;
+
+        SoundManager.soundManager.PlayBGM(BGMType.Title);
     }
 
     private void Update()
@@ -91,13 +95,15 @@ public class TitleManager : MonoBehaviour
                 if (currentTime >= 4.5f)
                 {
                     menu.SetActive(true);
-                }
-
-                if (logoRectTransform.transform.position == targetPosition)
-                {
                     timeon = false;
                     currentTime = 0;
                 }
+
+                //if (logoRectTransform.transform.position == targetPosition)
+                //{
+                //    timeon = false;
+                //    currentTime = 0;
+                //}
             }
         }
     }
@@ -106,6 +112,8 @@ public class TitleManager : MonoBehaviour
 
     public void gamestartClicked()
     {
+        //SoundManager.soundManager.PlayBGM(BGMType.InVillage);
+        SoundManager.soundManager.SEPlay(SEType.ButtonClick);
         LoadingSceneManager.LoadScene("NORSE VILLAGE");
     }
 
@@ -113,10 +121,13 @@ public class TitleManager : MonoBehaviour
     {
         menu.SetActive(false);
         option.SetActive(true);
+
+        SoundManager.soundManager.SEPlay(SEType.ButtonClick);
     }
 
     public void gameexitClicked()
     {
+        SoundManager.soundManager.SEPlay(SEType.ButtonClick);
         Application.Quit();
     }
 
@@ -124,20 +135,31 @@ public class TitleManager : MonoBehaviour
 
     public void optionVideoClicked()
     {
-        option_Vidio.SetActive(true);
-        option_Audio.SetActive(false);
+        //option_Vidio.SetActive(true);
+        //option_Audio.SetActive(false);
+        SoundManager.soundManager.SEPlay(SEType.WrongButtonClick);
     }
 
     public void optionAudioClicked()
     {
-        option_Vidio.SetActive(false);
+        //option_Vidio.SetActive(false);
         option_Audio.SetActive(true);
+        SoundManager.soundManager.SEPlay(SEType.ButtonClick);
+    }
+
+    public void optionKeyClicked()
+    {
+        //option_Vidio.SetActive(false);
+        //option_Audio.SetActive(false);
+        //option_Key.SetActive(true);
+        SoundManager.soundManager.SEPlay(SEType.WrongButtonClick);
     }
 
     public void optionBackClicked()
     {
         option.SetActive(false);
         menu.SetActive(true);
+        SoundManager.soundManager.SEPlay(SEType.ButtonClick);
     }
 
     //////////////////////////////////////////////////

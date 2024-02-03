@@ -46,6 +46,8 @@ public class ChestConroller : MonoBehaviour
 
     public void StorageBoxselectCloseButtonClicked()
     {
+        SoundManager.soundManager.SEPlay(SEType.ButtonClick);
+
         panel_Box.SetActive(false);
         Debug.Log("Ã¢°í ´ÝÈû");
         chest.OpenBox = false;
@@ -56,6 +58,8 @@ public class ChestConroller : MonoBehaviour
 
     public void EquipBoxOpenButtonClicked()
     {
+        SoundManager.soundManager.SEPlay(SEType.ButtonClick);
+
         panel_Box.SetActive(false);
         EquipBox.SetActive(true);
         EquipBox.GetComponent<RectTransform>().position = new Vector3(500f, 540f);
@@ -67,6 +71,8 @@ public class ChestConroller : MonoBehaviour
 
     public void EquipBoxCloseButtonClicked()
     {
+        SoundManager.soundManager.SEPlay(SEType.ButtonClick);
+
         EquipBox.SetActive(false);
         stat.GetComponent<RectTransform>().position = new Vector3(566f, 540f);
         WeaponslotController.Instance.open = false;
@@ -77,6 +83,8 @@ public class ChestConroller : MonoBehaviour
 
     public void ConsumablesBoxOpenButtonClicked()
     {
+        SoundManager.soundManager.SEPlay(SEType.ButtonClick);
+
         panel_Box.SetActive(false);
         ConsumablesBox.SetActive(true);
         PotionSlot.SetActive(true);
@@ -85,6 +93,8 @@ public class ChestConroller : MonoBehaviour
 
     public void ConsumablesBoxCloseButtonClicked()
     {
+        SoundManager.soundManager.SEPlay(SEType.ButtonClick);
+
         ConsumablesBox.SetActive(false);
         PotionSlot.SetActive(false);
         Debug.Log("¼Ò¸ðÇ° »óÀÚ ´ÝÈû");
@@ -93,6 +103,8 @@ public class ChestConroller : MonoBehaviour
 
     public void MaterialBoxOpenButtonClicked()
     {
+        SoundManager.soundManager.SEPlay(SEType.ButtonClick);
+
         panel_Box.SetActive(false);
         MaterialBox.SetActive(true);
         Debug.Log("Àç·á »óÀÚ ¿­¸²");
@@ -100,6 +112,8 @@ public class ChestConroller : MonoBehaviour
 
     public void MaterialBoxCloseButtonClicked()
     {
+        SoundManager.soundManager.SEPlay(SEType.ButtonClick);
+
         MaterialBox.SetActive(false);
         Debug.Log("Àç·á »óÀÚ ´ÝÈû");
         panel_Box.SetActive(true);

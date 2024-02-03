@@ -39,14 +39,17 @@ public class ShopDesc : MonoBehaviour
                 EquipChest.Instance.FreshSlot();
                 PlayerState.Instance.Money -= currentItem.itemprice;
                 Debug.Log(currentItem.itemName + " 备概 己傍");
+
+                SoundManager.soundManager.SEPlay(SEType.BuyClicked);
                 exitClicked();
             }
             else if (currentItem.itemType == Item.ObjectType.Potion)
             {
                 ChestItemDataManager.Instance.AddItem(currentItem, 1);
                 ConsumablesChest.Instance.FreshSlot();
-                PlayerState.Instance.Money -= currentItem.itemprice;
+                PlayerState.Instance.Money -= currentItem.itemprice;                
                 Debug.Log(currentItem.itemName + " 备概 己傍");
+                SoundManager.soundManager.SEPlay(SEType.BuyClicked);
             }
         }
     }

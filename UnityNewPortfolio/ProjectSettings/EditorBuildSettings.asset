@@ -6,6 +6,9 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/TitleScene.unity
+    guid: 645df8af0b6dfc1439d92fe120b74473
+  - enabled: 1
     path: Assets/Scenes/NORSE VILLAGE.unity
     guid: 9b2b7edec1159db48bd6ca139abf872b
   - enabled: 1
