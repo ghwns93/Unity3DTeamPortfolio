@@ -32,8 +32,6 @@ public class SoundManager : MonoBehaviour
     public AudioClip seChest;               // SE (창고 온/오프)
     public AudioClip seEquipChange;         // SE (장비 장착/해제)
 
-
-
     ///////////////////////////////////////////
 
     // 첫 SoundManager를 저장할 static 변수
