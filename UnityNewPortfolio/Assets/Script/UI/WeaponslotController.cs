@@ -73,7 +73,7 @@ public class WeaponslotController : MonoBehaviour
     {
         if (slot.Items != null)
         {
-            SoundManager.soundManager.SEPlay(SEType.ButtonClick);
+            SoundManager.soundManager.SEPlay(SEType.EquipChange);
             ChestItemDataManager.Instance.AddItem(slot.Items.item, 1);
             EquipChest.Instance.FreshSlot();
             ChestItemDataManager.Instance.weaponslot = null;

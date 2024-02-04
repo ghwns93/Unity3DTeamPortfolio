@@ -67,6 +67,8 @@ public class Chest : MonoBehaviour
         pc.isUiOpen = true;
         playerUI.SetActive(false);
         PotionSlot.SetActive(false);
+
+        SoundManager.soundManager.SEPlay(SEType.OpenChest);
     }
 
     // 거리 확인

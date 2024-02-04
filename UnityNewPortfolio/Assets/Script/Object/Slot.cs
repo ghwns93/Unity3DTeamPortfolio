@@ -97,7 +97,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         {
             if (WeaponslotController.Instance.open)
             {
-                SoundManager.soundManager.SEPlay(SEType.ButtonClick);
+                SoundManager.soundManager.SEPlay(SEType.EquipChange);
 
                 if (WeaponslotController.Instance.slot.Items == null)
                 {
