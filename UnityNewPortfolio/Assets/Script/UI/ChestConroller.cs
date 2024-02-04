@@ -46,7 +46,7 @@ public class ChestConroller : MonoBehaviour
 
     public void StorageBoxselectCloseButtonClicked()
     {
-        SoundManager.soundManager.SEPlay(SEType.ButtonClick);
+        SoundManager.soundManager.SEPlay(SEType.OpenChest);
 
         panel_Box.SetActive(false);
         Debug.Log("Ã¢°í ´ÝÈû");

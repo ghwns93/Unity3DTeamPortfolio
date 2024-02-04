@@ -115,7 +115,7 @@ public class PlayerController : MonoBehaviour
             // 스태미나 관련
             if (staminarecovery)
             {
-                PlayerState.Instance.Stamina += 5.0f * Time.deltaTime;
+                PlayerState.Instance.Stamina += 10.0f * Time.deltaTime;
 
                 if (PlayerState.Instance.Stamina >= PlayerState.Instance.StaminaMax)
                 {

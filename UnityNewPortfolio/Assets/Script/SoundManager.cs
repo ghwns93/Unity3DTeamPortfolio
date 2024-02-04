@@ -7,11 +7,15 @@ using UnityEngine.UI;
 public enum BGMType { None, Title, InVillage, InField, InBoss }
 
 // SE 종류
-public enum SEType { OpenShop, BuyClicked, ButtonClick, WrongButtonClick }
+public enum SEType { OpenShop, BuyClicked, ButtonClick, WrongButtonClick, PotionDrink, OpenChest, EquipChange }
 
 public class SoundManager : MonoBehaviour
 {
-    public Slider volumeSlider;     // 옵션 볼륨조절 바
+    public Slider bgmVolumeSlider;      // 옵션 BGM 볼륨조절 바
+    public Slider seVolumeSlider;       // 옵션 SE 볼륨 조절 바
+
+    private AudioSource bgmAudioSource;
+    private AudioSource seAudioSource;
 
     ///////////////////////////////////////////
 
@@ -24,6 +28,9 @@ public class SoundManager : MonoBehaviour
     public AudioClip seBuyClicked;          // SE (상점 구매)
     public AudioClip seButtonClick;         // SE (버튼 클릭)
     public AudioClip seWrongButtonClick;    // SE (비활성 버튼 클릭)
+    public AudioClip sePotionDrink;         // SE (포션)
+    public AudioClip seChest;               // SE (창고 온/오프)
+    public AudioClip seEquipChange;         // SE (장비 장착/해제)
 
     ///////////////////////////////////////////
 
@@ -53,46 +60,68 @@ public class SoundManager : MonoBehaviour
 
     void Start()
     {
-        float savedVolume = PlayerPrefs.GetFloat("SoundVolume", 1.0f);
-        SetVolume(savedVolume);
+        bgmAudioSource = gameObject.AddComponent<AudioSource>();
+        seAudioSource = gameObject.AddComponent<AudioSource>();
 
-        if(volumeSlider != null )
+        float savedBgmVolume = PlayerPrefs.GetFloat("BgmVolume", 1.0f);
+        float savedSeVolume = PlayerPrefs.GetFloat("SeVolume", 1.0f);
+
+        SetBgmVolume(savedBgmVolume);
+        SetSeVolume(savedSeVolume);
+
+        if (bgmVolumeSlider != null )
         {
-            volumeSlider.value = savedVolume;
-            volumeSlider.onValueChanged.AddListener(ChangeVolume);
-        }        
+            bgmVolumeSlider.value = savedBgmVolume;
+            bgmVolumeSlider.onValueChanged.AddListener(ChangeBgmVolume);
+        }
+
+        if (seVolumeSlider != null)
+        {
+            seVolumeSlider.value = savedSeVolume;
+            seVolumeSlider.onValueChanged.AddListener(ChangeSeVolume);
+        }
     }
 
-    public void ChangeVolume(float volume)
+    void ChangeBgmVolume(float volume)
     {
-        SetVolume(volume);
+        SetBgmVolume(volume);
     }
 
-    void SetVolume(float volume)
+    void ChangeSeVolume(float volume)
     {
-        AudioListener.volume = Mathf.Clamp01(volume);
-        PlayerPrefs.SetFloat("SoundVolume", AudioListener.volume);
+        SetSeVolume(volume);
+    }
+
+    void SetBgmVolume(float volume)
+    {
+        bgmAudioSource.volume = Mathf.Clamp01(volume);
+        PlayerPrefs.SetFloat("BgmVolume", bgmAudioSource.volume);
+    }
+
+    void SetSeVolume(float volume)
+    {
+        seAudioSource.volume = Mathf.Clamp01(volume);
+        PlayerPrefs.SetFloat("SeVolume", seAudioSource.volume);
     }
 
     ///////////////////////////////////////////
-    
+
     public void PlayBGM(BGMType type)
     {
         if (type != playingBGM)
         {
             playingBGM = type;
-            AudioSource audio = GetComponent<AudioSource>();
 
             if (type == BGMType.Title)
-                audio.clip = bgmInTitle;    // 타이틀 BGM
+                bgmAudioSource.clip = bgmInTitle;    // 타이틀 BGM
             else if (type == BGMType.InVillage)
-                audio.clip = bgmInVillage;     // 마을 BGM
+                bgmAudioSource.clip = bgmInVillage;     // 마을 BGM
             else if (type == BGMType.InField)
-                audio.clip = bgmInField;     // 필드 BGM
+                bgmAudioSource.clip = bgmInField;     // 필드 BGM
             else if (type == BGMType.InBoss)
-                audio.clip = bgmInBoss;     // 보스 BGM
+                bgmAudioSource.clip = bgmInBoss;     // 보스 BGM
 
-            audio.Play(); // 사운드 재생
+            bgmAudioSource.Play(); // 사운드 재생
         }
     }
 
@@ -108,15 +137,24 @@ public class SoundManager : MonoBehaviour
     {
         // 상점 오픈
         if (type == SEType.OpenShop)
-            GetComponent<AudioSource>().PlayOneShot(seOpenShop);
+            seAudioSource.PlayOneShot(seOpenShop);
         // 상점 구매
         else if (type == SEType.BuyClicked)
-            GetComponent<AudioSource>().PlayOneShot(seBuyClicked);
+            seAudioSource.PlayOneShot(seBuyClicked);
         // 버튼 클릭
         else if (type == SEType.ButtonClick)
-            GetComponent<AudioSource>().PlayOneShot(seButtonClick);
+            seAudioSource.PlayOneShot(seButtonClick);
         // 비활성 버튼 클릭
         else if (type == SEType.WrongButtonClick)
-            GetComponent<AudioSource>().PlayOneShot(seWrongButtonClick);
+            seAudioSource.PlayOneShot(seWrongButtonClick);
+        // 포션 먹는 소리
+        else if (type == SEType.PotionDrink)
+            seAudioSource.PlayOneShot(sePotionDrink);
+        // 창고 여닫이 소리
+        else if (type == SEType.OpenChest)
+            seAudioSource.PlayOneShot(seChest);
+        // 창고 여닫이 소리
+        else if (type == SEType.EquipChange)
+            seAudioSource.PlayOneShot(seEquipChange);
     }
 }

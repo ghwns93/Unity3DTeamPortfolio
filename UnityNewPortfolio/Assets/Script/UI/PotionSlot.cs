@@ -65,6 +65,8 @@ public class PotionSlot : MonoBehaviour
                 {
                     slot.Items = null;
                 }
+
+                SoundManager.soundManager.SEPlay(SEType.PotionDrink);
             }
         }
     }

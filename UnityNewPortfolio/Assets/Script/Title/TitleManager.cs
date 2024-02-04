@@ -112,7 +112,7 @@ public class TitleManager : MonoBehaviour
 
     public void gamestartClicked()
     {
-        //SoundManager.soundManager.PlayBGM(BGMType.InVillage);
+        SoundManager.soundManager.PlayBGM(BGMType.InVillage);
         SoundManager.soundManager.SEPlay(SEType.ButtonClick);
         LoadingSceneManager.LoadScene("NORSE VILLAGE");
     }
