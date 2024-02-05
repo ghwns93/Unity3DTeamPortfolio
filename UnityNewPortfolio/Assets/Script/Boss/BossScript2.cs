@@ -7,7 +7,7 @@ using UnityEngine.AI;
 using UnityEngine.UI;
 using static UnityEngine.InputManagerEntry;
 using static UnityEngine.Rendering.DebugUI;
-public class BossScript : MonoBehaviour
+public class BossScript2 : MonoBehaviour
 {
     enum BossType
     {
@@ -15,22 +15,20 @@ public class BossScript : MonoBehaviour
         Move,
         Attack,
         Damaged,
-        Phase2
+        Die
     }
 
     BossType State;
+    BossScript bs;
 
     public int maxHp = 300;
-    public int hp = 300;
+    public int hp;
     public int power;
-    // 2페이즈
-    public bool phaseChange = false;
-    [HideInInspector]
+
     public bool isAttacking;
 
     public float pushBackForce = 10f; // 밀쳐내는 힘의 크기
     public float effectRadius = 10f; // 효과가 적용되는 반경
-
 
     // 적 HP 슬라이더
     public Slider hpSlider;
@@ -42,18 +40,20 @@ public class BossScript : MonoBehaviour
     public Transform player;
 
     // 공격 가능한 범위   
-    public float range = 10.0f;
+    public float range = 15.0f;
 
     // 이동 속도
-    public float speed = 5.0f;
+    public float speed = 2.5f;
 
     // 공격 딜레이
     public float attackDelay = 7.0f;
+
     // 누적 시간
     float currentTime = 0.0f;
 
     // 이동 쿨다운 시간
     public float moveCooldown = 3.0f;
+
     // 공격 후 다음 이동까지의 누적 시간
     private float moveCooldownTime = 0.0f;
 
@@ -71,30 +71,18 @@ public class BossScript : MonoBehaviour
 
     // 내비게이션 메쉬 컴포넌트
     NavMeshAgent agent;
-    Renderer renderer;
-
-    public RuntimeAnimatorController boss2; // Inspector에서 Boss2의 Animator Controller를 할당
-
-    private BossScript2 bossScript2; // 이 오브젝트에 붙어있는 BossScript2 컴포넌트의 참조
 
     void Start()
     {
+        attackPower = power;
+
         State = BossType.Idle;
         player = GameObject.Find("PlayerBody").transform;
         cc = GetComponent<CharacterController>();
         anim = GetComponentInChildren<Animator>();
         agent = GetComponent<NavMeshAgent>();
-        renderer = GetComponentInChildren<Renderer>();
 
-        // BossScript2 컴포넌트를 찾아 참조를 저장합니다.
-        bossScript2 = GetComponent<BossScript2>();
-
-        // 초기에는 BossScript2를 비활성화 상태로 만듭니다.
-        if (bossScript2 != null)
-        {
-            bossScript2.enabled = false;
-        }
-
+        hp = bs.hp;
     }
     void Update()
     {
@@ -121,15 +109,13 @@ public class BossScript : MonoBehaviour
             case BossType.Damaged:
                 Damaged();
                 break;
-            case BossType.Phase2:
-                Phase2();
+            case BossType.Die:
+                Die();
                 break;
         }
         // 현재 HP를 슬라이더의 value에 반영한다
         hpSlider.value = (float)hp / (float)maxHp;
     }
-
-
 
     void LookAtPlayer()
     {
@@ -182,49 +168,10 @@ public class BossScript : MonoBehaviour
             power = 10;
 
             attackCount++;
-            if (attackCount % 6 == 0)
-            {
-                isAttacking = true;
-                attackCount= 0;
-                anim.SetTrigger("Skill");
-                power = 20;
-                AttackAction();
-                Debug.Log("Skill Attack");
-            }
-            else
-            {
-                int random = UnityEngine.Random.Range(0, 3) + 1;
 
-                float distance = Vector3.Distance(transform.position, player.position);
-                if (distance <= range && random == 1)
-                {
-                    isAttacking = true;
-                    power = 10;
-                    anim.SetTrigger("CloseAttack");
-                 
-                    Debug.Log("Close Attack");
-
-                }
-                
-                else if (distance <= range  && random == 2)
-                {
-                    isAttacking = true;
-                    power = 15;
-                    anim.SetTrigger("MiddleAttack");
-                    AttackAction();
-                    Debug.Log("Middle Attack");
-                }
-                else if (distance <= range && random == 3)
-                {
-                    isAttacking = true;
-                    power = 15;
-                    anim.SetTrigger("FarAttack");
-                    AttackAction();
-                    Debug.Log("Far Attack");
-                }
-
-            }
-
+            /////
+            ///
+            
             StartCoroutine(ReactivateNavMeshAgent(moveCooldown));
 
             currentTime = 0;
@@ -238,7 +185,7 @@ public class BossScript : MonoBehaviour
 
         isAttacking = false;
 
-        if (State != BossType.Damaged && State != BossType.Phase2)
+        if (State != BossType.Damaged && State != BossType.Die)
         {
             State = BossType.Move;
 
@@ -267,7 +214,7 @@ public class BossScript : MonoBehaviour
         Debug.Log(hp);
 
         // 적 체력이 0보다 크면 피격 상태로 전환
-        if (hp > maxHp/2)
+        if (hp > 0)
         {
             State = BossType.Damaged;
             print("상태 전환 : Any State -> Damaged");
@@ -280,12 +227,10 @@ public class BossScript : MonoBehaviour
         // 그렇지 않다면 사망 상태로 전환
         else
         {
-            State = BossType.Phase2;
-            print("상태 전환 : Any State -> Phase2");
-
-            // 2페이즈 시작
-            Phase2();
-            anim.SetTrigger("Phase2");
+            State = BossType.Die;
+            print("상태 전환 : Any State -> Die");
+            anim.SetTrigger("Die");
+            Die();
         }
     }
 
@@ -307,28 +252,25 @@ public class BossScript : MonoBehaviour
         print("상태 전환 : Damaged -> Move");
     }
 
-
-    private void Phase2()
+    // 사망 상태
+    void Die()
     {
-        State= BossType.Phase2;
+        Debug.Log("사망");
 
-        if (hp <= maxHp / 2)
-        {
-            // "Bone" 오브젝트를 찾습니다. 이 예제에서는 "Bone"이 현재 스크립트가 부착된 오브젝트의 자식의 자식에 위치한다고 가정합니다.
-            Transform colorChange = transform.Find("0");
+        // 사망 상태를 처리하기 위한 코루틴을 실행한다
+        StartCoroutine(DieProcess());
+    }
 
-            // Renderer 컴포넌트를 가져옵니다.
+    // 사망 상태 처리용 코루틴
+    IEnumerator DieProcess()
+    {
+        // 캐릭터 컨트롤러를 비활성화한다
+        cc.enabled = false;
 
-
-            if (renderer != null)
-            {
-                // Material의 Albedo 색상을 변경합니다.
-                renderer.material.color = new Color32(255, 0, 0, 255); 
-            }
-
-            ApplyPushBackEffect();
-            ChangePhase();
-        }
+        // 2초 동안 기다린 이후 자기자신을 제거한다
+        yield return new WaitForSeconds(2.0f);
+        print("소멸!");
+        Destroy(gameObject);
     }
 
     public void ApplyPushBackEffect()
@@ -372,7 +314,6 @@ public class BossScript : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, effectRadius);
     }
 
-
     void OnAnimatorMove()
     {
         if (agent.isStopped)
@@ -382,24 +323,6 @@ public class BossScript : MonoBehaviour
 
             transform.position = newPosition;
             transform.rotation = newRotation;
-        }
-    }
-
-    public void ChangePhase()
-    {
-        // BossScript를 비활성화합니다.
-        this.enabled = false;
-
-        // BossScript2를 활성화합니다.
-        if (bossScript2 != null)
-        {
-            bossScript2.enabled = true;
-        }
-
-        // Animator 컨트롤러를 변경합니다.
-        if (anim != null && boss2 != null)
-        {
-            anim.runtimeAnimatorController = boss2;
         }
     }
 }

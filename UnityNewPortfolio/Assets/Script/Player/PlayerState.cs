@@ -12,6 +12,7 @@ public class PlayerState : MonoBehaviour
     // 적 정보를 전달받을 스크립트
     public Enemy_VS VS;
     public Enemy_VA VA;
+    BossScript bs;
 
     [SerializeField]
     private float hp;
@@ -101,6 +102,10 @@ public class PlayerState : MonoBehaviour
         else if (VA != null)
         {
             VA.AttackAction();
+        }
+        else if(bs != null)
+        {
+            bs.AttackAction();
         }
     }
 

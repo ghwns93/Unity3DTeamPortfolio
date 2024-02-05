@@ -10,10 +10,12 @@ public class WeaponPower : MonoBehaviour
 
     Enemy_VS EV;
     Enemy_VA EA;
+    BossScript bs;
+
     PlayerController PCR;
 
     // 플레이어 정보를 전달받을 스크립트
-    public int power = 5;
+    public int power = 10;
     
     private void Start()
     {
@@ -33,6 +35,8 @@ public class WeaponPower : MonoBehaviour
         {
             // Enemy_VS 스크립트를 찾습니다.
             EV = other.gameObject.GetComponent<Enemy_VS>();
+            EA = other.gameObject.GetComponent<Enemy_VA>();
+            bs = other.gameObject.GetComponent<BossScript>();
             Debug.Log("충돌판정");
 
             // Enemy_VS 스크립트가 있다면, hp를 감소시킵니다.
@@ -46,6 +50,12 @@ public class WeaponPower : MonoBehaviour
             {
                 Debug.Log("충돌판정 체력감소");
                 EV.HitEnemy(power);
+            }
+
+            else if (bs != null)
+            {
+                Debug.Log("충돌판정 체력감소");
+                bs.HitEnemy(power);
             }
 
             PlayParticleEffect();
