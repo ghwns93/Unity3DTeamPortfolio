@@ -32,7 +32,7 @@ public class BossScript : MonoBehaviour
     public float speed = 5.0f;
 
     // 공격 딜레이
-    public float attackDelay = 20.0f;
+    public float attackDelay = 7.0f;
     // 누적 시간
     float currentTime = 0.0f;
 
@@ -66,7 +66,7 @@ public class BossScript : MonoBehaviour
     }
     void Update()
     {
-        // moveCooldownTime을 감소시키기
+        //moveCooldownTime을 감소시키기
         if (moveCooldownTime > 0)
         {
             moveCooldownTime -= Time.deltaTime;
@@ -125,9 +125,9 @@ public class BossScript : MonoBehaviour
         else if (moveCooldownTime <= 0)
         {
             State = BossType.Attack;
-            currentTime = attackDelay;
             anim.SetTrigger("MoveToAttackDelay");
         }
+
     }
 
     void Attack()
@@ -143,27 +143,33 @@ public class BossScript : MonoBehaviour
             attackCount++;
             if (attackCount % 6 == 0)
             {
+                attackCount= 0;
                 anim.SetTrigger("Skill");
                 Debug.Log("Skill Attack");
             }
             else
             {
+                int random = Random.Range(0, 3) + 1;
+
                 float distance = Vector3.Distance(transform.position, player.position);
-                if (distance <= range * 0.3f)
+                if (distance <= range && random == 1)
                 {
                     anim.SetTrigger("CloseAttack");
                     Debug.Log("Close Attack");
+
                 }
-                else if (distance <= range * 0.6f)
+                
+                else if (distance <= range  && random == 2)
                 {
                     anim.SetTrigger("MiddleAttack");
                     Debug.Log("Middle Attack");
                 }
-                else
+                else if (distance <= range && random == 3)
                 {
                     anim.SetTrigger("FarAttack");
                     Debug.Log("Far Attack");
                 }
+                
             }
 
             StartCoroutine(ReactivateNavMeshAgent(moveCooldown));
@@ -180,7 +186,11 @@ public class BossScript : MonoBehaviour
         if (State != BossType.Damaged && State != BossType.Die)
         {
             State = BossType.Move;
+
             agent.isStopped = false;
+            
+            // 이동 애니메이션
+            anim.SetTrigger("AttackToMove");
         }
     }
 

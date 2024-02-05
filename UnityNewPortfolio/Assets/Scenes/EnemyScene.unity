@@ -2205,8 +2205,8 @@ MonoBehaviour:
   sight: 10
   range: 3
   speed: 5
-  attackDelay: 7
-  moveCooldown: 3
+  attackDelay: 3
+  moveCooldown: 1
   attackPower: 10
 --- !u!136 &7051503301680205353
 CapsuleCollider:
