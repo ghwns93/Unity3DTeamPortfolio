@@ -52,6 +52,8 @@ public class AnvilController : MonoBehaviour
                 enhanceCanvas.enabled = true;
                 playerController.isUiOpen = true;
 
+                SoundManager.soundManager.SEPlay(SEType.OpenAnvil);
+
                 Inven.SetActive(true);
                 Inven.GetComponent<RectTransform>().position = new Vector3(1200f, 540f);
             }
@@ -80,10 +82,15 @@ public class AnvilController : MonoBehaviour
         if (other.gameObject.transform.tag == "Player")
         {
             canvas.enabled = false;
-            enhanceCanvas.enabled = false;
-            playerController.isUiOpen = false;
-            Inven.SetActive(false);
-            ResetEnhanceInfo();
+
+            if (enhanceCanvas.enabled == true)
+            {
+                enhanceCanvas.enabled = false;
+                playerController.isUiOpen = false;
+                Inven.SetActive(false);
+                SoundManager.soundManager.SEPlay(SEType.OpenAnvil);
+                ResetEnhanceInfo();
+            }
         }
     }
 
@@ -92,6 +99,7 @@ public class AnvilController : MonoBehaviour
         enhanceCanvas.enabled = false;
         playerController.isUiOpen = false;
         Inven.SetActive(false);
+        SoundManager.soundManager.SEPlay(SEType.OpenAnvil);
         ResetEnhanceInfo();
     }
 
@@ -164,6 +172,8 @@ public class AnvilController : MonoBehaviour
 
                 if (money >= priceGold)
                 {
+                    SoundManager.soundManager.SEPlay(SEType.ButtonAnvil);
+
                     items.item.itemEnhance++;
                     money -= priceGold;
                     InfoTextView(items);
