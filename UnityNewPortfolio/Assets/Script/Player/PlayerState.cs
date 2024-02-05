@@ -7,6 +7,8 @@ public class PlayerState : MonoBehaviour
     //싱글톤 구성
     private static PlayerState playerInstance = null;
 
+    public GameObject hitPrefab;
+
     // 적 정보를 전달받을 스크립트
     public Enemy_VS VS;
     public Enemy_VA VA;
@@ -118,6 +120,7 @@ public class PlayerState : MonoBehaviour
         if (playerHp > 0)
         {
             StartCoroutine(PlayHitEffect());
+            //PlayParticleEffect();
         }
     }
 
@@ -126,8 +129,26 @@ public class PlayerState : MonoBehaviour
         Debug.Log("피격이펙트 ON");
 
         // 0.3초간 대기한다
-        yield return new WaitForSeconds(0.3f);
+        yield return new WaitForSeconds(0.5f);
+        PlayParticleEffect();
 
         Debug.Log("피격이펙트 OFF");
+    }
+
+    void PlayParticleEffect()
+    {
+        // 파티클을 생성할 위치
+        Vector3 spawnPosition = transform.position;
+
+        // 파티클을 생성하고 변수에 할당
+        GameObject particleObject = Instantiate((GameObject)hitPrefab, spawnPosition, Quaternion.identity);
+
+        // 파티클 시스템 컴포넌트 가져오기
+        ParticleSystem particleSystem = particleObject.GetComponent<ParticleSystem>();
+
+        // 파티클이 재생되는 동안 대기
+        float duration = particleSystem.main.duration;
+
+        Destroy(particleObject, duration);
     }
 }
