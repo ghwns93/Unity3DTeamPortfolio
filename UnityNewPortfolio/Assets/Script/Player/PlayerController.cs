@@ -81,12 +81,12 @@ public class PlayerController : MonoBehaviour
             {
                 if (!isAttack)
                 {
-                    if (PlayerState.Instance.Stamina >= PlayerState.Instance.StaminaMax * 0.2f)
+                    if (PlayerState.Instance.Stamina >= 20)
                     {
                         StopCoroutine(StaminaRecovery(0f));
                         staminarecovery = false;
 
-                        PlayerState.Instance.Stamina -= PlayerState.Instance.StaminaMax * 0.2f;
+                        PlayerState.Instance.Stamina -= 20;
 
                         if (PlayerState.Instance.Stamina < 0)
                             PlayerState.Instance.Stamina = 0;
@@ -135,6 +135,12 @@ public class PlayerController : MonoBehaviour
                     animator.SetBool("RunFoward", true);
                     PlayerState.Instance.Stamina -= 5 * Time.deltaTime;
                 }
+                else
+                {
+                    nowSpeed = speed;
+                    animator.SetBool("RunFoward", false);
+                    StartCoroutine(StaminaRecovery(1.0f));
+                }
             }
             else
             {
@@ -148,22 +154,22 @@ public class PlayerController : MonoBehaviour
             {
                 StopCoroutine(StaminaRecovery(0f));
                 staminarecovery = false;
-                if (PlayerState.Instance.Stamina >= PlayerState.Instance.StaminaMax * 0.1f)
+                if (PlayerState.Instance.Stamina >= 10)
                 {
-                    PlayerState.Instance.Stamina -= PlayerState.Instance.StaminaMax * 0.1f;
+                    PlayerState.Instance.Stamina -= 10;
+
+                    // 캐릭터 Y축 속력에 점프력을 적용하고 상태 변경한다
+                    isDodge = true;
+
+                    animator.SetTrigger("JumpTrigger");
+
+                    nowSpeed *= 0.7f;
+
+                    StartCoroutine(StaminaRecovery(1.5f));
 
                     if (PlayerState.Instance.Stamina < 0)
                         PlayerState.Instance.Stamina = 0;
                 }
-
-                // 캐릭터 Y축 속력에 점프력을 적용하고 상태 변경한다
-                isDodge = true;
-
-                animator.SetTrigger("JumpTrigger");
-
-                nowSpeed *= 0.7f;
-
-                StartCoroutine(StaminaRecovery(1.5f));
             }
 
             // 캐릭터 수직 속도에 중력을 적용한다

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class TitleManager : MonoBehaviour
 {
@@ -114,7 +115,8 @@ public class TitleManager : MonoBehaviour
     {
         SoundManager.soundManager.PlayBGM(BGMType.InVillage);
         SoundManager.soundManager.SEPlay(SEType.ButtonClick);
-        LoadingSceneManager.LoadScene("NORSE VILLAGE");
+        //LoadingSceneManager.LoadScene("NORSE VILLAGE");
+        SceneManager.LoadScene("NORSE VILLAGE");
     }
 
     public void optionClicked()

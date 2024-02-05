@@ -19,8 +19,8 @@ public class StatText : MonoBehaviour
     void LateUpdate()
     {
         text_lv.text = PlayerState.Instance.Level.ToString();
-        text_hp.text = PlayerState.Instance.Hp.ToString();
-        text_sp.text = PlayerState.Instance.Stamina.ToString();
+        text_hp.text = PlayerState.Instance.HpMax.ToString();
+        text_sp.text = PlayerState.Instance.StaminaMax.ToString();
         text_gold.text = PlayerState.Instance.Money.ToString() + " G";
     }
 }
