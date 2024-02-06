@@ -201,7 +201,7 @@ public class BossScript : MonoBehaviour
                     isAttacking = true;
                     power = 10;
                     anim.SetTrigger("CloseAttack");
-                 
+                    AttackAction();
                     Debug.Log("Close Attack");
 
                 }
@@ -325,10 +325,20 @@ public class BossScript : MonoBehaviour
                 // Material의 Albedo 색상을 변경합니다.
                 renderer.material.color = new Color32(255, 0, 0, 255); 
             }
-
+            // 페이즈2 상태를 처리하는 코루틴 함수를 호출한다
             ApplyPushBackEffect();
-            ChangePhase();
+            bossScript2.hp = hp;
+            StartCoroutine(Phase2Change());
         }
+    }
+    
+    // 피격 상태 처리용 코루틴
+    IEnumerator Phase2Change()
+    {
+         // 피격 애니메이션 재생 시간만큼 기다린다
+         yield return new WaitForSeconds(1.0f);
+
+        ChangePhase();
     }
 
     public void ApplyPushBackEffect()

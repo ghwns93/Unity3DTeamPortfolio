@@ -174,7 +174,8 @@ public class AnvilController : MonoBehaviour
                 {
                     SoundManager.soundManager.SEPlay(SEType.ButtonAnvil);
 
-                    items.item.itemEnhance++;
+                    //items.item.itemEnhance++;
+                    items.enchant++;
                     money -= priceGold;
                     InfoTextView(items);
 
@@ -193,7 +194,7 @@ public class AnvilController : MonoBehaviour
 
     private void InfoTextView(ItemInfo items)
     {
-        informationText.text = "강화 수치\n" + items.item.itemEnhance.ToString().Trim() + "->" + (items.item.itemEnhance + 1).ToString().Trim();
+        informationText.text = "강화 수치\n" + items.enchant.ToString().Trim() + "->" + (items.enchant + 1).ToString().Trim();
     }
 
     private void ResetEnhanceInfo()

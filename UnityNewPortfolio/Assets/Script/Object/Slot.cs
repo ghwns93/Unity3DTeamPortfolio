@@ -61,7 +61,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         {
             if (Items != null)
             {
-                tooltip.ShowToolTip(items.item, transform.position);
+                tooltip.ShowToolTip(items, transform.position);
             }
         }
     }

@@ -90,4 +90,5 @@ public class ItemInfo
 {
     public Item item;
     public int count;
+    public int enchant;
 }
