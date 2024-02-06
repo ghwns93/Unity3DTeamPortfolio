@@ -551,6 +551,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 651514930}
   m_CullTransparentMesh: 1
+--- !u!1 &744770484
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 744770485}
+  m_Layer: 0
+  m_Name: FirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &744770485
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 744770484}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.214, y: 2.139, z: 0.763}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7051503301680205348}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &946938450
 GameObject:
   m_ObjectHideFlags: 0
@@ -2545,6 +2576,7 @@ Transform:
   m_Children:
   - {fileID: 1936089940341306705}
   - {fileID: 1954458464}
+  - {fileID: 744770485}
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2601,6 +2633,7 @@ GameObject:
   - component: {fileID: 7051503301680205350}
   - component: {fileID: 7051503301680205352}
   - component: {fileID: 7051503301680205353}
+  - component: {fileID: 7051503301680205354}
   m_Layer: 0
   m_Name: Boss
   m_TagString: Enemy
@@ -2650,6 +2683,34 @@ CapsuleCollider:
   m_Height: 3.2
   m_Direction: 1
   m_Center: {x: 0, y: 1.6, z: 0}
+--- !u!114 &7051503301680205354
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7051503301680205351}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f72a1be95d2f6dc4fa95771eda8efef5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHp: 300
+  hp: 0
+  power: 0
+  fireBoll: {fileID: 1958183866474222086, guid: 2c07164943e69b64cbae185ed8aafe45, type: 3}
+  firePoint: {fileID: 744770485}
+  isAttacking: 0
+  pushBackForce: 10
+  effectRadius: 10
+  hpSlider: {fileID: 2013664427}
+  sight: 20
+  player: {fileID: 1075226992}
+  range: 15
+  speed: 2.5
+  attackDelay: 1.5
+  moveCooldown: 3
+  attackPower: 10
 --- !u!4 &7099625839532683978
 Transform:
   m_ObjectHideFlags: 0
@@ -2960,6 +3021,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 8164978597647587281, guid: 6dd86b98483d48148ac749ed1ef0a205, type: 3}
+      propertyPath: hitPrefab
+      value: 
+      objectReference: {fileID: 4021103657954561961, guid: 5c755f9bc5253ea418e919994537dcc7, type: 3}
     - target: {fileID: 8239208583225244933, guid: 6dd86b98483d48148ac749ed1ef0a205, type: 3}
       propertyPath: m_RootOrder
       value: 10

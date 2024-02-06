@@ -25,6 +25,10 @@ public class BossScript2 : MonoBehaviour
     public int hp;
     public int power;
 
+    public GameObject fireBoll;
+
+    public Transform firePoint;
+
     public bool isAttacking;
 
     public float pushBackForce = 10f; // 밀쳐내는 힘의 크기
@@ -34,7 +38,7 @@ public class BossScript2 : MonoBehaviour
     public Slider hpSlider;
 
     // 플레이어를 인식할 수 있는 범위
-    public float sight = 20.0f;
+    public float sight = 30.0f;
 
     // 플레이어의 위치 (Transform)
     public Transform player;
@@ -81,8 +85,6 @@ public class BossScript2 : MonoBehaviour
         cc = GetComponent<CharacterController>();
         anim = GetComponentInChildren<Animator>();
         agent = GetComponent<NavMeshAgent>();
-
-        hp = bs.hp;
     }
     void Update()
     {
@@ -157,40 +159,58 @@ public class BossScript2 : MonoBehaviour
 
     void Attack()
     {
+        Debug.Log("발사");
         if (moveCooldownTime > 0) return; // 공격 후 이동 중이라면 공격하지 않음
 
-        currentTime += Time.deltaTime;
+        Debug.Log(currentTime);
+        currentTime += Time.deltaTime* 100;
+
 
         if (currentTime > attackDelay)
         {
             agent.isStopped = true;
 
             power = 10;
+            Debug.Log("발사1");
 
-            attackCount++;
+                float distance = Vector3.Distance(transform.position, player.position);
+                
+                if (distance <= range)
+                {
+                    Debug.Log("발사2");
+                
+                    isAttacking = true;
+                    power = 10;
+                    anim.SetTrigger("Attack");
 
-            /////
-            ///
+                    GameObject fireboll = Instantiate(fireBoll, firePoint.position, firePoint.rotation);
+
+                     currentTime= 0;
+                    Debug.Log("Attack");
+
+                }
+            }
             
             StartCoroutine(ReactivateNavMeshAgent(moveCooldown));
 
-            currentTime = 0;
+
             moveCooldownTime = moveCooldown; // 공격 후 이동 쿨다운 시작
         }
-    }
+    
 
     IEnumerator ReactivateNavMeshAgent(float delay)
     {
         yield return new WaitForSeconds(delay);
 
         isAttacking = false;
+        Debug.Log("발사3");
 
         if (State != BossType.Damaged && State != BossType.Die)
         {
             State = BossType.Move;
 
             agent.isStopped = false;
-            
+
             // 이동 애니메이션
             anim.SetTrigger("AttackToMove");
         }
@@ -199,6 +219,7 @@ public class BossScript2 : MonoBehaviour
     // 플레이어의 데미지 처리 함수
     public void AttackAction()
     {
+        
         player.GetComponent<PlayerState>().DamageAction(power);
 
     }
