@@ -48,7 +48,7 @@ public class BossPower : MonoBehaviour
             }
             else
             {
-                Debug.LogError("BossScript reference (bs) is not assigned on " + gameObject.name);
+                Destroy(this);
             }
 
             if (controller != null && !isPushingBack)

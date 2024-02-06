@@ -11,6 +11,7 @@ public class WeaponPower : MonoBehaviour
     Enemy_VS EV;
     Enemy_VA EA;
     BossScript bs;
+    BossScript2 bs2;
 
     PlayerController PCR;
 
@@ -37,6 +38,7 @@ public class WeaponPower : MonoBehaviour
             EV = other.gameObject.GetComponent<Enemy_VS>();
             EA = other.gameObject.GetComponent<Enemy_VA>();
             bs = other.gameObject.GetComponent<BossScript>();
+            bs2 = other.gameObject.GetComponent<BossScript2>();
             Debug.Log("충돌판정");
 
             // Enemy_VS 스크립트가 있다면, hp를 감소시킵니다.
@@ -58,6 +60,11 @@ public class WeaponPower : MonoBehaviour
                 bs.HitEnemy(power);
             }
 
+            else if (bs2 != null)
+            {
+                Debug.Log("충돌판정 체력감소");
+                bs2.HitEnemy(power);
+            }
             PlayParticleEffect();
         }
     }

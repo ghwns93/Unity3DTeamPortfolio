@@ -19,7 +19,7 @@ public class BossScript : MonoBehaviour
     }
 
     BossType State;
-
+    public GameObject hitPrefab;
     public int maxHp = 300;
     public int hp = 300;
     public int power;
@@ -48,7 +48,7 @@ public class BossScript : MonoBehaviour
     public float speed = 5.0f;
 
     // 공격 딜레이
-    public float attackDelay = 7.0f;
+    public float attackDelay = 5.0f;
     // 누적 시간
     float currentTime = 0.0f;
 
@@ -139,6 +139,7 @@ public class BossScript : MonoBehaviour
         // 캐릭터의 회전을 부드럽게 조정합니다.
         transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, Time.deltaTime * speed);
     }
+
 
     void Idle()
     {
@@ -314,10 +315,8 @@ public class BossScript : MonoBehaviour
 
         if (hp <= maxHp / 2)
         {
-            // "Bone" 오브젝트를 찾습니다. 이 예제에서는 "Bone"이 현재 스크립트가 부착된 오브젝트의 자식의 자식에 위치한다고 가정합니다.
             Transform colorChange = transform.Find("0");
 
-            // Renderer 컴포넌트를 가져옵니다.
 
 
             if (renderer != null)
@@ -325,6 +324,9 @@ public class BossScript : MonoBehaviour
                 // Material의 Albedo 색상을 변경합니다.
                 renderer.material.color = new Color32(255, 0, 0, 255); 
             }
+
+            PlayParticleEffect();
+
             // 페이즈2 상태를 처리하는 코루틴 함수를 호출한다
             ApplyPushBackEffect();
             bossScript2.hp = hp;
@@ -339,6 +341,8 @@ public class BossScript : MonoBehaviour
          yield return new WaitForSeconds(1.0f);
 
         ChangePhase();
+
+        Destroy(this);
     }
 
     public void ApplyPushBackEffect()
@@ -411,5 +415,22 @@ public class BossScript : MonoBehaviour
         {
             anim.runtimeAnimatorController = boss2;
         }
+    }
+
+    void PlayParticleEffect()
+    {
+        // 파티클을 생성할 위치
+        Vector3 spawnPosition = transform.position;
+
+        // 파티클을 생성하고 변수에 할당
+        GameObject particleObject = Instantiate((GameObject)hitPrefab, spawnPosition, Quaternion.identity);
+
+        // 파티클 시스템 컴포넌트 가져오기
+        ParticleSystem particleSystem = particleObject.GetComponent<ParticleSystem>();
+
+        // 파티클이 재생되는 동안 대기
+        float duration = particleSystem.main.duration;
+
+        Destroy(particleObject, duration);
     }
 }

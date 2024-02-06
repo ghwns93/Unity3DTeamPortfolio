@@ -9,6 +9,7 @@ TagManager:
   - Arrow
   - AnimTag
   - UserStartPos
+  - Fireboll
   layers:
   - Default
   - TransparentFX

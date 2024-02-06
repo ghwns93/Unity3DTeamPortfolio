@@ -21,9 +21,12 @@ public class BossScript2 : MonoBehaviour
     BossType State;
     BossScript bs;
 
+    [HideInInspector]
     public int maxHp = 300;
+    [HideInInspector]
     public int hp;
-    public int power;
+    [HideInInspector]
+    public int power = 10;
 
     public GameObject fireBoll;
 
@@ -38,13 +41,13 @@ public class BossScript2 : MonoBehaviour
     public Slider hpSlider;
 
     // 플레이어를 인식할 수 있는 범위
-    public float sight = 30.0f;
+    public float sight =20.0f;
 
     // 플레이어의 위치 (Transform)
     public Transform player;
 
     // 공격 가능한 범위   
-    public float range = 15.0f;
+    public float range = 10.0f;
 
     // 이동 속도
     public float speed = 2.5f;
@@ -78,6 +81,7 @@ public class BossScript2 : MonoBehaviour
 
     void Start()
     {
+        Debug.Log("2페이즈 start");
         attackPower = power;
 
         State = BossType.Idle;
@@ -130,6 +134,7 @@ public class BossScript2 : MonoBehaviour
 
     void Idle()
     {
+        Debug.Log("2페이즈 아이들");
         if (Vector3.Distance(transform.position, player.position) < sight)
         {
             State = BossType.Move;
@@ -139,6 +144,7 @@ public class BossScript2 : MonoBehaviour
 
     void Move()
     {
+        Debug.Log("2페이즈 무브");
         float distance = Vector3.Distance(transform.position, player.position);
         if (distance > range)
         {
@@ -159,11 +165,9 @@ public class BossScript2 : MonoBehaviour
 
     void Attack()
     {
-        Debug.Log("발사");
         if (moveCooldownTime > 0) return; // 공격 후 이동 중이라면 공격하지 않음
 
-        Debug.Log(currentTime);
-        currentTime += Time.deltaTime* 100;
+        currentTime += Time.deltaTime;
 
 
         if (currentTime > attackDelay)
@@ -171,7 +175,7 @@ public class BossScript2 : MonoBehaviour
             agent.isStopped = true;
 
             power = 10;
-            Debug.Log("발사1");
+        Debug.Log("2페이즈 발사");
 
                 float distance = Vector3.Distance(transform.position, player.position);
                 
@@ -182,21 +186,27 @@ public class BossScript2 : MonoBehaviour
                     isAttacking = true;
                     power = 10;
                     anim.SetTrigger("Attack");
-
-                    GameObject fireboll = Instantiate(fireBoll, firePoint.position, firePoint.rotation);
+               
+                    StartCoroutine(CastFireBoll());
 
                      currentTime= 0;
                     Debug.Log("Attack");
 
                 }
-            }
-            
+
             StartCoroutine(ReactivateNavMeshAgent(moveCooldown));
-
-
             moveCooldownTime = moveCooldown; // 공격 후 이동 쿨다운 시작
         }
-    
+     }
+
+    IEnumerator CastFireBoll()
+    {
+        yield return new WaitForSeconds(0.2f);
+
+        GameObject fireboll = Instantiate(fireBoll, firePoint.position, firePoint.rotation);
+        Debug.Log("화염 생성");
+    }
+
 
     IEnumerator ReactivateNavMeshAgent(float delay)
     {
@@ -216,19 +226,11 @@ public class BossScript2 : MonoBehaviour
         }
     }
 
-    // 플레이어의 데미지 처리 함수
-    public void AttackAction()
-    {
-        
-        player.GetComponent<PlayerState>().DamageAction(power);
-
-    }
-
-
     // 데미지 처리 함수
     public void HitEnemy(int hitPower)
     {
 
+        Debug.Log("2페이즈 데미지 입기");
         // 플레이어의 공격력만큼 적 체력을 감소시켜준다
         hp -= hitPower;
 
@@ -237,6 +239,7 @@ public class BossScript2 : MonoBehaviour
         // 적 체력이 0보다 크면 피격 상태로 전환
         if (hp > 0)
         {
+        Debug.Log("2페이즈 데미지 데미지드 메서드");
             State = BossType.Damaged;
             print("상태 전환 : Any State -> Damaged");
 
@@ -246,8 +249,9 @@ public class BossScript2 : MonoBehaviour
             Damaged();
         }
         // 그렇지 않다면 사망 상태로 전환
-        else
+        else if(hp <= 0)
         {
+        Debug.Log("2페이즈 데미지 죽음 메서드");
             State = BossType.Die;
             print("상태 전환 : Any State -> Die");
             anim.SetTrigger("Die");
@@ -258,6 +262,7 @@ public class BossScript2 : MonoBehaviour
 
     private void Damaged()
     {
+        Debug.Log("2페이즈 데미지 메서드");
         // 피격 상태를 처리하는 코루틴 함수를 호출한다
         StartCoroutine(DamageProcess());
     }
@@ -265,6 +270,7 @@ public class BossScript2 : MonoBehaviour
     // 피격 상태 처리용 코루틴
     IEnumerator DamageProcess()
     {
+        Debug.Log("2페이즈 데미지 코루틴");
         // 피격 애니메이션 재생 시간만큼 기다린다
         yield return new WaitForSeconds(1.0f);
 
@@ -289,7 +295,7 @@ public class BossScript2 : MonoBehaviour
         cc.enabled = false;
 
         // 2초 동안 기다린 이후 자기자신을 제거한다
-        yield return new WaitForSeconds(2.0f);
+        yield return new WaitForSeconds(5.0f);
         print("소멸!");
         Destroy(gameObject);
     }
