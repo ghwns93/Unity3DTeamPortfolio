@@ -11,7 +11,7 @@ public class Tooltip : MonoBehaviour
     public Text text_itemdesc;
     public Text text_itemused;
 
-    public void ShowToolTip(Item _item, Vector3 _pos)
+    public void ShowToolTip(ItemInfo _item, Vector3 _pos)
     {
         tooltip_base.SetActive(true);
         _pos += new Vector3(tooltip_base.GetComponent<RectTransform>().rect.width * 0.5f,
@@ -19,20 +19,20 @@ public class Tooltip : MonoBehaviour
                             0);
         tooltip_base.transform.position = _pos;
 
-        text_itemdesc.text = _item.itemDesc;
+        text_itemdesc.text = _item.item.itemDesc;
 
-        if(_item.itemType==Item.ObjectType.Weapon)
+        if(_item.item.itemType==Item.ObjectType.Weapon)
         {
-            text_itemname.text = _item.itemName + " + " + _item.itemEnhance;
+            text_itemname.text = _item.item.itemName + " + " + _item.enchant;
         }
         else
         {
-            text_itemname.text = _item.itemName;
+            text_itemname.text = _item.item.itemName;
         }
 
-        if (_item.itemType == Item.ObjectType.Weapon)
+        if (_item.item.itemType == Item.ObjectType.Weapon)
             text_itemused.text = "Å¬¸¯ - ÀåÂø";
-        else if (_item.itemType == Item.ObjectType.Potion)
+        else if (_item.item.itemType == Item.ObjectType.Potion)
             text_itemused.text = "Å¬¸¯ - Äü½½·Ô µî·Ï";
         else
             text_itemused.text = "";
