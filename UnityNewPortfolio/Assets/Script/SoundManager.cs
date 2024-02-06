@@ -7,7 +7,8 @@ using UnityEngine.UI;
 public enum BGMType { None, Title, InVillage, InField, InBoss }
 
 // SE 종류
-public enum SEType { OpenShop, BuyClicked, ButtonClick, WrongButtonClick, PotionDrink, OpenChest, EquipChange, OpenAnvil, ButtonAnvil }
+public enum SEType { OpenShop, BuyClicked, ButtonClick, WrongButtonClick, PotionDrink, OpenChest, EquipChange, OpenAnvil, ButtonAnvil,
+                     QuestBoard,  PickUp}
 
 public class SoundManager : MonoBehaviour
 {
@@ -32,7 +33,9 @@ public class SoundManager : MonoBehaviour
     public AudioClip seChest;               // SE (창고 온/오프)
     public AudioClip seEquipChange;         // SE (장비 장착/해제)
     public AudioClip seOpenAnvil;           // SE (강화 오픈)
-    public AudioClip seClickAnvil;          // SE (강화 오픈)
+    public AudioClip seClickAnvil;          // SE (강화 소리)
+    public AudioClip seOpenQuest;           // SE (퀘스트 오픈)
+    public AudioClip sePickUp;              // SE (광석 줍기)
 
     ///////////////////////////////////////////
 
@@ -164,5 +167,11 @@ public class SoundManager : MonoBehaviour
         // 강화 소리
         else if (type == SEType.ButtonAnvil)
             seAudioSource.PlayOneShot(seClickAnvil);
+        // 퀘스트 창 선택 소리
+        else if (type == SEType.QuestBoard)
+            seAudioSource.PlayOneShot(seOpenQuest);
+        // 줍는 소리
+        else if (type == SEType.PickUp)
+            seAudioSource.PlayOneShot(sePickUp);
     }
 }

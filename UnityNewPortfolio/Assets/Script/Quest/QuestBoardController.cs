@@ -133,6 +133,7 @@ public class QuestBoardController : MonoBehaviour
     {
         questCanvas.enabled = false;
         playerController.isUiOpen = false;
+        SoundManager.soundManager.SEPlay(SEType.ButtonClick);
     }
 
     public void AcceptQuest()
@@ -140,6 +141,7 @@ public class QuestBoardController : MonoBehaviour
         QuestManager.Instance.nowQuest = selectedQuest;
         questCanvas.enabled = false;
         playerController.isUiOpen = false;
+        SoundManager.soundManager.SEPlay(SEType.ButtonClick);
     }
 
     private void QuestSelect(Quest quest)
@@ -151,5 +153,7 @@ public class QuestBoardController : MonoBehaviour
         questStoryText.text = quest.questStory;
 
         selectedQuest = quest;
+
+        SoundManager.soundManager.SEPlay(SEType.QuestBoard);
     }
 }

@@ -17459,6 +17459,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7717007156562877376, guid: a747cf3a0a0839544b87ceb8700f0022, type: 3}
+      propertyPath: sePickUp
+      value: 
+      objectReference: {fileID: 8300000, guid: e590c25cbf02a4d8b9bcf15061a48a0b, type: 3}
+    - target: {fileID: 7717007156562877376, guid: a747cf3a0a0839544b87ceb8700f0022, type: 3}
+      propertyPath: seOpenQuest
+      value: 
+      objectReference: {fileID: 8300000, guid: 746e87c3d1c1f488e9e42bec2a9bc870, type: 3}
+    - target: {fileID: 7717007156562877376, guid: a747cf3a0a0839544b87ceb8700f0022, type: 3}
+      propertyPath: sePickUpOar
+      value: 
+      objectReference: {fileID: 8300000, guid: 69b3c162753cc4eacafb334f8a4e6f6f, type: 3}
     - target: {fileID: 7717007156562877377, guid: a747cf3a0a0839544b87ceb8700f0022, type: 3}
       propertyPath: m_RootOrder
       value: 15
