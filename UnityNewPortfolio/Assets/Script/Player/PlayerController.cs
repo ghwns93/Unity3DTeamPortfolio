@@ -98,6 +98,8 @@ public class PlayerController : MonoBehaviour
                         animator.SetTrigger("AttackTrigger");
                         animator.SetBool("AttackEnd", false);
 
+                        SoundManager.soundManager.SEPlay(SEType.PlayerAttack);
+
                         Debug.Log("공격판정");
 
                         StartCoroutine(StaminaRecovery(2.0f));
@@ -262,6 +264,8 @@ public class PlayerController : MonoBehaviour
         yield return new WaitUntil(() => Input.GetButtonDown("Fire1"));
         // 눌렸다면, boolean 변수를 True로 바꾼다.
         isContinueComboAttack = true;
+        // 눌렸다면, 공격 사운드 재생
+        SoundManager.soundManager.SEPlay(SEType.PlayerAttack);
     }
 
     IEnumerator StaminaRecovery(float second)

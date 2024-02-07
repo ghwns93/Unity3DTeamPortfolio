@@ -11,6 +11,10 @@ public class GameManager : MonoBehaviour
 
     public GameObject playerPrefeb;
 
+    public string SceneTownName;
+    public string SceneIslandName;
+    public string SceneBossName;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -52,10 +56,22 @@ public class GameManager : MonoBehaviour
         playerBody = player.transform.Find("PlayerBody").gameObject;
         startPos = GameObject.FindGameObjectWithTag("UserStartPos");
 
+        if(scene.name == SceneTownName)
+        {
+            SoundManager.soundManager.PlayBGM(BGMType.InVillage);
+        }
+        else if (scene.name == SceneIslandName)
+        {
+            SoundManager.soundManager.PlayBGM(BGMType.InField);
+        }
+        else if (scene.name == SceneBossName) 
+        {
+            SoundManager.soundManager.PlayBGM(BGMType.InBoss);
+        }
+
         if (startPos != null) Debug.Log("startPos : " + startPos.transform.position);
         player.transform.position = startPos.transform.position;
         playerBody.transform.localPosition = Vector3.zero;
-
     }
 
     void OnDisable()

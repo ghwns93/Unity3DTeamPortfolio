@@ -35,6 +35,7 @@ public class ItemBoxController : MonoBehaviour
                 if (dropItem.itemType == Item.ObjectType.Material)
                 {
                     Inventory.Instance.AddItem(dropItem);
+                    SoundManager.soundManager.SEPlay(SEType.PickUp);
 
                     if (QuestManager.Instance.nowQuest != null)
                     {

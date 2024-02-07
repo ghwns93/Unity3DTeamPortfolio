@@ -4,11 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 
 // BGM 종류
-public enum BGMType { None, Title, InVillage, InField, InBoss }
+public enum BGMType { None, Title, InVillage, InField, InBoss, InBattle, QuestClear }
 
 // SE 종류
 public enum SEType { OpenShop, BuyClicked, ButtonClick, WrongButtonClick, PotionDrink, OpenChest, EquipChange, OpenAnvil, ButtonAnvil,
-                     QuestBoard,  PickUp}
+                     QuestBoard,  PickUp, PlayerAttack, PlayerHit}
 
 public class SoundManager : MonoBehaviour
 {
@@ -24,6 +24,8 @@ public class SoundManager : MonoBehaviour
     public AudioClip bgmInVillage;      // BGM (마을)
     public AudioClip bgmInField;        // BGM (필드)
     public AudioClip bgmInBoss;         // BGM (보스전)
+    public AudioClip bgmInBattle;       // BGM (전투)
+    public AudioClip bgmQuestClear;     // BGM (퀘스트 클리어)
 
     public AudioClip seOpenShop;            // SE (상점 오픈)
     public AudioClip seBuyClicked;          // SE (상점 구매)
@@ -36,6 +38,9 @@ public class SoundManager : MonoBehaviour
     public AudioClip seClickAnvil;          // SE (강화 소리)
     public AudioClip seOpenQuest;           // SE (퀘스트 오픈)
     public AudioClip sePickUp;              // SE (광석 줍기)
+
+    public AudioClip sePlayerAttack;        // SE 플레이어 공격
+    public AudioClip sePlayerHit;           // SE 플레이어 피격
 
     ///////////////////////////////////////////
 
@@ -117,6 +122,8 @@ public class SoundManager : MonoBehaviour
         {
             playingBGM = type;
 
+            if (bgmAudioSource.isPlaying) bgmAudioSource.Stop();
+
             if (type == BGMType.Title)
                 bgmAudioSource.clip = bgmInTitle;    // 타이틀 BGM
             else if (type == BGMType.InVillage)
@@ -125,6 +132,10 @@ public class SoundManager : MonoBehaviour
                 bgmAudioSource.clip = bgmInField;     // 필드 BGM
             else if (type == BGMType.InBoss)
                 bgmAudioSource.clip = bgmInBoss;     // 보스 BGM
+            else if (type == BGMType.InBattle)
+                bgmAudioSource.clip = bgmInBattle;     // 전투 BGM
+            else if (type == BGMType.QuestClear)
+                bgmAudioSource.clip = bgmQuestClear;     // 퀘스트클리어 BGM
 
             bgmAudioSource.Play(); // 사운드 재생
         }
@@ -173,5 +184,11 @@ public class SoundManager : MonoBehaviour
         // 줍는 소리
         else if (type == SEType.PickUp)
             seAudioSource.PlayOneShot(sePickUp);
+        // 플레이어 공격 소리
+        else if (type == SEType.PlayerAttack)
+            seAudioSource.PlayOneShot(sePlayerAttack);
+        // 플레이어 피격 소리
+        else if (type == SEType.PlayerHit)
+            seAudioSource.PlayOneShot(sePlayerHit);
     }
 }

@@ -12,10 +12,10 @@ public class Enemy_VS : EnemyStat
 {
     // 플레이어 스크립트
     PlayerState pStat;
-        
+
     // 적 상태 구조체
     EnemyState E_State;
-    
+
     // 플레이어 위치
     Transform player;
 
@@ -39,11 +39,11 @@ public class Enemy_VS : EnemyStat
     Animator anim;
 
     public Transform[] waypoints; // 웨이포인트 배열
-    
+
     public float waitTime = 0.5f; // 각 웨이포인트에서 대기하는 시간
 
     private int currentWaypointIndex = 0; // 현재 웨이포인트 인덱스
-    
+
     private float waitTimer;               // 대기 타이머
 
     public float rotateSpeed = 2.0f; // 회전 속도
@@ -75,7 +75,7 @@ public class Enemy_VS : EnemyStat
         {
             player = playerObject.transform;
         }
-        
+
 
         // 캐릭터 컨트롤러 가져오기
         cc = GetComponent<CharacterController>();
@@ -89,7 +89,7 @@ public class Enemy_VS : EnemyStat
 
         waitTimer = waitTime;
 
-        isFinded= false;
+        isFinded = false;
 
         GameObject arrow = GameObject.FindGameObjectWithTag("Arrow");
     }
@@ -186,13 +186,13 @@ public class Enemy_VS : EnemyStat
 
     private void Idle()
     {
-            print("상태 : Idle");
-            //enum 변수의 상태 전환
-            E_State = EnemyState.Patrol;
-            print("상태 전환 : Idle -> Patrol");
+        print("상태 : Idle");
+        //enum 변수의 상태 전환
+        E_State = EnemyState.Patrol;
+        print("상태 전환 : Idle -> Patrol");
 
-            //이동 애니메이션 전환하기
-            anim.SetTrigger("IdleToPatrol");
+        //이동 애니메이션 전환하기
+        anim.SetTrigger("IdleToPatrol");
     }
     private void Patrol()
     {
@@ -212,10 +212,12 @@ public class Enemy_VS : EnemyStat
 
     private void Find()
     {
-                E_State = EnemyState.Move0;
+        E_State = EnemyState.Move0;
         print("상태전환 : Find -> Move0");
 
         anim.SetTrigger("FindToMove0");
+
+        SoundManager.soundManager.PlayBGM(BGMType.InBattle);
     }
 
 
@@ -262,19 +264,22 @@ public class Enemy_VS : EnemyStat
         }
     }
 
-        private void Lost()
-        {
-            // enum 변수의 상태 전환
-            E_State = EnemyState.Patrol;
-            print("상태 전환 : Lost -> Patrol");
+    private void Lost()
+    {
+        // enum 변수의 상태 전환
+        E_State = EnemyState.Patrol;
+        print("상태 전환 : Lost -> Patrol");
 
-            // 이동 애니메이션 전환하기
-            anim.SetTrigger("LostToPatrol");
-       }
+        // 이동 애니메이션 전환하기
+        anim.SetTrigger("LostToPatrol");
+
+
+        SoundManager.soundManager.PlayBGM(BGMType.InField);
+    }
 
     void Attack0()
     {
-        speed= 0;
+        speed = 0;
         // 플레이어가 공격 범위 내라면 공격을 시작한다
         if (Vector3.Distance(transform.position, player.position) < attackRange1)
         {
@@ -351,6 +356,8 @@ public class Enemy_VS : EnemyStat
     {
         Debug.Log("사망");
 
+        SoundManager.soundManager.PlayBGM(BGMType.InField);
+
         // 사망 상태를 처리하기 위한 코루틴을 실행한다
         StartCoroutine(DieProcess());
     }
@@ -370,7 +377,7 @@ public class Enemy_VS : EnemyStat
     // 데미지 처리 함수
     public void HitEnemy(int hitPower)
     {
-       
+
 
         // 플레이어의 공격력만큼 적 체력을 감소시켜준다
         hp -= hitPower;
@@ -417,7 +424,7 @@ public class Enemy_VS : EnemyStat
         print("상태 전환 : Damaged -> Move");
     }
 
-void MoveTowards(Vector3 target)
+    void MoveTowards(Vector3 target)
     {
         Vector3 direction = (target - transform.position).normalized;
         transform.position += direction * speed * Time.deltaTime;

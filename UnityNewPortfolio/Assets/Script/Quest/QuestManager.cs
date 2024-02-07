@@ -65,6 +65,8 @@ public class QuestManager : MonoBehaviour
                     PlayerController pc = GameObject.Find("PlayerBody").GetComponent<PlayerController>();
                     pc.questClear = true;
 
+                    SoundManager.soundManager.PlayBGM(BGMType.QuestClear);
+
                     nowQuest = null;
                 }
             }

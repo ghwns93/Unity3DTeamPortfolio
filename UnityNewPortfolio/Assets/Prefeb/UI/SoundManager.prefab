@@ -47,9 +47,11 @@ MonoBehaviour:
   bgmVolumeSlider: {fileID: 0}
   seVolumeSlider: {fileID: 0}
   bgmInTitle: {fileID: 8300000, guid: e40564838dadef247b0948fb3ed80e62, type: 3}
-  bgmInVillage: {fileID: 0}
-  bgmInField: {fileID: 0}
-  bgmInBoss: {fileID: 0}
+  bgmInVillage: {fileID: 8300000, guid: bf9b1ac3735084d468d7debf7da0c0d6, type: 3}
+  bgmInField: {fileID: 8300000, guid: 0f3be0e3009c53e4fbf8e674481de3d8, type: 3}
+  bgmInBoss: {fileID: 8300000, guid: baac6f56e4cbf0649a4999861c366b84, type: 3}
+  bgmInBattle: {fileID: 8300000, guid: eeae8c93c3b43ef4582f750f4830f92d, type: 3}
+  bgmQuestClear: {fileID: 8300000, guid: c4d5ceea40223ee459a53069d563ff20, type: 3}
   seOpenShop: {fileID: 8300000, guid: 7cd5479f7ff346144ab58b4ef62b2606, type: 3}
   seBuyClicked: {fileID: 8300000, guid: 6ec0d7492da4a774ca1b54fd44a2448a, type: 3}
   seButtonClick: {fileID: 8300000, guid: a6f7f22e9345f3f4e813f9043a9cfc86, type: 3}
@@ -61,3 +63,5 @@ MonoBehaviour:
   seClickAnvil: {fileID: 8300000, guid: 9e831dc1b80674e1a8914ed75f13a089, type: 3}
   seOpenQuest: {fileID: 8300000, guid: 746e87c3d1c1f488e9e42bec2a9bc870, type: 3}
   sePickUp: {fileID: 8300000, guid: e590c25cbf02a4d8b9bcf15061a48a0b, type: 3}
+  sePlayerAttack: {fileID: 8300000, guid: ea9a31772ea781a46a097e17e62aa3f9, type: 3}
+  sePlayerHit: {fileID: 8300000, guid: 1dc4b1508a4f3b94f8426885d7afafee, type: 3}

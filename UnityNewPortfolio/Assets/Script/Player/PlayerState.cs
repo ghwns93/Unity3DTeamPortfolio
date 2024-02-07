@@ -154,6 +154,9 @@ public class PlayerState : MonoBehaviour
         // 파티클이 재생되는 동안 대기
         float duration = particleSystem.main.duration;
 
+        // 플레이어 피격음
+        SoundManager.soundManager.SEPlay(SEType.PlayerHit);
+
         Destroy(particleObject, duration);
     }
 }
