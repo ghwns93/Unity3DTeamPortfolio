@@ -139,14 +139,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13db1e7522eedbb4d970b8d0ed9c37f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitPrefab: {fileID: 4021103657954561961, guid: 5c755f9bc5253ea418e919994537dcc7, type: 3}
   VS: {fileID: 0}
   VA: {fileID: 0}
   hp: 100
-  hpmax: 0
+  hpmax: 100
   stamina: 100
-  staminamax: 0
+  staminamax: 100
   level: 1
-  money: 0
+  money: 1500
 --- !u!1001 &4819830279061997183
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -204,7 +205,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7357950541477948887, guid: 89232d2a44e7e914fb1df7ac28fc6d03, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7357950541477948887, guid: 89232d2a44e7e914fb1df7ac28fc6d03, type: 3}
       propertyPath: m_IsActive
@@ -525,7 +526,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 266939429741767471, guid: 36ad6c63daa6a5548aa7f58c35e779e3, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 266939429741767471, guid: 36ad6c63daa6a5548aa7f58c35e779e3, type: 3}
       propertyPath: m_IsActive

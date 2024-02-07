@@ -255,7 +255,7 @@ public class BossScript2 : MonoBehaviour
             State = BossType.Die;
             print("상태 전환 : Any State -> Die");
             anim.SetTrigger("Die");
-            Die();
+            //Die();
         }
     }
 
@@ -282,10 +282,13 @@ public class BossScript2 : MonoBehaviour
     // 사망 상태
     void Die()
     {
-        Debug.Log("사망");
+        if (cc.enabled == true)
+        {
+            Debug.Log("사망");
 
-        // 사망 상태를 처리하기 위한 코루틴을 실행한다
-        StartCoroutine(DieProcess());
+            // 사망 상태를 처리하기 위한 코루틴을 실행한다
+            StartCoroutine(DieProcess());
+        }
     }
 
     // 사망 상태 처리용 코루틴
@@ -293,6 +296,8 @@ public class BossScript2 : MonoBehaviour
     {
         // 캐릭터 컨트롤러를 비활성화한다
         cc.enabled = false;
+
+        QuestManager.Instance.nowQuest.questNowCount++;
 
         // 2초 동안 기다린 이후 자기자신을 제거한다
         yield return new WaitForSeconds(5.0f);

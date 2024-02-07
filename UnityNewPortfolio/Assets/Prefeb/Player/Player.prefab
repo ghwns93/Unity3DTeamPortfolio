@@ -115,29 +115,9 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 963839504918572288}
     m_Modifications:
-    - target: {fileID: 1754739158, guid: af2bfbce2b4b86841ad819130804c923, type: 3}
-      propertyPath: hpmax
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 1754739158, guid: af2bfbce2b4b86841ad819130804c923, type: 3}
-      propertyPath: money
-      value: 1500
-      objectReference: {fileID: 0}
-    - target: {fileID: 1754739158, guid: af2bfbce2b4b86841ad819130804c923, type: 3}
-      propertyPath: staminamax
-      value: 100
-      objectReference: {fileID: 0}
-    - target: {fileID: 2666072785390283688, guid: af2bfbce2b4b86841ad819130804c923, type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5638788334328055081, guid: af2bfbce2b4b86841ad819130804c923, type: 3}
       propertyPath: m_Name
       value: PlayerBody
-      objectReference: {fileID: 0}
-    - target: {fileID: 5638788334328055081, guid: af2bfbce2b4b86841ad819130804c923, type: 3}
-      propertyPath: m_TagString
-      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 5638788334328055082, guid: af2bfbce2b4b86841ad819130804c923, type: 3}
       propertyPath: m_RootOrder
@@ -187,10 +167,6 @@ PrefabInstance:
       propertyPath: cameraOrigin
       value: 
       objectReference: {fileID: 2192991543281519974}
-    - target: {fileID: 6593801453762047446, guid: af2bfbce2b4b86841ad819130804c923, type: 3}
-      propertyPath: m_Layer
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: af2bfbce2b4b86841ad819130804c923, type: 3}
 --- !u!4 &4627843043407213352 stripped

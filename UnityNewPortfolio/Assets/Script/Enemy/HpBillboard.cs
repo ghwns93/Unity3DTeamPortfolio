@@ -4,7 +4,12 @@ using UnityEngine;
 
 public class HpBillboard : MonoBehaviour
 {
-    public Transform target;
+    Transform target;
+
+    private void Start()
+    {
+        target = GameObject.FindGameObjectWithTag("MainCamera").transform;
+    }
 
     void Update()
     {

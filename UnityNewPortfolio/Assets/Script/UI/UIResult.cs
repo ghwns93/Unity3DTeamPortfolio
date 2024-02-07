@@ -90,6 +90,8 @@ public class UIResult : MonoBehaviour
     {
         pc.isUiOpen = false;
         pc.questClear = false;
+        pc.isAttack = false;
+        pc.isDodge = false;
         getitem.interactable = true;
         villagemove.interactable = false;
         gameObject.SetActive(false);

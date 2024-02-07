@@ -59,3 +59,5 @@ MonoBehaviour:
   seEquipChange: {fileID: 8300000, guid: 1e913916908f24548bfafb718a25ee8a, type: 3}
   seOpenAnvil: {fileID: 8300000, guid: 5009d69ae8c9645c8a6f84e7cadb9770, type: 3}
   seClickAnvil: {fileID: 8300000, guid: 9e831dc1b80674e1a8914ed75f13a089, type: 3}
+  seOpenQuest: {fileID: 8300000, guid: 746e87c3d1c1f488e9e42bec2a9bc870, type: 3}
+  sePickUp: {fileID: 8300000, guid: e590c25cbf02a4d8b9bcf15061a48a0b, type: 3}
